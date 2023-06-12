@@ -9,13 +9,13 @@ const Ratings = ({rating}) => {
             [...Array(5)].map((item, index)=>{
                 if(rating <= index){
                     return(
-                        <div className='rating-star'>
+                        <div className='rating-star' key={index}>
                             <StarBorderIcon />
                         </div>
                     )
                 }else{
                     return(
-                        <div className='rating-star'>
+                        <div className='rating-star' key={index}>
                             <StarIcon />
                         </div>
                     )
