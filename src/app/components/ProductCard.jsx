@@ -20,12 +20,12 @@ const ProductCard = ({ data, ImageProductCard}) => {
                 >
                     <SwiperSlide>
                         <div className="le_pr-image">
-                            <Image src="" width={300} height={300} />
+                            <Image src="" width={300} height={300} alt="" />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <div className="le_pr-image">
-                            <Image src="" width={300} height={300} />
+                            <Image src="" width={300} height={300} alt="" />
                         </div>
                     </SwiperSlide>
                 </Swiper>

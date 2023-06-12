@@ -7,7 +7,7 @@ const HeaderCartBtn = ({count}) => {
     <button className='header-action-btn header-cart-btn'>
         <span>{count}</span>
         <div className="icon">
-            <Image src={cartIcon} width={"50px"} height={"50px"} />
+            <Image src={cartIcon} width={"50px"} height={"50px"} alt="" />
         </div>
     </button>
   )

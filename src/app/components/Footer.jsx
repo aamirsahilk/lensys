@@ -11,12 +11,12 @@ const Footer = () => {
             <div className="grid lg:grid-cols-6 grid-cols-1 gap-8">
                 <div className="relative lg:col-span-3">
                     <Link href="" className='ft-logo'>
-                        <Image src={logo} />
+                        <Image src={logo} alt="" />
                     </Link>
                     <div className="ft-content">
                         <h3 className='ft-head'>Buy The Best Eyewear From Lensys</h3>
                         <p className="para">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                         </p>
                     </div>
                     <h3 className="ft-head">
