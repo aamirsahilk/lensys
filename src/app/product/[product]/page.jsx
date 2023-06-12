@@ -61,7 +61,7 @@ const ProductInner = ({params}) => {
                       {
                         colors.map((col, index)=>{
                           return(
-                            <div className='color-selector'>
+                            <div className='color-selector' key={index}>
                               <input type="radio" defaultChecked={col.name === "Japanese Gold"} value={col.name} name="color" onChange={ev=>setColor(ev.target.value)} id={`color-${index}`} />
                               <label htmlFor={`color-${index}`}>
                                 <span className='color' style={{background: col.hex}}></span>
