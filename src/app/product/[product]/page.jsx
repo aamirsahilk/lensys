@@ -1,14 +1,14 @@
 'use client'
 import React, {useState, useEffect} from 'react'
-import ProductInnerMainSlider from '../../components/ProductInnerMainSlider'
-import SecHeading from '../../components/SecHeading'
-import CheckPincode from '../../components/CheckPincode'
-import CustomButton from '../../components/CustomButton'
-import ProductInnerTabs from '../../components/ProductInnerTabs'
+import ProductInnerMainSlider from '../../../components/ProductInnerMainSlider'
+import SecHeading from '../../../components/SecHeading'
+import CheckPincode from '../../../components/CheckPincode'
+import CustomButton from '../../../components/CustomButton'
+import ProductInnerTabs from '../../../components/ProductInnerTabs'
 import Link from 'next/link'
 import Image from 'next/image'
 import offerImage from '../../../images/offer-banner.jpg'
-import ProductCard from '../../components/ProductCard'
+import ProductCard from '../../../components/ProductCard'
 
 const ProductInner = ({params}) => {
   const [color, setColor] = useState('Japanese Gold')

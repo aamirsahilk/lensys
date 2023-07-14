@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
-import FilterArea from '@/app/components/FilterArea'
+import FilterArea from '@/components/FilterArea'
 import Select from 'react-select'
-import ProductCard from '@/app/components/ProductCard'
+import ProductCard from '@/components/ProductCard'
 
 const Category = ({params, searchParams}) => {
   const options = [
@@ -43,54 +43,15 @@ const Category = ({params, searchParams}) => {
               </div>
             </div>
             <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
-              <div className="relative">
-                <ProductCard />
-              </div>
+              {
+                [...Array(20)].map((item,index)=>{
+                  return(
+                    <div className="relative" key={index}>
+                      <ProductCard />
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
         </div>
