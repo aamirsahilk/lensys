@@ -6,7 +6,7 @@ import Image from 'next/image';
 import eye from '@/images/eye.svg'
 import upload from '@/images/upload-icon.svg'
 
-import LensCard from './lensCard';
+// import LensCard from './LensCard';
 import ColorRadios from '../ColorRadios';
 
 const ThirdStep = () => {
