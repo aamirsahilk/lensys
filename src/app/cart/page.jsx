@@ -87,7 +87,7 @@ const Cart = () => {
                         <div className="info-line flex no-wrap items-start gap-2">
                             <Image src={infoIcon} alt="" width={25} height={25} />
                             <span>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys
                             </span>
                         </div>
                         <h3 className="it-head mb-5 mt-10">
