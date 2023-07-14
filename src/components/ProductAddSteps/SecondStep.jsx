@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 import StepProduct from './StepProduct'
 
-import LensCard from './lensCard';
+import LensCard from './LensCard';
 import ColorRadios from '../ColorRadios';
 
 const SecondStep = () => {
