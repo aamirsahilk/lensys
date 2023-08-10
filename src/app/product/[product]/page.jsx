@@ -10,73 +10,95 @@ import Image from 'next/image'
 import offerImage from '../../../images/offer-banner.jpg'
 import ProductCard from '../../../components/ProductCard'
 
+import ContactLensPowerSelect from '@/components/ContactLensPowerSelect'
+
+import api from '@/api/api'
+
 const ProductInner = ({params}) => {
+
+
+  const productSlug = params.product;
+  const [product, setProduct] = useState({});
+  const [colorId, setColorId] = useState(null);
+  const fetchProduct = async()=>{
+    const response = await api.get(`product/${productSlug}`);
+    const data = response.data;
+    setProduct(data);
+    setColors(data.colors);
+    setColor(data.colors[0].color_name)
+    setColorId(data.colors[0].id)
+  }
+  const fetchOtherDetails = async()=>{
+    const response = await api.get(`productimages/${colorId}`);
+    const data = response.data;
+    setProduct({...product, ...data});
+  }
+  const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras} = product;
+  console.log("product", product);
+  useEffect(() => {
+    fetchProduct();
+  }, [])
+  useEffect(() => {
+    if(colorId){
+      fetchOtherDetails();
+    }
+  },[colorId])
   const [color, setColor] = useState('Japanese Gold')
-  const colors = [
-    {
-      name : 'Japanese Gold',
-      hex : '#EDA587'
-    },
-    {
-      name : 'Brown',
-      hex : '#A3651F'
-    },
-    {
-      name : 'Silver',
-      hex : '#C4BEC4'
-    },
-    {
-      name : 'Blue',
-      hex : '#3048B3'
-    },
-  ]
+  const [colors, setColors] = useState([])
+
   return (
     <main className='le_product-inner-page'>
-      {`dcdd- ${params.product}`}
         <div className="container mx-auto">
           <section className="sec">
-            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-14">
-              <div className="relative">
-                <ProductInnerMainSlider />
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-14">
+              <div className="relative md:sticky md:top-24 self-start">
+                <ProductInnerMainSlider thumbs={extras} mainImage={image} />
               </div>
               <div className="relative">
                 <SecHeading>
-                  Spectus
+                  {product_name || 'Spectus'}
                 </SecHeading>
                 <p className="para mt-5">
                   AMIN-Titanium <br />
                   Hexagon Glasses in Titanium
                 </p>
                 <div className="price-wrapper mt-5">
-                  <p>₹ 1600.00 <span>( inc VAT )</span></p>
+                  <p>{currency || '₹'} {product_price || '1600.00'} <span>( inc VAT )</span></p>
                 </div>
                 <div className="act-msg suc">
                   <p>Delivered in 6-7 operational days</p>
                 </div>
-                <div className="color-selector-wrapper mt-5">
-                    <p className="para dark">
-                      Color <span>{color}</span>
-                    </p>
-                    <div className="flex flex-wrap gap-5 mt-5">
-                      {
-                        colors.map((col, index)=>{
-                          return(
-                            <div className='color-selector' key={index}>
-                              <input type="radio" defaultChecked={col.name === "Japanese Gold"} value={col.name} name="color" onChange={ev=>setColor(ev.target.value)} id={`color-${index}`} />
-                              <label htmlFor={`color-${index}`}>
-                                <span className='color' style={{background: col.hex}}></span>
-                                <p>{col.name}</p>
-                              </label>
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                </div>
+                {
+                  colors &&
+                  <div className="color-selector-wrapper mt-5">
+                      <p className="para dark">
+                        Color <span>{color}</span>
+                      </p>
+                      <div className="flex flex-wrap gap-5 mt-5">
+                        {
+                          colors?.map((col, index)=>{
+                            return(
+                              <div className='color-selector' key={index}>
+                                <input type="radio" defaultChecked={col.color_name == colors[0].color_name} value={col.color_name} name="color" data-id={col.id} onChange={ev=>{setColor(ev.target.value);setColorId(ev.target.dataset.id)}} id={`color-${index}`} />
+                                <label htmlFor={`color-${index}`}>
+                                  <span className='color' style={{background: col.color_code}}></span>
+                                  <p>{`${col.color_name}`} </p>
+                                </label>
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                  </div>
+                }
                 <CheckPincode />
+                <ContactLensPowerSelect />
                 <div className="flex flex-wrap gap-2 mt-8">
                   <CustomButton secondary={true} big={true}>ONLY FRAME</CustomButton>
-                  <CustomButton big={true} headerBtn={true}>SELECT LENSE</CustomButton>
+                  <Link href={`add-product/${slug}?pid=${id}&color=${colorId}`} className='main-btn big'>
+                    <span>SELECT LENSE</span>
+                  </Link>
+                  {/* <CustomButton big={true} headerBtn={true}>SELECT LENSE</CustomButton> */}
                 </div>
                 <div className="relative mt-5">
                   <ul className="pointer-list">
@@ -100,7 +122,7 @@ const ProductInner = ({params}) => {
         <section className="sec pr-tab-sec">
             <div className="container mx-auto">
               <div className="relative">
-                  <ProductInnerTabs />
+                  <ProductInnerTabs data={product} />
               </div>
             </div>
         </section>

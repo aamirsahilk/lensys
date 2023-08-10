@@ -1,17 +1,29 @@
 import React, {useState, useEffect} from 'react'
 
+
 import StepProduct from './StepProduct'
 
 import Image from 'next/image';
 import eye from '@/images/eye.svg'
 import upload from '@/images/upload-icon.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProductAdd } from '@/store/features/productAdd/productAddSlice';
 
 // import LensCard from './LensCard';
 import ColorRadios from '../ColorRadios';
 
-const ThirdStep = () => {
+const ThirdStep = ({id}) => {
+  const dispatch = useDispatch();
+  const productData = useSelector((state)=> state.productData.value)
+  const handleCLick = (e)=>{
+      const vl = e.target.dataset.value;
+      dispatch(updateProductAdd({...productData, prescription: vl}))
+  }
+  useEffect(()=>{
+    dispatch(updateProductAdd({...productData, prescription: 1}))
+  },[])
 
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(3);
 
   const tabChange = (tb)=>{
     setTab(tb)
@@ -23,7 +35,7 @@ const ThirdStep = () => {
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     <div className='l-part'>
-                        <StepProduct />
+                        <StepProduct id={id} />
                     </div>
                     <div className='r-part '>
                         <h3 className="sm-head">
@@ -31,18 +43,19 @@ const ThirdStep = () => {
                         </h3>
                         <ul className="radio-tabs mb-8 pb-5">
                           <li>
-                            <button className={`${tab==1?'active':''}`} onClick={()=>tabChange(1)}>
-                              <span>Enter Manually</span>
+                            <button data-value="1" className={`${tab==3?'active':''}`} onClick={(e)=>{tabChange(3);handleCLick(e)}}>
+                              <span>upload later</span>
                             </button>
                           </li>
+                          
                           <li>
-                            <button className={`${tab==2?'active':''}`} onClick={()=>tabChange(2)}>
+                            <button data-value="2" className={`${tab==2?'active':''}`} onClick={()=>{tabChange(2);handleCLick(e)}}>
                               <span>upload prescription</span>
                             </button>
                           </li>
                           <li>
-                            <button className={`${tab==3?'active':''}`} onClick={()=>tabChange(3)}>
-                              <span>upload later</span>
+                            <button data-value="3" className={`${tab==1?'active':''}`} onClick={()=>{tabChange(1);handleCLick(e)}}>
+                              <span>Enter Manually</span>
                             </button>
                           </li>
                         </ul>

@@ -1,48 +1,60 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import SecHeading from './SecHeading'
 import CustomButton from './CustomButton'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
+import api from '@/api/api';
+
 import ProductCard from './ProductCard';
 
 const HomeCatPr = () => {
+
+    const [categories, setCatagories] = useState(null)
+    const [products, setProducts] = useState(null)
+    const [id, setId] = useState(null)
+ 
+    const fetchCategories = async() =>{
+        const response = await api.get('categories');
+        setCatagories(response.data)
+
+        const id = response.data[0].id || null;
+        if(id) {
+            const res = await api.get(`featured-products/${id}`);
+            setProducts(res.data)
+
+            setId(id)
+        }
+    }
+
+    const handleCat = async (e)=>{
+        const id = e.target.dataset.id;
+        
+        const response = await api.get(`featured-products/${id}`);
+        setId(id)
+        setProducts(response.data)
+      
+    }
+
+    useEffect(() =>{
+        fetchCategories();
+    },[])
+
     return (
         <section className='home-cat-pr-sec sec'>
             <div className="container mx-auto">
                 <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-8">
                     <div className="relative">
                         <ul className="home-cat-list">
-                            <li>
-                                <button className='active'>
-                                    <span>Latest picks</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <span>Latest picks</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <span>Latest picks</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <span>Latest picks</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <span>Latest picks</span>
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <span>Latest picks</span>
-                                </button>
-                            </li>
+                            {categories && categories.map((category, index) => {
+                                return (
+                                    <li key={index}>
+                                        <button className={category.id == id?'active':''} data-id={category.id} onClick={(e)=>handleCat(e)}>
+                                            <span>{category.name}</span>
+                                        </button>
+                                    </li>
+                                )
+                            })}
                         </ul>
                     </div>
                     <div className="relative lg:col-span-3">
@@ -75,19 +87,14 @@ const HomeCatPr = () => {
                                         spaceBetween: 10,
                                     },
                                 }}
-                                >
-                                    <SwiperSlide>
-                                        <ProductCard />
-                                    </SwiperSlide>
-                                    <SwiperSlide>
-                                        <ProductCard />
-                                    </SwiperSlide>
-                                    <SwiperSlide>
-                                        <ProductCard />
-                                    </SwiperSlide>
-                                    <SwiperSlide>
-                                        <ProductCard />
-                                    </SwiperSlide>
+                                >   
+                                    {products && products.length? products.map((product, index) => {
+                                        return (
+                                            <SwiperSlide key={index}>
+                                                <ProductCard data={product} />
+                                            </SwiperSlide>
+                                        )
+                                    }):<p className='no-res'>No Results</p>}
                                 </Swiper>
                             </div>
                         </div>

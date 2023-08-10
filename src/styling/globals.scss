@@ -16,6 +16,7 @@ $green: #21D0B5;
 $blue: #1FACCF;
 $pink: #FE2B54;
 $dark: #0B272B;
+$error: #d3481e;
 $text: #6A6A6A;
 $white: #fff;
 $gr: linear-gradient(180deg, #19CFFD 0%, #21D0B5 100%);
@@ -30,7 +31,7 @@ $gr: linear-gradient(180deg, #19CFFD 0%, #21D0B5 100%);
 
 @font-face {
   font-family: 'sansburg';
-  src: url(../fonts/Sansburg.ttf);
+  src: url(/fonts/Sansburg.ttf);
 }
 
 body {
@@ -93,6 +94,15 @@ p.para{
   border-radius: 100px;
   background: $gr;
   transition: 0.2s cubic-bezier(0.47, 0, 0.745, 0.715);
+
+  &.white-bordered{
+    border: 1px solid white;
+    background: transparent !important;
+
+    span{
+      color: white;
+    }
+  }
 
   &.sm{
     padding: 0.5em 1em !important;
@@ -453,4 +463,9 @@ $trans: 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
   font-size: 28px;
   font-weight: 600;
   color: $dark;
+
+  &.sm-grey{
+    font-size: 24px;
+    color: #575757;
+  }
 }

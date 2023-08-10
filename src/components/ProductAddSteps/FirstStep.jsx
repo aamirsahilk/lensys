@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import StepProduct from './StepProduct'
 import Image from 'next/image'
@@ -8,69 +8,60 @@ import blueProtect from '../../images/blue-protect.svg'
 import bifocal from '../../images/bifocal.svg'
 import prog from '../../images/progressive.svg'
 
-const FirstStep = () => {
+import api from '@/api/api'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProductAdd } from '@/store/features/productAdd/productAddSlice'
+
+const FirstStep = ({id}) => {
+    const [lensTypes, setLensTypes ] = useState(null);
+    const fetchLensTypes = async()=>{
+        const response = await api.get('lensestypes');
+        const data = await response.data;
+        setLensTypes(data);
+    }
+
+    useEffect(() => {
+        fetchLensTypes();
+    }, [])
+
+    const productData = useSelector((state)=> state.productData.value)
+    
+    const dispatch = useDispatch();
+
+    const updateLensTypes = (e)=>{
+        const vl = e.target.value;
+        dispatch(updateProductAdd({...productData, lensType: vl}))
+    }
+
   return (
     <>
         <div className="inner-steps first-step">
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     <div className='l-part'>
-                        <StepProduct />
+                        <StepProduct id={id} />
                     </div>
                     <div className='r-part'>
                         <div className="lens-type-select-container">
-                            <div className="le_radio-check">
-                                <input type="radio" name="lenseType" id="singlevision" />
-                                <label htmlFor="singlevision">
-                                    <div className="ic">
-                                        <Image src={singlevisionlens} width={50} height={50} alt="" />
+                            {
+                                lensTypes &&
+                                lensTypes?.map((lens, index)=>(
+                                    <div className="le_radio-check" key={index}>
+                                        <input type="radio" name="lenseType" defaultChecked={productData.lensType && productData.lensType == lens.id} onChange={(e)=>updateLensTypes(e)} id={`vision-${index}`} value={lens.id} />
+                                        <label htmlFor={`vision-${index}`}>
+                                            <div className="ic">
+                                                <Image src={lens.image || singlevisionlens} width={50} height={50} alt="" />
+                                            </div>
+                                            <div className="det">
+                                                <h3>{lens.name}</h3>
+                                                <p>{lens.description}</p>
+                                            </div>
+                                            <span></span>
+                                        </label>
                                     </div>
-                                    <div className="det">
-                                        <h3>Single Vision / Powered Eyeglasses</h3>
-                                        <p>For distance or near vision.</p>
-                                    </div>
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div className="le_radio-check">
-                                <input type="radio" name="lenseType" id="bluepr" />
-                                <label htmlFor="bluepr">
-                                    <div className="ic">
-                                        <Image src={blueProtect} width={50} height={50} alt="" />
-                                    </div>
-                                    <div className="det">
-                                        <h3>Blue Protect Lenses ( No Power )</h3>
-                                        <p>Fashion or Protection from Glare/Computer Screens etc.</p>
-                                    </div>
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div className="le_radio-check">
-                                <input type="radio" name="lenseType" id="bifocal" />
-                                <label htmlFor="bifocal">
-                                    <div className="ic">
-                                        <Image src={bifocal} width={50} height={50} alt="" />
-                                    </div>
-                                    <div className="det">
-                                        <h3>Bifocal Eyeglasses</h3>
-                                        <p>Distance & Near vision in same lenses.</p>
-                                    </div>
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div className="le_radio-check">
-                                <input type="radio" name="lenseType" id="prog" />
-                                <label htmlFor="prog">
-                                    <div className="ic">
-                                        <Image src={prog} width={50} height={50} alt="" />
-                                    </div>
-                                    <div className="det">
-                                        <h3>Progressive Eyeglasses</h3>
-                                        <p>Fashion or Protection from Glare/Computer Screens etc.</p>
-                                    </div>
-                                    <span></span>
-                                </label>
-                            </div>
+                                ))
+                            }
+                          
                         </div>
                     </div>
                 </div>

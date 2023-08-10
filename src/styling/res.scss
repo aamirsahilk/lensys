@@ -58,6 +58,7 @@
     }
     .home-cat-pr-slider > .swiper{
         padding: 0 !important;
+        padding-top: 0.2em !important;
     }
     .home-cat-pr-slider{
         margin-top: 1.2em;
@@ -69,6 +70,8 @@
         display: flex;
         flex-wrap: nowrap;
         gap: 15px;
+        overflow-x: auto;
+        overflow-y: hidden;
 
         li{
 
@@ -76,5 +79,22 @@
                 min-width: max-content;
             }
         }
+    }
+}
+@media(max-width:600px){
+    .le_pr-inner-main-slider .swiper{
+        height: auto;
+        padding-bottom: 3px;
+    }
+    .le_tabs-header{
+        overflow-x: auto;
+        overflow-y: hidden;
+        justify-content: flex-start;
+    }
+    .sec{
+        padding: 2em 0px;
+    }
+    .act-msg p{
+        font-size: 14px;
     }
 }

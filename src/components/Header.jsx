@@ -22,9 +22,7 @@ const Header = () => {
             window.removeEventListener('scroll', isSticky);
         };
     });
-
     
-
     const [menuOpen, setMenuOpen] = useState(false);
     const [megamenuOpen, setMegamenuOpen] = useState(false);
 

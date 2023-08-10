@@ -1,15 +1,22 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import ReactPlayer from 'react-player'
 
-const TestimonialVideo = () => {
+const TestimonialVideo = ({index}) => {
     const [domLoaded, setDomLoaded] = useState(false); 
+    const [swiperIn, setSwiperIn] = useState(null); 
     useEffect(()=>{
         setDomLoaded(true);
     }, [])
+    useEffect(()=>{
+        if(swiperIn){
+            swiperIn.slideTo(index)
+        }
+    },[index])
   return (
-    <Swiper spaceBetween={15} slidesPerView={1.2} onSlideChange={() => console.log('slide change')}  className='' >
+    <Swiper onSwiper={(swiper)=>setSwiperIn(swiper)} spaceBetween={15} slidesPerView={1.2} onSlideChange={() =>{}}  className='' >
         <SwiperSlide>
             <div className="testimonial-video-wrapper">
                 <div className="testimonial-video-container">

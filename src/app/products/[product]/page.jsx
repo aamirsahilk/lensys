@@ -1,10 +1,25 @@
 "use client"
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+
 import FilterArea from '@/components/FilterArea'
 import Select from 'react-select'
 import ProductCard from '@/components/ProductCard'
 
+import NoResult from '@/components/NoResult'
+import api from '@/api/api'
+
+
 const Category = ({params, searchParams}) => {
+  const categoryParam = params.product;
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = async()=>{
+    const response = await api.get(`products/${categoryParam}`);
+    setProducts(response.data);
+  }
+  useEffect(() => {
+    fetchProducts();
+  }, [])
   const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
@@ -44,13 +59,13 @@ const Category = ({params, searchParams}) => {
             </div>
             <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
               {
-                [...Array(20)].map((item,index)=>{
+                products.length? products.map((item,index)=>{
                   return(
                     <div className="relative" key={index}>
-                      <ProductCard />
+                      <ProductCard data={item} />
                     </div>
                   )
-                })
+                }):<NoResult />
               }
             </div>
           </div>

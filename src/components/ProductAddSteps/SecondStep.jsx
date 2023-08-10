@@ -4,8 +4,23 @@ import StepProduct from './StepProduct'
 
 import LensCard from './LensCard';
 import ColorRadios from '../ColorRadios';
+import { useDispatch, useSelector } from 'react-redux'
 
-const SecondStep = () => {
+import api from '@/api/api';
+
+const SecondStep = ({id}) => {
+  const [lensPackage, setLensPackage] = useState([])
+
+  const productData = useSelector((state)=> state.productData.value);
+  const fetchLensprice = async()=>{
+    const res = await api.get(`lensprice/${productData.lensType}`)
+    const data = res.data;
+    setLensPackage(data)
+    console.log("data", data);
+  }
+  useEffect(()=>{
+    fetchLensprice();
+  },[])
 
   const [tab, setTab] = useState(1);
 
@@ -67,7 +82,7 @@ const SecondStep = () => {
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     <div className='l-part'>
-                        <StepProduct />
+                        <StepProduct id={id} />
                     </div>
                     <div className='r-part'>
                         <div className="l-t-tabs">
@@ -86,9 +101,10 @@ const SecondStep = () => {
                             <div>
                                 <ul className="select-lens-type-list ">
                                   {
-                                    SampleData.map((item,index)=>(
+                                    
+                                    lensPackage.length ? lensPackage.map((item,index)=>(
                                       <LensCard lensDetails={item} key={index} />
-                                    ))
+                                    )):''
                                   }
                                 </ul> 
                             </div>:

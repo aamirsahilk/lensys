@@ -4,7 +4,7 @@ const initialState = {
   value: {loggedin: false},
 }
 
-export const UserDataSlice = createSlice({
+export const UserDataSlice  = createSlice({
   name: 'userData',
   initialState,
   reducers: {

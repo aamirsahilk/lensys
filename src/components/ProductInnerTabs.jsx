@@ -9,44 +9,55 @@ import {
   } from "@material-tailwind/react";
    
 
-const ProductInnerTabs = () => {
-    const data = [
-        {
-          label: "Description",
-          value: "desc",
-          desc: `It really matters and then like it really doesn't matter.
-          What matters is the people who are sparked by it. And the people 
-          who are like offended by it, it doesn't matter.`,
-        },
-        {
-          label: "Details",
-          value: "det",
-          desc: `Because it's about motivating the doers. Because I'm here
-          to follow my dreams and inspire other people to follow their dreams, too.`,
-        },
-        {
-          label: "Shipping",
-          value: "ship",
-          desc: `Because it's about motivating the doers. Because I'm here
-          to follow my dreams and inspire other people to follow their dreams, too.`,
-        }
-      ];
+const ProductInnerTabs = ({data}) => {
+    const {product_name, product_price, regular_price, currency, product_description, attributes} = data;
+    console.log('atttr', attributes);
   return (
     <>
-        <Tabs value={data[0].value}>
+        <Tabs value={'desc'}>
             <TabsHeader className='le_tabs-header'>
-            {data.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                {label}
+    
+                <Tab value="desc">
+                Description
                 </Tab>
-            ))}
+                <Tab value="det">
+                Details
+                </Tab>
+                <Tab value="ship">
+                Shipping
+                </Tab>
+          
             </TabsHeader>
             <TabsBody className='mt-8'>
-            {data.map(({ value, desc }) => (
-                <TabPanel key={value} value={value}>
-                {desc}
-                </TabPanel>
-            ))}
+          
+              <TabPanel value="desc">
+                {product_description || 'No Description'}
+              </TabPanel>
+              <TabPanel value="det">
+                {
+                  attributes &&
+                  <div className="max-w-[600px] mx-auto">
+                    <table className='c-table'>
+                      <tbody>
+                        {
+                          attributes?.map((at, index)=>(
+                            <tr key={index}>
+                              <td>{at.key}</td>
+                              <td>{at.value}</td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                }
+              </TabPanel>
+              <TabPanel value="ship">
+                {
+                  "No Shipping details"
+                }
+              </TabPanel>
+           
             </TabsBody>
         </Tabs>
     </>
