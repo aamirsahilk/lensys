@@ -29,8 +29,8 @@ import face from '../../../public/images/face-2.jpg'
 export default function Sidebar({link, setLink}) {
     // const [open, setOpen] = useState(0);
 
+    var path = usePathname()
     const isActive = (pathname) => {
-        var path = usePathname()
         return path === pathname ? 'bg-blue-gray-50 bg-opacity-80 text-blue-gray-900' : '';
     };
 
