@@ -22,7 +22,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { updateUserData } from '@/store/features/userdata/UserDataSlice';
-import { validatePassword } from '@/utils/helpers';
+
 import mailIcon from '../../public/images/go-mail-icon.svg'
 
 import CustomButton from './CustomButton';
