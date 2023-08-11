@@ -15,14 +15,32 @@ import {
     DialogBody,
     DialogFooter,
 } from "@material-tailwind/react";
+import QtyCounter from './QtyCounter';
+import api from '@/api/api';
 import CloseIcon from '@mui/icons-material/Close';
 
 import deleteIcon from '@/images/delete.svg'
 
-const CartItem = ({fullDet}) => {
+const CartItem = ({fullDet, handleRemoveCart}) => {
     const [size, setSize] = useState(null);
     const handleOpen = (value) => setSize(value);
     const [isMobile, setIsMobile] = useState(false);
+    const [counter,setCounter] = useState(1);
+    const handleCounter = async (e)=>{
+      var count = 0;
+      if(e.target.dataset.action == "inc"){
+        count = counter + 1;
+      }
+      if(e.target.dataset.action == "dec"){
+        if(counter > 1){
+          count = counter - 1;
+        }
+      }
+      const res = await api.post('updateqty', {cartCount:count});
+      if(res.data){
+        setCounter(count);
+      }
+    }
     useEffect(() => {
         const handleResize = () => {
           // Check the window width and set the class accordingly
@@ -60,15 +78,16 @@ const CartItem = ({fullDet}) => {
                                 </button>
                             </>
                         }
+                        <QtyCounter counter={counter} handleCounter={handleCounter} />
                     </div>
-                    <div>
+                    <div className='flex flex-col items-end h-full justify-between'>
                         <p className="price">7000</p>
+                        <button className='delete-btn' onClick={(e)=>handleRemoveCart(id)}>
+                            <span>Remove</span>
+                            <Image src={deleteIcon} alt="" />
+                        </button>
                     </div>
                 </div>
-                <button className='delete-btn'>
-                    <span>Remove</span>
-                    <Image src={deleteIcon} alt="" />
-                </button>
             </div>
 
         </div>

@@ -10,6 +10,7 @@ import {
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
+import api from '@/api/api'
 import CartItem from '@/components/CartItem'
 
 function Icon({ id, open }) {
@@ -31,6 +32,34 @@ function Icon({ id, open }) {
 const Cart = () => {
     const [open, setOpen] = useState(true);
     const [isAddressSame, setIsAddressSame] = useState(false)
+    const [cartItems, setCartItems] = useState([]);
+
+    const fetchCart = async () =>{
+        const res = await api.get('cartitems',{
+            // headers: {
+            //     Authorization: `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIxMiIsImVtYWlsIjoiYWFtaXIucy5raGFuLmFzQGdtYWlsLmNvbSIsIkFQSV9USU1FIjoxNjkxNjcyMjgyfQ.dZsNZiMovw3YoDoyPL2enJLQKbbF-3ezgsuq5yjZcuM`
+            // }
+        })
+        if(res.data.status){
+            setCartItems(res.data)
+        }
+    }
+
+    const handleRemoveCart = async (id) =>{
+        const formData = new FormData();
+        formData.append('cartid',id);
+        const res = await api.post('removecartitem',formData,{
+            // headers: {
+            //     Authorization: `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIxMiIsImVtYWlsIjoiYWFtaXIucy5raGFuLmFzQGdtYWlsLmNvbSIsIkFQSV9USU1FIjoxNjkxNjcyMjgyfQ.dZsNZiMovw3YoDoyPL2enJLQKbbF-3ezgsuq5yjZcuM`
+            // }
+        })
+        fetchCart();
+    }
+
+    useEffect(() => {
+        // fetchCart()
+    }, [])
+
     
     const handleOpen = () => setOpen((prevState)=> !prevState);
 
@@ -39,15 +68,7 @@ const Cart = () => {
             
             <div className="container mx-auto">
             
-                <div className="apply-offer-strip">
-                    <div className="ic">
-                        <Image src={offerImage} width={30} height={30} alt="" />
-                    </div>
-                    <input type="text" placeholder='Apply Coupon' />
-                    <a href="javascript:void(0)" className="main-btn">
-                        Apply Coupon
-                    </a>
-                </div>
+                
                 <div className="grid grid-cols-1 md:grid-cols-12 mt-8 gap-8">
                     <div className="relative md:col-span-7">
                         <h3 className="it-head mb-5">
@@ -169,10 +190,19 @@ const Cart = () => {
                             </AccordionHeader>
                             <AccordionBody>
                                 <div className="cart-items-list">
-                                    <CartItem />
+                                    <CartItem handleRemoveCart={handleRemoveCart} />
                                 </div>
                             </AccordionBody>
                         </Accordion>
+                        <div className="apply-offer-strip">
+                            <div className="ic">
+                                <Image src={offerImage} width={30} height={30} alt="" />
+                            </div>
+                            <input type="text" placeholder='Apply Coupon' />
+                            <a href="javascript:void(0)" className="main-btn">
+                                Apply Coupon
+                            </a>
+                        </div>
                         <button className='main-btn full mt-5 big dark'>
                             <span>Proceed For Payment</span>
                         </button>

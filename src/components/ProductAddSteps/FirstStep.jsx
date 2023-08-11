@@ -12,7 +12,7 @@ import api from '@/api/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProductAdd } from '@/store/features/productAdd/productAddSlice'
 
-const FirstStep = ({id}) => {
+const FirstStep = ({id, colorId}) => {
     const [lensTypes, setLensTypes ] = useState(null);
     const fetchLensTypes = async()=>{
         const response = await api.get('lensestypes');
@@ -39,7 +39,7 @@ const FirstStep = ({id}) => {
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     <div className='l-part'>
-                        <StepProduct id={id} />
+                        <StepProduct id={id} colorId={colorId} />
                     </div>
                     <div className='r-part'>
                         <div className="lens-type-select-container">

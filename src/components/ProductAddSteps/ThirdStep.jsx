@@ -12,7 +12,7 @@ import { updateProductAdd } from '@/store/features/productAdd/productAddSlice';
 // import LensCard from './LensCard';
 import ColorRadios from '../ColorRadios';
 
-const ThirdStep = ({id}) => {
+const ThirdStep = ({id, colorId}) => {
   const dispatch = useDispatch();
   const productData = useSelector((state)=> state.productData.value)
   const handleCLick = (e)=>{
@@ -35,7 +35,7 @@ const ThirdStep = ({id}) => {
             <div className="container mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     <div className='l-part'>
-                        <StepProduct id={id} />
+                        <StepProduct id={id} colorId={colorId} />
                     </div>
                     <div className='r-part '>
                         <h3 className="sm-head">

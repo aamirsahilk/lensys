@@ -85,19 +85,19 @@ export default function AddProductSteps({params, searchParams}) {
     switch (vl) {
       case 0:
         return (
-          <FirstStep id={color}  />
+          <FirstStep id={pid} colorId={color}  />
         )
         break;
 
       case 1:
         return (
-          <SecondStep id={color}   />
+          <SecondStep id={pid} colorId={color}  />
         )
         break;
 
       case 2:
         return (
-          <ThirdStep id={color}  />
+          <ThirdStep id={pid} colorId={color} />
         )
         break;
 
@@ -122,7 +122,12 @@ export default function AddProductSteps({params, searchParams}) {
     });
     formData.append('colorid', color);
     formData.append('productid', pid);
-    const res = await api.post('addtocart', formData);
+    const res = await api.post('addtocart', formData, {
+       headers: {
+            'Authorization': `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIxNyIsImVtYWlsIjoidGFoYS5oNTM2M0BnbWFpbC5jb20iLCJBUElfVElNRSI6MTY5MTczNDk4NX0.JYJAoL4yCPdAfqpcKJloXlQrOeCbgX47m77IO_jaehE`
+            // 'Content-Type': 'application/json',
+        }
+    });
     const data = res.data;
     if(data.status){
       push('/cart');

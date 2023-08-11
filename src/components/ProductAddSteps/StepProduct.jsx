@@ -10,11 +10,11 @@ import api from '@/api/api';
 
 import 'swiper/css';
 
-const StepProduct = ({id}) => {
+const StepProduct = ({id,colorId}) => {
     const productAddedInCart = useSelector((state)=> state.productAddedInCart.value)
     const [product,setProduct] = useState(null); 
     const fetchProduct = async ()=>{
-        const response = await api.get(`productname/${id || 4}`)
+        const response = await api.get(`productname?productid=${id || 4}&colorid=${colorId || ''}`)
         const data = await response.data;
         setProduct(data)
     }
@@ -44,7 +44,7 @@ const StepProduct = ({id}) => {
                     <p className='le_pr-para'>
                     {
                         product?
-                        product.attributes.map((attr,index)=>{
+                        product.attributes?.map((attr,index)=>{
                             return <span key={index}> {attr.value} • </span>
                         }):''
                     }

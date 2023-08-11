@@ -36,7 +36,7 @@ const HomeBannerArea = ({data}) => {
                     <Link href={banner.link} className="main-banner">
                         <picture>
                             <source srcet={banner.phone} media="max-width:600px"/>
-                            <Image src={banner.image} width={1920} height={700} alt={banner.alttext} />
+                            <Image src={banner.image} width={1920} height={1080} alt={banner.alttext} />
                         </picture>
                         {/* <div className="container">
                             <div className="banner-inner-area grid grid-cols-1 lg:grid-cols-2 place-items-center">

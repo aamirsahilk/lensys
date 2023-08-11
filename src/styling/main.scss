@@ -1966,3 +1966,45 @@
         object-position: center;
     }
 }
+.counter-wrapper{
+    position: relative;
+    display: flex;
+    $ss: 35px;
+    border-radius: 100px;
+    overflow: hidden;
+    $border: 1px solid rgba($color: #000000, $alpha: .15);
+    border: $border;
+    max-width: max-content;
+
+    button, input{
+        width: $ss;
+        height: $ss;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        outline: none;
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    button{
+        background: transparent;
+        outline: none;
+        box-shadow: none;
+        border: none;
+        
+        &[data-action=inc]{
+            border-left: $border;
+        }
+        &[data-action=dec]{
+            border-right: $border;
+        }
+
+        span{
+            pointer-events: none;
+        }
+    }
+}
