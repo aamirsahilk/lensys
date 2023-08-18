@@ -34,18 +34,18 @@ function Icon({ id, open }) {
   );
 }
 
-const FilterArea = () => {
+const FilterArea = ({handleFilter, categoryParam}) => {
 
   const [filters, setFilters] = useState([]);
 
   const fetchFilters = useCallback(async() =>{
-    const res = await api.get('filters/eyeglasses');
+    const res = await api.get('filters/'+categoryParam);
     const data = res.data;
     console.log('filters', data);
     if(data){
       setFilters(data)
     }
-  },[])
+  },[categoryParam])
 
 
   useEffect(()=>{
@@ -108,7 +108,7 @@ const FilterArea = () => {
             <AccordionBody>
               <div className="im-cus-radio-container">
                 <div className="im-cus-radio">
-                  <input type="radio" name="shopfor" id="men" />
+                  <input type="radio" name="subcategory" value="MEN" onClick={(e)=>handleFilter(e)} id="men" />
                   <label htmlFor="men">
                     <div className="ic">
                       <MenIcon />
@@ -117,7 +117,7 @@ const FilterArea = () => {
                   </label>
                 </div>
                 <div className="im-cus-radio">
-                  <input type="radio" name="shopfor" id="women" />
+                  <input type="radio" name="subcategory" value="WOMEN" onClick={(e)=>handleFilter(e)} id="women" />
                   <label htmlFor="women">
                     <div className="ic">
                       <WomenIcon />
@@ -126,7 +126,7 @@ const FilterArea = () => {
                   </label>
                 </div>
                 <div className="im-cus-radio">
-                  <input type="radio" name="shopfor" id="kids" />
+                  <input type="radio" name="subcategory" value="KIDS" onClick={(e)=>handleFilter(e)} id="kids" />
                   <label htmlFor="kids">
                     <div className="ic">
                       <KidIcon />
@@ -137,27 +137,31 @@ const FilterArea = () => {
               </div>
             </AccordionBody>
           </Accordion>
-          <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
-            <AccordionHeader onClick={handleOpenAcc2}>
-              <h4>PRICES</h4>
-            </AccordionHeader>
-            <AccordionBody>
-              <div className="checkbox-container">
-                {
-                  PricesFilter.map((mp, index) => {
-                    return (
-                      <div className="cus-checkbox-wrapper" key={index}>
-                        <input type="radio" name='pricesFilter' id={`price-${index}`} />
-                        <label htmlFor={`price-${index}`}>
-                          <span>{mp}</span>
-                        </label>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-            </AccordionBody>
-          </Accordion>
+          {
+            filters.priceranges&&
+            <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
+              <AccordionHeader onClick={handleOpenAcc2}>
+                <h4>PRICES</h4>
+              </AccordionHeader>
+              <AccordionBody>
+                <div className="checkbox-container">
+                  {
+                    filters.priceranges.length > 0 &&
+                    filters.priceranges.map((mp, index) => {
+                      return (
+                        <div className="cus-checkbox-wrapper" key={index}>
+                          <input type="radio" value={mp.min+'-'+mp.max} name='pricerange' onClick={(e)=>handleFilter(e)} id={`price-${index}`} />
+                          <label htmlFor={`price-${index}`}>
+                            <span>{mp.min+'-'+mp.max}</span>
+                          </label>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              </AccordionBody>
+            </Accordion>
+          }
           {/* <Accordion className='cus-acc' open={openAcc3} icon={<Icon open={openAcc3} />}>
             <AccordionHeader onClick={handleOpenAcc3}>
               <h4>STYLES</h4>
@@ -195,7 +199,7 @@ const FilterArea = () => {
             </AccordionBody>
           </Accordion> */}
           {
-            filters &&
+            filters.brands &&
             <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
               <AccordionHeader onClick={handleOpenAcc2}>
                 <h4>BRANDS</h4>
@@ -203,11 +207,11 @@ const FilterArea = () => {
               <AccordionBody>
                 <div className="checkbox-container">
                   {
-                    filters.brands &&
+                    filters.brands.length > 0 &&
                     filters.brands.map((mp, index) => {
                         return (
                             <div className={`cus-checkbox-wrapper ${index+1 > maxLength?"hidden":''}`} key={index}>
-                              <input type="radio" value={mp.id} name='brandFilter' id={`brand-${index}`} />
+                              <input type="radio" value={mp.id} onClick={(e)=>handleFilter(e)} name='brands' id={`brand-${index}`} />
                               <label htmlFor={`brand-${index}`}>
                                 <span>{mp.name}</span>
                               </label>

@@ -16,14 +16,23 @@ const Category = ({params, searchParams}) => {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterQuery, setFilterQuery] = useState({});
 
-  const fetchProducts = useCallback(async()=>{
-    const response = await api.get(`products/${categoryParam}`);
+  const fetchProducts = useCallback(async(pr)=>{
+    let paramString = '';
+    if(Object.entries(filterQuery).length != 0){
+      for (const key in filterQuery) {
+        if (filterQuery.hasOwnProperty(key)) {
+          paramString += `${key}=${filterQuery[key]}&`;
+        }
+      }
+    }
+    const response = await api.get(`products/${categoryParam}${paramString!=''&&'?'+paramString}`);
     setProducts(response.data);
     setTimeout(()=>{
       setLoading(false);
     },1500)
-  },[categoryParam]);
+  },[categoryParam,filterQuery]);
 
   const fetchFilters = useCallback(async()=>{
     const res = await api.get(`filters/${categoryParam}`);
@@ -59,11 +68,26 @@ const Category = ({params, searchParams}) => {
       };
     },
   };
+
+  const handleFilter = (e) =>{
+    // console.log("filters", filterQuery, e.target.value, e.target.name);
+    const vl = e.target.value;
+    const name = e.target.name;
+    const newObj = {[name]: vl};
+    const mainObj = {...filterQuery, ...newObj}
+    setFilterQuery(mainObj);
+  }
+
+  useEffect(() =>{
+    console.log('filtersQuery', filterQuery);
+  }, [filterQuery])
+
+
   return (
     <main className='le_archive-page py-5'>
       <div className="relative grid grid-cols-1 lg:grid-cols-5 ">
         <div className="relative pl-5">
-          <FilterArea />
+          <FilterArea handleFilter={handleFilter} categoryParam={categoryParam} />
         </div>
         <div className="relative lg:col-span-4 px-5">
           <div className="archive-pr-wrapper">
