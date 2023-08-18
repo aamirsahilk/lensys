@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import offerImage from '@/images/offer.svg'
 import infoIcon from '@/images/info.svg'
@@ -179,11 +179,11 @@ const Cart = () => {
 
     useEffect(() => {
         fetchCart()
-    },[]);
+    },[fetchCart]);
 
     useEffect(() => {
         getStates()
-    },[]);
+    },[getStates]);
 
     useEffect(() => {
         setDomLoaded(true)

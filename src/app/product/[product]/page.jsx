@@ -40,12 +40,12 @@ const ProductInner = ({params}) => {
   
   useEffect(() => {
     fetchProduct();
-  }, [])
+  }, [fetchProduct])
   useEffect(() => {
     if(colorId){
       fetchOtherDetails();
     }
-  },[colorId])
+  },[colorId, fetchOtherDetails])
   const [color, setColor] = useState('Japanese Gold')
   const [colors, setColors] = useState([])
 
