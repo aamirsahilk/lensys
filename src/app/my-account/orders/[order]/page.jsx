@@ -37,7 +37,7 @@ const SingleOrder = ({params}) => {
         const data = res.data;
         setOrders(data.order_items || []);
         setOrder(data || {});
-    }, [])
+    }, [orderId])
 
     useEffect(() => {
         fetchOrder()

@@ -30,13 +30,13 @@ const ProductInner = ({params}) => {
     setColors(data.colors || []);
     setColor(data.colors ? data.colors[0].color_name : '')
     setColorId(data.colors ? data.colors[0].id : '')
-  },[])
+  },[productSlug])
  
   const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras, categoryid} = product;
   
   useEffect(() => {
     fetchProduct();
-  }, [fetchProduct,productSlug])
+  }, [fetchProduct])
   
   useEffect(() => {
     const fetchOtherDetails = async()=>{

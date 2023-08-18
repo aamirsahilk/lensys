@@ -19,7 +19,7 @@ const StepProduct = ({id,colorId}) => {
         const response = await api.get(`productname?productid=${id || 4}&colorid=${colorId || ''}`)
         const data = await response.data;
         setProduct(data)
-    },[])
+    },[colorId,id])
     useEffect(()=>{
         fetchProduct()
     },[fetchProduct]);

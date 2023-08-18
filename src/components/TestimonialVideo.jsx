@@ -14,7 +14,7 @@ const TestimonialVideo = ({index}) => {
         if(swiperIn){
             swiperIn.slideTo(index)
         }
-    },[index])
+    },[index,swiperIn])
   return (
     <Swiper onSwiper={(swiper)=>setSwiperIn(swiper)} spaceBetween={15} slidesPerView={1.2} onSlideChange={() =>{}}  className='' >
         <SwiperSlide>

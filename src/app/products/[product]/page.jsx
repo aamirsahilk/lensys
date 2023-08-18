@@ -23,7 +23,7 @@ const Category = ({params, searchParams}) => {
     setTimeout(()=>{
       setLoading(false);
     },1500)
-  },[]);
+  },[categoryParam]);
 
   const fetchFilters = useCallback(async()=>{
     const res = await api.get(`filters/${categoryParam}`);
@@ -31,11 +31,11 @@ const Category = ({params, searchParams}) => {
     if(data.status){
       setFilters(data || []);
     }
-  },[])
+  },[categoryParam])
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts,categoryParam])
+  }, [fetchProducts])
 
   // useEffect(() => {
   //   fetchFilters();
