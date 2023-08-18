@@ -420,7 +420,7 @@ const Cart = () => {
                                         </> :
                                         <>
                                             <div className="no-cart-items pt-12 pb-12">
-                                                <h3 className='heading text-center mb-5'>You don't have any items added in yout cart</h3>
+                                                <h3 className='heading text-center mb-5'>You don&apos;t have any items added in yout cart</h3>
                                                 <Link href="/" className="main-btn center mt-5">
                                                     <span>Do some shopping</span>
                                                 </Link>

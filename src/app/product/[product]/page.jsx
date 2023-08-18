@@ -47,7 +47,7 @@ const ProductInner = ({params}) => {
     if(colorId){
       fetchOtherDetails();
     }
-  },[colorId])
+  },[colorId,product])
   const [color, setColor] = useState('Japanese Gold')
   const [colors, setColors] = useState([])
 

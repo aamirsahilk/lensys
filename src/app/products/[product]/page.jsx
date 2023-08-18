@@ -82,7 +82,7 @@ const Category = ({params, searchParams}) => {
               {
                 loading ?
                 [...Array(6)].map((item, index)=>(
-                  <ProductCardSkeleton />
+                  <ProductCardSkeleton key={index} />
                 )):
                 products.length? products.map((item,index)=>{
                   return(

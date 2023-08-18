@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState, useCallback } from 'react'
 
 // icons
 import MenIcon from '../icons/MenIcon'
@@ -9,6 +9,8 @@ import halfRim from '@/images/half-rim.svg'
 import fullRim from '@/images/full-rim.svg'
 
 import Image from 'next/image'
+import api from '@/api/api'
+
 
 import {
   Accordion,
@@ -33,6 +35,23 @@ function Icon({ id, open }) {
 }
 
 const FilterArea = () => {
+
+  const [filters, setFilters] = useState([]);
+
+  const fetchFilters = useCallback(async() =>{
+    const res = await api.get('filters/eyeglasses');
+    const data = res.data;
+    console.log('filters', data);
+    if(data){
+      setFilters(data)
+    }
+  },[])
+
+
+  useEffect(()=>{
+    fetchFilters();
+  }, [fetchFilters])
+
   const [openAcc1, setOpenAcc1] = useState(true);
   const [openAcc2, setOpenAcc2] = useState(true);
   const [openAcc3, setOpenAcc3] = useState(true);
@@ -71,7 +90,7 @@ const FilterArea = () => {
     e.target.classList.add('hidden')
   }
 
-  const maxLength = 4;
+  const maxLength = 2;
 
 
   return (
@@ -175,31 +194,35 @@ const FilterArea = () => {
               </div>
             </AccordionBody>
           </Accordion> */}
-          <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
-            <AccordionHeader onClick={handleOpenAcc2}>
-              <h4>BRANDS</h4>
-            </AccordionHeader>
-            <AccordionBody>
-              <div className="checkbox-container">
-                {
-                  brands.map((mp, index) => {
-                      return (
-                        
-                          <div className={`cus-checkbox-wrapper ${index+1 > maxLength?"hidden":''}`} key={index}>
-                            <input type="radio" name='brandFilter' id={`brand-${index}`} />
-                            <label htmlFor={`brand-${index}`}>
-                              <span>{mp}</span>
-                            </label>
-                          </div>
-                      )
-                  })
-                }
-                {
-                  brands.length > maxLength?<button className='main-btn link-btn mt-2' onClick={(e)=>handleReadmore(e)}><span>+{brands.length - maxLength} More</span></button>:''
-                }
-              </div>
-            </AccordionBody>
-          </Accordion>
+          {
+            filters &&
+            <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
+              <AccordionHeader onClick={handleOpenAcc2}>
+                <h4>BRANDS</h4>
+              </AccordionHeader>
+              <AccordionBody>
+                <div className="checkbox-container">
+                  {
+                    filters.brands &&
+                    filters.brands.map((mp, index) => {
+                        return (
+                            <div className={`cus-checkbox-wrapper ${index+1 > maxLength?"hidden":''}`} key={index}>
+                              <input type="radio" value={mp.id} name='brandFilter' id={`brand-${index}`} />
+                              <label htmlFor={`brand-${index}`}>
+                                <span>{mp.name}</span>
+                              </label>
+                            </div>
+                        )
+                    })
+                  }
+                  {
+                    filters.brands &&
+                    filters?.brands.length > maxLength?<button className='main-btn link-btn mt-2' onClick={(e)=>handleReadmore(e)}><span>+{filters?.brands.length - maxLength} More</span></button>:''
+                  }
+                </div>
+              </AccordionBody>
+            </Accordion>
+          }
         </div>
       </div>
     </aside>
