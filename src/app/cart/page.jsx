@@ -69,11 +69,11 @@ const Cart = () => {
     const openDrawerRight = () => setOpenRight(true);
     const closeDrawerRight = () => setOpenRight(false);
 
-    const getStates = async () => {
+    const getStates = useCallback(async() => {
         const res = await api.get('states');
         setStates(res.data)
         getCities(res.data[0].id)
-    }
+    }, [])
     const getCities = async (id) => {
         const res = await api.get('cities/' + id);
         setCities(res.data)
@@ -179,7 +179,7 @@ const Cart = () => {
 
     useEffect(() => {
         fetchCart()
-    },[fetchCart]);
+    },[]);
 
     useEffect(() => {
         getStates()

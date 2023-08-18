@@ -41,7 +41,7 @@ const SingleOrder = ({params}) => {
 
     useEffect(() => {
         fetchOrder()
-    },[fetchOrder]);
+    },[]);
 
     return (
         <div>

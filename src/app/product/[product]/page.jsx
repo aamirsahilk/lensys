@@ -27,9 +27,9 @@ const ProductInner = ({params}) => {
     const response = await api.get(`product/${productSlug}`);
     const data = response.data;
     setProduct(data);
-    setColors(data.colors);
-    setColor(data.colors[0].color_name)
-    setColorId(data.colors[0].id)
+    setColors(data.colors || []);
+    setColor(data.colors ? data.colors[0].color_name : '')
+    setColorId(data.colors ? data.colors[0].id : '')
   }
   const fetchOtherDetails = async()=>{
     const response = await api.get(`productimages/${colorId}`);
@@ -40,12 +40,12 @@ const ProductInner = ({params}) => {
   
   useEffect(() => {
     fetchProduct();
-  }, [fetchProduct])
+  }, [])
   useEffect(() => {
     if(colorId){
       fetchOtherDetails();
     }
-  },[colorId, fetchOtherDetails])
+  },[colorId])
   const [color, setColor] = useState('Japanese Gold')
   const [colors, setColors] = useState([])
 

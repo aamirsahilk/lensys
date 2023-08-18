@@ -55,7 +55,7 @@ const HomeCatSlider = () => {
                     categories?.map((dt, index)=>{
                         return (
                             <SwiperSlide key={dt.id}>
-                                <Link href={`product/${dt.id}`} className='home-cat-card' data-index={`c-${index}`} style={{background: dt.color}}>
+                                <Link href={`products/${dt.id}`} className='home-cat-card' data-index={`c-${index}`} style={{background: dt.color}}>
                                     <div className="im">
                                         <Image src={dt.image} alt={dt.alt_text} width={100} height={100} />
                                     </div>
