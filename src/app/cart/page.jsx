@@ -383,7 +383,7 @@ const Cart = () => {
                                                                                 cartItems.length > 0 ?
                                                                                     cartItems?.map((item, index) => (
                                                                                         <CartItem handleCounter={handleCounter} counter={counter} data={item} handleRemoveCart={handleRemoveCart} key={index} />
-                                                                                    )) : <NoResult message={"You don't have any items added in cart"} />
+                                                                                    )) : <NoResult message={"You don&apos;t have any items added in cart"} />
                                                                             }
                                                                         </div>
                                                                     </AccordionBody>

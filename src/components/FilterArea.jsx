@@ -139,7 +139,7 @@ const FilterArea = () => {
               </div>
             </AccordionBody>
           </Accordion>
-          <Accordion className='cus-acc' open={openAcc3} icon={<Icon open={openAcc3} />}>
+          {/* <Accordion className='cus-acc' open={openAcc3} icon={<Icon open={openAcc3} />}>
             <AccordionHeader onClick={handleOpenAcc3}>
               <h4>STYLES</h4>
             </AccordionHeader>
@@ -174,7 +174,7 @@ const FilterArea = () => {
                 </div>
               </div>
             </AccordionBody>
-          </Accordion>
+          </Accordion> */}
           <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
             <AccordionHeader onClick={handleOpenAcc2}>
               <h4>BRANDS</h4>

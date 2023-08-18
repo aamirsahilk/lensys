@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 
@@ -15,14 +15,14 @@ const StepProduct = ({id,colorId}) => {
     const productAddedInCart = useSelector((state)=> state.productAddedInCart.value)
     const [product,setProduct] = useState(null); 
     const productData = useSelector((state)=> state.productData.value );
-    const fetchProduct = async ()=>{
+    const fetchProduct = useCallback(async ()=>{
         const response = await api.get(`productname?productid=${id || 4}&colorid=${colorId || ''}`)
         const data = await response.data;
         setProduct(data)
-    }
+    },[])
     useEffect(()=>{
         fetchProduct()
-    },[]);
+    },[fetchProduct]);
   return (
     <article className="le_step-product">
             <div className="le_pr-image-carousel">

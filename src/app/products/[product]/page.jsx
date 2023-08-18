@@ -8,15 +8,21 @@ import ProductCard from '@/components/ProductCard'
 import NoResult from '@/components/NoResult'
 import api from '@/api/api'
 
+import ProductCardSkeleton from '@/components/skeleton/ProductCardSkeleton'
+
 
 const Category = ({params, searchParams}) => {
   const categoryParam = params.product;
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchProducts = useCallback(async()=>{
     const response = await api.get(`products/${categoryParam}`);
     setProducts(response.data);
+    setTimeout(()=>{
+      setLoading(false);
+    },1500)
   },[]);
 
   const fetchFilters = useCallback(async()=>{
@@ -29,7 +35,7 @@ const Category = ({params, searchParams}) => {
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts])
+  }, [fetchProducts,categoryParam])
 
   // useEffect(() => {
   //   fetchFilters();
@@ -74,6 +80,10 @@ const Category = ({params, searchParams}) => {
             </div>
             <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
               {
+                loading ?
+                [...Array(6)].map((item, index)=>(
+                  <ProductCardSkeleton />
+                )):
                 products.length? products.map((item,index)=>{
                   return(
                     <div className="relative" key={index}>

@@ -26,7 +26,7 @@ const ProductInner = ({params}) => {
   const fetchProduct = useCallback(async()=>{
     const response = await api.get(`product/${productSlug}`);
     const data = response.data;
-    setProduct(data);
+    setProduct(p=>data);
     setColors(data.colors || []);
     setColor(data.colors ? data.colors[0].color_name : '')
     setColorId(data.colors ? data.colors[0].id : '')
@@ -36,7 +36,8 @@ const ProductInner = ({params}) => {
   
   useEffect(() => {
     fetchProduct();
-  }, [fetchProduct])
+  }, [fetchProduct,productSlug])
+  
   useEffect(() => {
     const fetchOtherDetails = async()=>{
       const response = await api.get(`productimages/${colorId}`);

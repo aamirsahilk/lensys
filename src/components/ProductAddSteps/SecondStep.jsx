@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 
 import StepProduct from './StepProduct'
 
@@ -12,15 +12,15 @@ const SecondStep = ({id, colorId}) => {
   const [lensPackage, setLensPackage] = useState([])
 
   const productData = useSelector((state)=> state.productData.value);
-  const fetchLensprice = async()=>{
+  const fetchLensprice = useCallback(async()=>{
     const res = await api.get(`lensprice/${productData.lensType}`)
     const data = res.data;
     setLensPackage(data)
     console.log("data", data);
-  }
+  },[])
   useEffect(()=>{
     fetchLensprice();
-  },[])
+  },[fetchLensprice])
 
   const [tab, setTab] = useState(1);
 

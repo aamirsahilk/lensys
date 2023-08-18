@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Sidebar from '@/components/my-account/Sidebar';
 
 import {
@@ -32,16 +32,16 @@ const SingleOrder = ({params}) => {
     const [orders, setOrders] = useState([]);
     const [order, setOrder] = useState({});
 
-    const fetchOrder = async() => {
+    const fetchOrder = useCallback(async() => {
         const res = await api.get('order-details/'+orderId);
         const data = res.data;
         setOrders(data.order_items || []);
         setOrder(data || {});
-    }
+    }, [])
 
     useEffect(() => {
         fetchOrder()
-    },[]);
+    },[fetchOrder]);
 
     return (
         <div>

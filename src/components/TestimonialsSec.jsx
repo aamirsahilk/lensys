@@ -17,13 +17,13 @@ const TestimonialsSec = () => {
     if (!swiperInstance) return;
     swiperInstance.slidePrev();
     setActiveIndex(swiperInstance.activeIndex);
-  }, []);
+  }, [swiperInstance]);
 
   const handleNext = useCallback(() => {
     if (!swiperInstance) return;
     swiperInstance.slideNext();
     setActiveIndex(swiperInstance.activeIndex);
-  }, []);
+  }, [swiperInstance]);
 
   return (
     <section className='sec testimonial-sec'>
