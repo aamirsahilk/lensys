@@ -1,9 +1,9 @@
 import React from 'react'
 
-const NoResult = () => {
+const NoResult = ({message}) => {
   return (
     <div className='no-res-wrap'>
-        <p>No Result Found</p>
+        <p>{message ? message : 'No Result Found'}</p>
     </div>
   )
 }

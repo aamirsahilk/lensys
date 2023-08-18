@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import { useSelector } from 'react-redux';
 
+
 import pr from '../../images/spec1.png'
 import api from '@/api/api';
 
@@ -13,6 +14,7 @@ import 'swiper/css';
 const StepProduct = ({id,colorId}) => {
     const productAddedInCart = useSelector((state)=> state.productAddedInCart.value)
     const [product,setProduct] = useState(null); 
+    const productData = useSelector((state)=> state.productData.value );
     const fetchProduct = async ()=>{
         const response = await api.get(`productname?productid=${id || 4}&colorid=${colorId || ''}`)
         const data = await response.data;
@@ -48,6 +50,7 @@ const StepProduct = ({id,colorId}) => {
                             return <span key={index}> {attr.value} • </span>
                         }):''
                     }
+                    {/* <span>{productData.lensType} • {productData.lensPackage}</span> */}
                     </p>
                     <div className="le_pr-price">
                         <h3>₹{product?product.regular_price:''} {productAddedInCart.lensPackage?`+${productAddedInCart.lensPackage}`:''} <span>+ tax</span></h3>

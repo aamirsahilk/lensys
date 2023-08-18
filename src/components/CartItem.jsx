@@ -21,26 +21,12 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import deleteIcon from '@/images/delete.svg'
 
-const CartItem = ({fullDet, handleRemoveCart}) => {
+const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => {
     const [size, setSize] = useState(null);
     const handleOpen = (value) => setSize(value);
     const [isMobile, setIsMobile] = useState(false);
-    const [counter,setCounter] = useState(1);
-    const handleCounter = async (e)=>{
-      var count = 0;
-      if(e.target.dataset.action == "inc"){
-        count = counter + 1;
-      }
-      if(e.target.dataset.action == "dec"){
-        if(counter > 1){
-          count = counter - 1;
-        }
-      }
-      const res = await api.post('updateqty', {cartCount:count});
-      if(res.data){
-        setCounter(count);
-      }
-    }
+    
+   
     useEffect(() => {
         const handleResize = () => {
           // Check the window width and set the class accordingly
@@ -63,13 +49,20 @@ const CartItem = ({fullDet, handleRemoveCart}) => {
     <> 
         <div className='cart-item flex gap-5'>
             <div className="cart-img">
-                {/* <Image src='' alt="" /> */}
+                <Image src={data?.productdetails.image} width={150} height={150} alt="" />
             </div>
             <div className="cart-det flex flex-col justify-between items-end w-full">
                 <div className='flex items-start justify-between w-full'>
                     <div>
-                        <h3>Vincent Chase Online</h3>
-                        <p>Size: Medium • Classic Acetate</p>
+                        <h3>{data?.productdetails.product_name}</h3>
+                        <p>
+                          {
+                            data?.productdetails.attributes &&
+                            data?.productdetails.attributes?.map((item, index)=>(
+                              <>{item.key}: {item.value} • </>
+                            ))
+                          }
+                        </p>
                         {
                             fullDet &&
                             <>
@@ -78,11 +71,11 @@ const CartItem = ({fullDet, handleRemoveCart}) => {
                                 </button>
                             </>
                         }
-                        <QtyCounter counter={counter} handleCounter={handleCounter} />
+                        <QtyCounter counter={data?.qty} handleCounter={handleCounter} cartId={data?.cartid} />
                     </div>
                     <div className='flex flex-col items-end h-full justify-between'>
-                        <p className="price">7000</p>
-                        <button className='delete-btn' onClick={(e)=>handleRemoveCart(id)}>
+                        <p className="price">{data?.subtotal}</p>
+                        <button className='delete-btn' type="button" onClick={(e)=>handleRemoveCart(data?.cartid)}>
                             <span>Remove</span>
                             <Image src={deleteIcon} alt="" />
                         </button>

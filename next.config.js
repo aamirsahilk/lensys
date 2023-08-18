@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: 'localhost',
+  //       destination: 'https://techmatrick.com/lensys',
+  //     },
+  //   ]
+  // },
   images: {
     remotePatterns: [
       {

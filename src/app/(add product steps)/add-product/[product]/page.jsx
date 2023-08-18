@@ -122,12 +122,7 @@ export default function AddProductSteps({params, searchParams}) {
     });
     formData.append('colorid', color);
     formData.append('productid', pid);
-    const res = await api.post('addtocart', formData, {
-       headers: {
-            'Authorization': `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIxNyIsImVtYWlsIjoidGFoYS5oNTM2M0BnbWFpbC5jb20iLCJBUElfVElNRSI6MTY5MTczNDk4NX0.JYJAoL4yCPdAfqpcKJloXlQrOeCbgX47m77IO_jaehE`
-            // 'Content-Type': 'application/json',
-        }
-    });
+    const res = await api.post('addtocart', formData);
     const data = res.data;
     if(data.status){
       push('/cart');

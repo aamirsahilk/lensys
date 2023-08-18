@@ -9,6 +9,8 @@ import { Providers } from '@/store/provider'
 import 'react-toastify/dist/ReactToastify.css';
 import Favicon from '../../public/images/lensys-favicon.png'
 
+import LayoutProvider from './LayoutProvider'
+
 
 const inter = Inter({ subsets: ['latin'] })
 const open  = Open_Sans({ subsets: ['latin'] })
@@ -20,13 +22,14 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  
   return (
     <html lang="en">
       <body className={open.className} data-body="dc">
         <Providers>
-          <Header />
-          {children}
-          <Footer />
+          <LayoutProvider>
+            {children}
+          </LayoutProvider >
         </Providers>
       </body>
     </html>

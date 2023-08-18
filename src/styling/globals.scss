@@ -104,6 +104,12 @@ p.para{
     }
   }
 
+  &.center{
+    margin: 0 auto;
+    display: flex;
+    max-width: max-content;
+  }
+
   &.sm{
     padding: 0.5em 1em !important;
 

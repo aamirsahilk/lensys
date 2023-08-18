@@ -16,7 +16,10 @@ import api from '@/api/api'
 
 const ProductInner = ({params}) => {
 
-
+  // 1 = eye
+  // 2 = sunglass
+  // 3 = colorcontact
+  // 4 = corrective
   const productSlug = params.product;
   const [product, setProduct] = useState({});
   const [colorId, setColorId] = useState(null);
@@ -33,8 +36,8 @@ const ProductInner = ({params}) => {
     const data = response.data;
     setProduct({...product, ...data});
   }
-  const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras} = product;
-  console.log("product", product);
+  const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras, categoryid} = product;
+  
   useEffect(() => {
     fetchProduct();
   }, [])
@@ -92,7 +95,10 @@ const ProductInner = ({params}) => {
                   </div>
                 }
                 <CheckPincode />
-                <ContactLensPowerSelect />
+                {
+                  categoryid == 4 ? <ContactLensPowerSelect /> : ''
+                }
+                
                 <div className="flex flex-wrap gap-2 mt-8">
                   <CustomButton secondary={true} big={true}>ONLY FRAME</CustomButton>
                   <Link href={`add-product/${slug}?pid=${id}&color=${colorId}`} className='main-btn big'>
