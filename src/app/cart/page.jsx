@@ -179,10 +179,16 @@ const Cart = () => {
 
     useEffect(() => {
         fetchCart()
+    },[]);
+
+    useEffect(() => {
+        getStates()
+    },[]);
+
+    useEffect(() => {
         setDomLoaded(true)
-        getStates();
         fetchCoupons();
-    }, [])
+    },[])
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required('Email is required'),

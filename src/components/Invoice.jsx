@@ -30,8 +30,8 @@ const Invoice = () => {
                     </thead>
                     <tbody>
                         {
-                            [...Array(5)].map(item=>(
-                                <tr>
+                            [...Array(5)].map((item, index)=>(
+                                <tr key={index}>
                                     <td className="text-left text-gray-700">Product 1</td>
                                     <td className="text-right text-gray-700">2</td>
                                     <td className="text-right text-gray-700">$100.00</td>

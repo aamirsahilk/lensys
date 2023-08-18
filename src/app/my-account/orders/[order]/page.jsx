@@ -27,7 +27,7 @@ import OrderCard from '@/components/OrderCard';
 
 
 
-const singleOrder = ({params}) => {
+const SingleOrder = ({params}) => {
     const orderId = params.order;
     const [orders, setOrders] = useState([]);
     const [order, setOrder] = useState({});
@@ -41,7 +41,7 @@ const singleOrder = ({params}) => {
 
     useEffect(() => {
         fetchOrder()
-    }, []);
+    },[]);
 
     return (
         <div>
@@ -173,4 +173,4 @@ const singleOrder = ({params}) => {
     )
 }
 
-export default singleOrder
+export default SingleOrder
