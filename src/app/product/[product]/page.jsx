@@ -1,5 +1,5 @@
 'use client'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import ProductInnerMainSlider from '../../../components/ProductInnerMainSlider'
 import SecHeading from '../../../components/SecHeading'
 import CheckPincode from '../../../components/CheckPincode'
@@ -23,25 +23,26 @@ const ProductInner = ({params}) => {
   const productSlug = params.product;
   const [product, setProduct] = useState({});
   const [colorId, setColorId] = useState(null);
-  const fetchProduct = async()=>{
+  const fetchProduct = useCallback(async()=>{
     const response = await api.get(`product/${productSlug}`);
     const data = response.data;
     setProduct(data);
     setColors(data.colors || []);
     setColor(data.colors ? data.colors[0].color_name : '')
     setColorId(data.colors ? data.colors[0].id : '')
-  }
-  const fetchOtherDetails = async()=>{
-    const response = await api.get(`productimages/${colorId}`);
-    const data = response.data;
-    setProduct({...product, ...data});
-  }
+  },[])
+ 
   const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras, categoryid} = product;
   
   useEffect(() => {
     fetchProduct();
-  }, [])
+  }, [fetchProduct])
   useEffect(() => {
+    const fetchOtherDetails = async()=>{
+      const response = await api.get(`productimages/${colorId}`);
+      const data = response.data;
+      setProduct({...product, ...data});
+    }
     if(colorId){
       fetchOtherDetails();
     }

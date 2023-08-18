@@ -1,5 +1,5 @@
 "use client"
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 
 import FilterArea from '@/components/FilterArea'
 import Select from 'react-select'
@@ -12,14 +12,29 @@ import api from '@/api/api'
 const Category = ({params, searchParams}) => {
   const categoryParam = params.product;
   const [products, setProducts] = useState([]);
+  const [filters, setFilters] = useState([]);
 
-  const fetchProducts = async()=>{
+  const fetchProducts = useCallback(async()=>{
     const response = await api.get(`products/${categoryParam}`);
     setProducts(response.data);
-  }
+  },[]);
+
+  const fetchFilters = useCallback(async()=>{
+    const res = await api.get(`filters/${categoryParam}`);
+    const data = res.data;
+    if(data.status){
+      setFilters(data || []);
+    }
+  },[])
+
   useEffect(() => {
     fetchProducts();
-  }, [])
+  }, [fetchProducts])
+
+  // useEffect(() => {
+  //   fetchFilters();
+  // }, [fetchFilters])
+
   const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },

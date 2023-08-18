@@ -154,7 +154,7 @@ const Cart = () => {
             fetchCart();
         }
     }
-    const fetchCart = async () => {
+    const fetchCart = useCallback(async () => {
         const res = await api.get('cartitems')
         // if(res.data.status){
         setCartItems(res.data.cartitems || []);
@@ -162,7 +162,7 @@ const Cart = () => {
         setGrandTotal(res.data.grandtotal)
         dispatch(updateCartCount(res.data.cartcount));
         // }
-    }
+    },[])
 
     const fetchCoupons = async () => {
         const res = await api.get('coupons')
@@ -179,7 +179,7 @@ const Cart = () => {
 
     useEffect(() => {
         fetchCart()
-    },[]);
+    },[fetchCart]);
 
     useEffect(() => {
         getStates()
