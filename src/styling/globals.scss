@@ -93,7 +93,23 @@ p.para{
   padding: 10px 25px;
   border-radius: 100px;
   background: $gr;
-  transition: 0.2s cubic-bezier(0.47, 0, 0.745, 0.715);
+  // transition: 0.2s cubic-bezier(0.47, 0, 0.745, 0.715);
+
+  &.block-btn{
+    display: flex;
+    max-width: 100% !important;
+    width: 100% !important;
+    text-align: center;
+    justify-content: center;
+  }
+
+  &:disabled{
+    background: rgb(124, 124, 124);
+
+    span{
+      color: white;
+    }
+  }
 
   &.white-bordered{
     border: 1px solid white;

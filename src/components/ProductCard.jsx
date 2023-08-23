@@ -48,7 +48,7 @@ const ProductCard = ({ data, ImageProductCard}) => {
                             <h3 className='le_pr-title'>{name?name:'Vincent Chase Online'}</h3>
                             <p className='le_pr-para'>Size: Medium • Classic Acetate</p>
                             <div className="le_pr-price">
-                                <h3>{regular_price?regular_price:'₹999'} <span>+ tax</span></h3>
+                                <h3>₹ {price?price:'₹999'} <span>+ tax</span></h3>
                             </div>
                         </div>
                         <div className="le_pr-offer-strip">

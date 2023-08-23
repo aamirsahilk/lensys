@@ -374,7 +374,7 @@ const Cart = () => {
                                                                 <Accordion open={open} icon={<Icon id={1} open={open ? 1 : 0} />}>
                                                                     <AccordionHeader className='cart-total-btn' onClick={handleOpen}>
                                                                         <h3 className="it-head">
-                                                                            Total: <span>{grandTotal || ''}</span>
+                                                                            Total: <span>₹ {grandTotal || ''}</span>
                                                                         </h3>
                                                                     </AccordionHeader>
                                                                     <AccordionBody>

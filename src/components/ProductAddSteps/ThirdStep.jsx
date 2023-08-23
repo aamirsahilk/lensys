@@ -21,7 +21,7 @@ const ThirdStep = ({id, colorId}) => {
   }
   useEffect(()=>{
     dispatch(updateProductAdd({...productData, prescription: 1}))
-  },[productData,dispatch])
+  },[])
 
   const [tab, setTab] = useState(3);
 

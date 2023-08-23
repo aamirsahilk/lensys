@@ -36,6 +36,10 @@
         .nav-list{
             display: flex;
             align-items: center;
+            
+            @media(min-width: 600px){
+                padding-right: 0.5em;
+            }
 
             li{
 
@@ -44,8 +48,8 @@
                     height: $nav-height;
                     display: inline-block;
                     line-height: $nav-height;
-                    padding: 0px 1.2em;
-                    font-size: 14px;
+                    padding: 0px 0.5em;
+                    font-size: 13px;
                     font-weight: 400;
                     text-transform: uppercase;
                 }
@@ -125,7 +129,7 @@
 
 .header-search-bar-container{
     position: relative;
-    width: 230px;
+    width: 170px;
 
     img{
         position: absolute;
@@ -177,19 +181,20 @@
     }
 
     &:hover{
+        background: $blue;
 
         .mega-menu-wrapper{
             pointer-events: unset;
             opacity: 1;
-            transform: translateX(-10%) translateY(0px);
+            transform: translateX(-50%) translateY(0px);
         }
     }
 }
 .mega-menu-wrapper{
-    position: absolute;
-    left: 0%;
-    transform: translateX(-10%) translateY(15px);
-    top: 90%;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%) translateY(15px);
+    top: 80px;
     z-index: 999;
     min-width: 1024px;
     pointer-events: none;

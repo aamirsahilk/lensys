@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,7 +7,25 @@ import MenIcon from '@/icons/MenIcon'
 import WomenIcon from '@/icons/WomenIcon'
 import KidIcon from '@/icons/KidIcon'
 
-const Megamenu = () => {
+import api from '@/api/api'
+
+const Megamenu = ({subCat}) => {
+    const [filters, setFilters] = useState([]);
+
+    const fetchFilters =async() =>{
+      const res = await api.get('filters/'+subCat);
+      const data = res.data;
+      console.log('filters', data);
+      if(data){
+        setFilters(data)
+      }
+    }
+  
+  
+    useEffect(()=>{
+      fetchFilters();
+    }, [])
+
   return (
     <div className='mega-menu-wrapper'>
         <div className="mega-menu-inner">
@@ -15,7 +33,7 @@ const Megamenu = () => {
                 <h3>SHOP BY GENDER</h3>
                 <ul className="gender-list">
                     <li>
-                        <Link href="/">
+                        <Link href={`products/${subCat}?brands=${'MEN'}`}>
                             <div className="ic">
                                 <MenIcon />
                             </div>
@@ -23,7 +41,7 @@ const Megamenu = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/">
+                        <Link href={`products/${subCat}?brands=${'WOMEN'}`}>
                             <div className="ic">
                                 <WomenIcon />
                             </div>
@@ -31,7 +49,7 @@ const Megamenu = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/">
+                        <Link href={`products/${subCat}?brands=${'KIDS'}`}>
                             <div className="ic">
                                 <KidIcon />
                             </div>
@@ -40,76 +58,63 @@ const Megamenu = () => {
                     </li>
                 </ul>
             </div>
-            <div className="col">
-                <h3>SHOP BY BRAND</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2">
-                    <ul>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/">
-                                <span>FASTRACK</span>
-                            </Link>
-                        </li>
+            {
+                filters.brands &&
+                <div className="col">
+                    <h3>SHOP BY BRAND</h3>
+                    <ul className="grid grid-cols-1 md:grid-cols-2">
+                      
+                            {
+                                filters.brands.length > 0 &&
+                                filters.brands.map((mp, index) => {
+                                    return (
+                                        
+                                        <li key={index}>
+                                            <Link href={`products/${subCat}?brands=${mp.id}`}>
+                                                <span>{mp.name}</span>
+                                            </Link>
+                                        </li>
+                                    
+                                    )
+                                })
+                            }
+                     
+                        {/* <ul>
+                            <li>
+                                <Link href="/">
+                                    <span>FASTRACK</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/">
+                                    <span>FASTRACK</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/">
+                                    <span>FASTRACK</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/">
+                                    <span>FASTRACK</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/">
+                                    <span>FASTRACK</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/">
+                                    <span>FASTRACK</span>
+                                </Link>
+                            </li>
+                        </ul> */}
                     </ul>
                 </div>
-            </div>
-            <div className="col">
+            }
+            {/* <div className="col">
                 <h3>SHOP BY COLOUR</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     <ul>
@@ -177,7 +182,7 @@ const Megamenu = () => {
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> */}
         </div>
     </div>
   )

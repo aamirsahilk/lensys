@@ -38,7 +38,24 @@ const HomeBrands = () => {
                     Brands
                 </SecHeading>
                 <div className="brand-swiper-container">
-                    <Swiper spaceBetween={20}  slidesPerView={4} grid={{rows: 2}}  onSlideChange={() => console.log('slide change')} onSwiper={(swiper) => console.log(swiper)} modules={[Grid]} className='brand-swiper' >
+                    <Swiper spaceBetween={20}  slidesPerView={4} grid={{rows: 2}}  onSlideChange={() => console.log('slide change')} onSwiper={(swiper) => {}} modules={[Grid]} className='brand-swiper' breakpoints={{
+                                    0: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 10,
+                                    },
+                                    640: {
+                                        slidesPerView: 1.5,
+                                        spaceBetween: 10,
+                                    },
+                                    768: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 10,
+                                    },
+                                    1024: {
+                                        slidesPerView: 4,
+                                        spaceBetween: 10,
+                                    },
+                                }} >
                         {
                             logos?.map((logo, index) =>(
                                 <SwiperSlide key={index}>

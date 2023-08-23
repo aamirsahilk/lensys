@@ -37,17 +37,20 @@ const ProductInner = ({params}) => {
   useEffect(() => {
     fetchProduct();
   }, [fetchProduct])
-  
-  useEffect(() => {
-    const fetchOtherDetails = async()=>{
+
+  const fetchOtherDetails = useCallback(async()=>{
+    console.log('colorId', colorId);
+    if(colorId){
       const response = await api.get(`productimages/${colorId}`);
       const data = response.data;
-      setProduct({...product, ...data});
+      setProduct((state)=>{return {...state, ...data}});
     }
-    if(colorId){
-      fetchOtherDetails();
-    }
-  },[colorId,product])
+  },[colorId])
+  
+  useEffect(() => {
+    fetchOtherDetails();
+    
+  },[fetchOtherDetails])
   const [color, setColor] = useState('Japanese Gold')
   const [colors, setColors] = useState([])
 
@@ -82,17 +85,25 @@ const ProductInner = ({params}) => {
                       <div className="flex flex-wrap gap-5 mt-5">
                         {
                           colors?.map((col, index)=>{
+                            // const styles = 
+                            // console.log('colors...', col.color_code.length, styles );
                             return(
-                              <div className='color-selector' key={index}>
+                              <div className='color-selector' key={index}> 
                                 <input type="radio" defaultChecked={col.color_name == colors[0].color_name} value={col.color_name} name="color" data-id={col.id} onChange={ev=>{setColor(ev.target.value);setColorId(ev.target.dataset.id)}} id={`color-${index}`} />
                                 <label htmlFor={`color-${index}`}>
-                                  <span className='color' style={{background: col.color_code}}></span>
+                                  <span className='color' style={
+                                    col.color_code.length === 1 ? 
+                                    {background: col.color_code[0]}:
+                                    {background: `linear-gradient(to left, ${col.color_code[0]} 50%,${col.color_code[1]} 50%)`}
+                                    }></span>
                                   <p>{`${col.color_name}`} </p>
                                 </label>
                               </div>
                             )
                           })
                         }
+
+
                       </div>
                   </div>
                 }

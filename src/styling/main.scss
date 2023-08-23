@@ -31,6 +31,7 @@
     display: flex;
     align-items: stretch;
     gap: 10px;
+    flex-wrap: wrap;
 
     input{
         padding: 12px 20px;
@@ -256,6 +257,7 @@
         &:nth-child(1){
             grid-column: span 2;
             grid-row: span 2;
+            padding-top: 103%;
         }
 
         img{
@@ -264,7 +266,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: coevr;
+            object-fit: cover;
             object-position: center;
         }
     }
@@ -498,6 +500,18 @@
         margin-bottom: 0;
         font-size: 16px;
         font-weight: 500;
+    }
+
+    &.center{
+        margin: 0 auto;
+        max-width: max-content;
+        display: block;
+    }
+
+    &.error{
+        background: rgb(255, 240, 240);
+        color: rgb(185, 44, 34);
+        border: 1px solid rgb(185, 44, 34);
     }
 
     &.suc{
@@ -1463,7 +1477,9 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
+    cursor: pointer;
     gap: 20px;
+    max-width: max-content;
     transition: 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
     &:hover{
@@ -1644,7 +1660,12 @@
             outline: none !important;
             transition: 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
-            &:focus{
+            &:read-only{
+                background: #e9e9e9;
+                cursor: not-allowed;
+            }
+
+            &:not(:read-only):focus{
                 border: 1px solid var(--blue, #00A0E3);
                 background: #FFF;
                 box-shadow: 0px 0px 8px 0px rgba($color: #00A0E3, $alpha: 0.15);
@@ -1718,6 +1739,7 @@
         border-radius: 7px;
         border: 1px solid var(--error, #F2254A);
         padding: 7px 10px;
+        min-width: max-content;
         max-width: max-content;
 
         span{
@@ -2051,6 +2073,14 @@
         font-weight: 500;
         color: #f22525;
     }
+
+    &.success{
+        border: 1px solid #0ca642;
+
+        span{
+            color: #0ca642;
+        }
+    }
 }
 .status{
     padding: 5px 10px;
@@ -2123,4 +2153,78 @@
         font-weight: 500;
         color: #a47e1b;
     }
+}
+.skeleton-box {
+    position: relative;
+    overflow: hidden;
+    background-color: #e2e8f0;
+  
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-100%);
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.5) 60%,
+        rgba(255, 255, 255, 0)
+      );
+      animation: shimmer 3s infinite;
+      content: '';
+    }
+  }
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  .forgot-pass-btn {
+    text-align: right;
+    display: block;
+    margin-left: auto;
+    max-width: max-content;
+    margin-top: 7px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #848484;
+  }
+  .selected-file{
+    border-radius: 8px;
+    padding: 1.1em 1.3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f2f2f2;
+    border: 1px solid rgba($color: #000000, $alpha: .15);
+
+    &.center{
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    p{
+        margin-bottom: 0;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    button{
+        background: transparent;
+        outline: none;
+        border: none;
+
+        svg{
+            fill: rgb(170, 32, 32);
+        }
+    }
+  }
+
+input.error{
+    border: 1px solid rgb(200, 17, 17) !important;
+    background: rgba(200, 17, 17, 0.05) !important;
+    box-shadow: 0px 0px 0px 5px rgba(200, 17, 17, 0.25) !important;
 }

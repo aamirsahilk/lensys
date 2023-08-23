@@ -74,7 +74,7 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
                         <QtyCounter counter={data?.qty} handleCounter={handleCounter} cartId={data?.cartid} />
                     </div>
                     <div className='flex flex-col items-end h-full justify-between'>
-                        <p className="price">{data?.subtotal}</p>
+                        <p className="price">{'₹ '+data?.subtotal}</p>
                         <button className='delete-btn' type="button" onClick={(e)=>handleRemoveCart(data?.cartid)}>
                             <span>Remove</span>
                             <Image src={deleteIcon} alt="" />

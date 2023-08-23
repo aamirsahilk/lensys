@@ -10,50 +10,37 @@ import api from '@/api/api'
 
 import ProductCardSkeleton from '@/components/skeleton/ProductCardSkeleton'
 
+import { useRouter, usePathname } from 'next/navigation'
+
 
 const Category = ({params, searchParams}) => {
   const categoryParam = params.product;
+  const searchParam = searchParams;
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterQuery, setFilterQuery] = useState({});
+  const router = useRouter();
+  const pathname = usePathname();
 
   const fetchProducts = useCallback(async(pr)=>{
-    let paramString = '';
-    if(Object.entries(filterQuery).length != 0){
-      for (const key in filterQuery) {
-        if (filterQuery.hasOwnProperty(key)) {
-          paramString += `${key}=${filterQuery[key]}&`;
-        }
-      }
-    }
-    const response = await api.get(`products/${categoryParam}${paramString!=''&&'?'+paramString}`);
+    const paramString = convertObjtoString(searchParam);
+    const response = await api.get(`products/${categoryParam}${'?'+paramString}`);
     setProducts(response.data);
     setTimeout(()=>{
       setLoading(false);
     },1500)
-  },[categoryParam,filterQuery]);
-
-  const fetchFilters = useCallback(async()=>{
-    const res = await api.get(`filters/${categoryParam}`);
-    const data = res.data;
-    if(data.status){
-      setFilters(data || []);
-    }
-  },[categoryParam])
+  },[categoryParam, searchParam]);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts])
 
-  // useEffect(() => {
-  //   fetchFilters();
-  // }, [fetchFilters])
-
   const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
+    { value: 'a-z', label: 'A-Z' },
+    { value: 'z-a', label: 'Z-A' },
+    { value: 'l-h', label: 'Price low to high' },
+    { value: 'h-l', label: 'Price high to low' }
   ]
   
   const colourStyles = {
@@ -69,43 +56,71 @@ const Category = ({params, searchParams}) => {
     },
   };
 
+  const convertObjtoString = (mainObj)=>{
+    let paramString = '';
+    if(Object.entries(mainObj).length != 0){
+      for (const key in mainObj) {
+        if (mainObj.hasOwnProperty(key)) {
+          paramString += `${key}=${mainObj[key]}&`;
+        }
+      }
+    }
+    return paramString;
+  }
+
+  // useEffect(()=>{
+    
+  //   console.log('useEffect filter');
+  // },[filterQuery])
+
   const handleFilter = (e) =>{
     // console.log("filters", filterQuery, e.target.value, e.target.name);
     const vl = e.target.value;
     const name = e.target.name;
     const newObj = {[name]: vl};
-    const mainObj = {...filterQuery, ...newObj}
-    setFilterQuery(mainObj);
+    const mainObj = {...searchParam, ...newObj}
+    router.push(`${pathname}?${convertObjtoString(mainObj)}`);
   }
 
-  useEffect(() =>{
-    console.log('filtersQuery', filterQuery);
-  }, [filterQuery])
+  const handleClearAll = (resetForm) =>{
+    router.push(`${pathname}?${''}`);
+    // resetForm();
+  }
 
+  const handleSelect = (selectedvalue) =>{
+    const newObj = {sortbyname: selectedvalue.value};
+    const mainObj = {...searchParam, ...newObj}
+    router.push(`${pathname}?${convertObjtoString(mainObj)}`);
+  }
 
   return (
     <main className='le_archive-page py-5'>
       <div className="relative grid grid-cols-1 lg:grid-cols-5 ">
         <div className="relative pl-5">
-          <FilterArea handleFilter={handleFilter} categoryParam={categoryParam} />
+          <FilterArea handleFilter={handleFilter} categoryParam={categoryParam} handleClearAll={handleClearAll} />
         </div>
         <div className="relative lg:col-span-4 px-5">
           <div className="archive-pr-wrapper">
-            <h3 className='searched-text'>Eyeglasses</h3>
+            <div className="flex items-center w-full justify-between">
+              <h3 className='searched-text'>Eyeglasses</h3>
+              <div>
+           
+                <Select options={options} onChange={handleSelect} styles={colourStyles} />
+              </div>
+            </div>
             <div className="flt-ot-bar flex items-center justify-between flex-wrap gap-5">
               <div className="flex items-center gap-3 flex-wrap">
-                <Select options={options} styles={colourStyles} />
-                <Select options={options} styles={colourStyles} />
-                <Select options={options} styles={colourStyles} />
+                
+                
               </div>
-              <div className="flex items-center gap-3 flex-wrap">
+              {/* <div className="flex items-center gap-3 flex-wrap">
                 <Select options={options} styles={colourStyles} />
-              </div>
+              </div> */}
             </div>
             <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
               {
                 loading ?
-                [...Array(6)].map((item, index)=>(
+                [...Array(8)].map((item, index)=>(
                   <ProductCardSkeleton key={index} />
                 )):
                 products.length? products.map((item,index)=>{

@@ -15,7 +15,24 @@ const ProductImageSlider = () => {
     return (
         <div className='le_pr-image-swiper'>
             
-            <Swiper navigation={{prevEl: navigationPrevRef.current,nextEl: navigationNextRef.current,}} spaceBetween={15} slidesPerView={4} onSlideChange={() => console.log('slide change')} modules={[Navigation]} className='mt-14 pb-5' >
+            <Swiper navigation={{prevEl: navigationPrevRef.current,nextEl: navigationNextRef.current,}} spaceBetween={15} slidesPerView={4} onSlideChange={() => console.log('slide change')} modules={[Navigation]} className='mt-14 pb-5' breakpoints={{
+                                    0: {
+                                        slidesPerView: 1,
+                                        spaceBetween: 10,
+                                    },
+                                    640: {
+                                        slidesPerView: 1.5,
+                                        spaceBetween: 10,
+                                    },
+                                    768: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 10,
+                                    },
+                                    1024: {
+                                        slidesPerView: 4,
+                                        spaceBetween: 10,
+                                    },
+                                }}>
                 {
                     [...Array(8)].map((item,index)=>(
                         <SwiperSlide key={index}>

@@ -82,6 +82,17 @@
     }
 }
 @media(max-width:600px){
+    .le_offer-grid{
+        grid-template-columns: 1fr;
+
+        >*{
+            grid-column: span 1 !important;
+
+            &:first-child{
+                grid-row: span 1 !important; 
+            }
+        }
+    }
     .le_pr-inner-main-slider .swiper{
         height: auto;
         padding-bottom: 3px;

@@ -138,14 +138,16 @@ const HeaderLoginArea = () => {
                 </div>
                 <List className="p-0">
                   <Link href="#" className="text-initial">
-                    <ListItem>
-                      <ListItemPrefix>
-                        <InsertEmoticonIcon />
-                      </ListItemPrefix>
-                      My Profile
-                    </ListItem>
+                    <Link href="my-account">
+                      <ListItem>
+                        <ListItemPrefix>
+                          <InsertEmoticonIcon />
+                        </ListItemPrefix>
+                        My Profile
+                      </ListItem>
+                    </Link>
                   </Link>
-                  <Link href="#" className="text-initial">
+                  <Link href="my-account/orders" className="text-initial">
                     <ListItem>
                       <ListItemPrefix>
                         <RedeemIcon />

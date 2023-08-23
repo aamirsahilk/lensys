@@ -13,9 +13,22 @@ import SelectDrop from '@/images/select-drop.svg'
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import CloseIcon from '@mui/icons-material/Close';
 
+import api from '@/api/api'
 
 
 const Header = () => {
+
+    const [categories, setCatagories] = useState([])
+ 
+    const fetchCategories = async() =>{
+        const response = await api.get('categories');
+        setCatagories(response.data)
+    }
+
+    useEffect(() =>{
+        fetchCategories();
+    },[])
+
     useEffect(() => {
         window.addEventListener('scroll', isSticky);
         return () => {
@@ -45,19 +58,32 @@ const Header = () => {
                 </div>
                 <div className="r-part">
                     <ul className="nav-list">
-                        <li className='has-mega-menu'>
+                        {   
+                            categories.length > 0 &&
+                            categories?.map((cat,index)=>(
+                                <li className='has-mega-menu' key={index}>
+                                    <Link href={'products/'+cat.id}>
+                                        <span>{cat.name}</span>
+                                        <Image src={SelectDrop} alt="" width={20} height={20} />
+                                    </Link>
+                                    <Megamenu subCat={cat.id} />
+                                </li>
+                            ))
+                        }
+                        {/* <li className='has-mega-menu'>
                             <Link href="">
                                 <span>Eyeglasses</span>
                                 <Image src={SelectDrop} alt="" width={20} height={20} />
                             </Link>
                             <Megamenu />
-                        </li>
+                        </li> */}
                         <li>
                             <Link href="">
                                 About
                             </Link>
                         </li>
-                        <li>
+                        
+                        {/* <li>
                             <Link href="">
                                 Eyeglasses
                             </Link>
@@ -66,12 +92,7 @@ const Header = () => {
                             <Link href="">
                                 Eyeglasses
                             </Link>
-                        </li>
-                        <li>
-                            <Link href="">
-                                Eyeglasses
-                            </Link>
-                        </li>
+                        </li> */}
                     </ul>
                     <HeaderSearchBar />
                     <ul className="ot-list">

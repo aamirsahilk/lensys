@@ -76,7 +76,7 @@ const SingleOrder = ({params}) => {
                                             </h3>
                                             {
                                                 orders?.map((item,index)=>(
-                                                    <OrderCard key={index} data={item} />
+                                                    <OrderCard key={index} data={item} orderId={orderId} cartId={item.cartid} fetchOrder={fetchOrder} />
                                                 ))
                                             }
                                         </div>  
@@ -119,7 +119,7 @@ const SingleOrder = ({params}) => {
                                             </table>
 
                                             <h3 className="heading sm mt-5 mb-3">Payment Details</h3>
-                                            <table className="c-table">
+                                            <table className="c-table mb-5">
                                                 <tbody>
                                                     <tr>
                                                         <td>
@@ -161,6 +161,9 @@ const SingleOrder = ({params}) => {
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <button className='main-btn block-btn dark'>
+                                                <span>Download Invoice</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </CardBody>
