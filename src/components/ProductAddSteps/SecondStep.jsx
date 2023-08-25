@@ -17,7 +17,7 @@ const SecondStep = ({id, colorId}) => {
     const data = res.data;
     setLensPackage(data)
     console.log("data", data);
-  },[])
+  },[productData])
   useEffect(()=>{
     fetchLensprice();
   },[fetchLensprice])

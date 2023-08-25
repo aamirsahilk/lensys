@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,19 +12,19 @@ import api from '@/api/api'
 const Megamenu = ({subCat}) => {
     const [filters, setFilters] = useState([]);
 
-    const fetchFilters =async() =>{
+    const fetchFilters =useCallback(async() =>{
       const res = await api.get('filters/'+subCat);
       const data = res.data;
       console.log('filters', data);
       if(data){
         setFilters(data)
       }
-    }
+    }, [subCat])
   
   
     useEffect(()=>{
       fetchFilters();
-    }, [])
+    }, [fetchFilters])
 
   return (
     <div className='mega-menu-wrapper'>

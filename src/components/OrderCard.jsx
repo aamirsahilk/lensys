@@ -170,7 +170,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                 setInitValues(data.prescription.jsondta)
             }
         }
-      }, [data])
+      }, [data, formik])
 
     const formik = useFormik({
         enableReinitialize: true,
