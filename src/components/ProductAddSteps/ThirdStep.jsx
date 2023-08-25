@@ -21,6 +21,7 @@ const ThirdStep = ({id, colorId}) => {
   }
   useEffect(()=>{
     dispatch(updateProductAdd({...productData, prescription: 1}))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   const [tab, setTab] = useState(3);

@@ -162,6 +162,7 @@ const Cart = () => {
         setGrandTotal(res.data.grandtotal)
         dispatch(updateCartCount(res.data.cartcount));
         // }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const fetchCoupons = async () => {
