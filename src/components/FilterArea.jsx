@@ -46,6 +46,7 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
   const current = new URLSearchParams(Array.from(searchParams.entries()));
   useEffect(() => {
     console.log('param', current.toString());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchFilters = useCallback(async() =>{

@@ -211,7 +211,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                 {
                                     data?.productdetails.attributes &&
                                     data?.productdetails.attributes?.map((item, index) => (
-                                        <>{item.key}: {item.value} • </>
+                                        <span key={index}>{item.key}: {item.value} • </span>
                                     ))
                                 }
                             </p>
@@ -378,7 +378,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                         </div>
                                                         {
                                                             [{name:'d',label:'D.V'},{name:'n',label:'N.V'}].map((item, i)=>(
-                                                                <div className="op-row">
+                                                                <div className="op-row" key={i}>
                                                                     <div className="op-cell">
                                                                         <p>{item.label}</p>
                                                                     </div>
@@ -422,7 +422,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                         </div>
                                                         {
                                                             [{name:'d',label:'D.V'},{name:'n',label:'N.V'}].map((item, i)=>(
-                                                                <div className="op-row">
+                                                                <div className="op-row" key={i}>
                                                                     <div className="op-cell">
                                                                         <p>{item.label}</p>
                                                                     </div>
