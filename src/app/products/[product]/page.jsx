@@ -102,7 +102,7 @@ const Category = ({params, searchParams}) => {
         <div className="relative lg:col-span-4 px-5">
           <div className="archive-pr-wrapper">
             <div className="flex items-center w-full justify-between">
-              <h3 className='searched-text'>Eyeglasses</h3>
+              <h3 className='searched-text mb-0'>{categoryParam}</h3>
               <div>
            
                 <Select options={options} onChange={handleSelect} styles={colourStyles} />
@@ -117,21 +117,29 @@ const Category = ({params, searchParams}) => {
                 <Select options={options} styles={colourStyles} />
               </div> */}
             </div>
-            <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
               {
                 loading ?
-                [...Array(8)].map((item, index)=>(
-                  <ProductCardSkeleton key={index} />
-                )):
-                products.length? products.map((item,index)=>{
-                  return(
-                    <div className="relative" key={index}>
-                      <ProductCard data={item} />
-                    </div>
-                  )
-                }):<NoResult />
+                <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
+                  {
+                    [...Array(8)].map((item, index)=>(
+                      <ProductCardSkeleton key={index} />
+                    ))
+                  }
+                </div>:
+                products.length?
+                <div className="relative grid grid-cols-1 lg:grid-cols-4 gap-5 mt-5">
+                  {
+                     products.map((item,index)=>{
+                      return(
+                        <div className="relative" key={index}>
+                          <ProductCard data={item} />
+                        </div>
+                      )
+                    })
+                  }
+                </div>:<div className='pt-5'><NoResult message={searchParam.search ? `No result found for keyword "${searchParam.search}"`:'No results found try diffrent filters'} /></div>
+                
               }
-            </div>
           </div>
         </div>
       </div>

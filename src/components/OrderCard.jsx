@@ -547,7 +547,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
             </Dialog>
 
 
-            <Dialog
+            {/* <Dialog
                 open={
                 size2 === "xs" ||
                 size2 === "sm" ||
@@ -559,12 +559,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                 size={isMobile ? 'xl' : invoiceModal || "md"}
                 handler={handleInvoiceModal}
             >
-                {/* <DialogHeader>
-                            <div className="flex items-center justify-between w-full gap-5 flex-wrap">
-                                <h2 className='head sm'>Invoice</h2>
-                            
-                            </div>
-                        </DialogHeader> */}
+                
                 <DialogBody className='h-[80vh] overflow-scroll rounded-xl' divider >
                 <button className='modal-close-btn' onClick={() => handleInvoiceModal("close")}>
                     <CloseIcon />
@@ -585,7 +580,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                     </button>
                 </div>
                 </DialogFooter>
-            </Dialog>
+            </Dialog> */}
         </>
     )
 }
