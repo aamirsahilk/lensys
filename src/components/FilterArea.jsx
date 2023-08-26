@@ -92,7 +92,7 @@ const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawer
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [closeDrawerRight]);
 
   const [openAcc1, setOpenAcc1] = useState(true);
   const [openAcc2, setOpenAcc2] = useState(true);

@@ -24,10 +24,11 @@ const HeaderSearchBar = () => {
     }
     return obj;
   };
+  const searchParamsObject = searchParamsToObject();
   
   useEffect(() => {
-    const searchParamsObject = searchParamsToObject();
     searchParamsObject.search && setSearchQuery(searchParamsObject.search)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
