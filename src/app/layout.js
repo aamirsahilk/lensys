@@ -1,16 +1,8 @@
-'use client'
+
 import '../styling/main.scss'
 import '../styling/res.scss'
 import { Inter } from 'next/font/google'
 import { Open_Sans } from 'next/font/google'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-
-import api from '@/api/api'
-
-import React, {useState, useEffect, useCallback} from 'react'
-
-
 import { Providers } from '@/store/provider'
 import 'react-toastify/dist/ReactToastify.css';
 import Favicon from '../../public/images/lensys-favicon.png'
