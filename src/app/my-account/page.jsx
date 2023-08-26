@@ -34,7 +34,7 @@ const MyAccount = () => {
   const user = useSelector(state=>state.userData.value);
   const dispatch = useDispatch();
   
-  const userData = user.profile;
+  const userData = user;
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('First Name is required'),
