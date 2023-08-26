@@ -126,11 +126,7 @@ const Orders = () => {
   return (
     <>
       <Script id="razorpay-checkout-js" src="https://checkout.razorpay.com/v1/checkout.js" />
-      <div className='my-acc-page md:grid md:grid-cols-12'>
-        <div className="md:col-span-3">
-          <Sidebar />
-        </div>
-        <div className="md:col-span-9">
+      
           <main className='myacc-container'>
             <div className="acc-content-wrap my-acc-page-content p-5">
               <Card className='mb-5'>
@@ -243,9 +239,6 @@ const Orders = () => {
               </Card>
             </div>
           </main>
-        </div>
-      </div>
-
 
       <Dialog
         open={

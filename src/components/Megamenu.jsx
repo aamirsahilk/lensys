@@ -9,13 +9,12 @@ import KidIcon from '@/icons/KidIcon'
 
 import api from '@/api/api'
 
-const Megamenu = ({subCat}) => {
+const Megamenu = ({subCat,setMenuOpen}) => {
     const [filters, setFilters] = useState([]);
 
     const fetchFilters =useCallback(async() =>{
       const res = await api.get('filters/'+subCat);
       const data = res.data;
-      console.log('filters', data);
       if(data){
         setFilters(data)
       }
@@ -33,7 +32,7 @@ const Megamenu = ({subCat}) => {
                 <h3>SHOP BY GENDER</h3>
                 <ul className="gender-list">
                     <li>
-                        <Link href={`products/${subCat}?brands=${'MEN'}`}>
+                        <Link href={`products/${subCat}?brands=${'MEN'}`} onClick={()=>setMenuOpen(false)}>
                             <div className="ic">
                                 <MenIcon />
                             </div>
@@ -41,7 +40,7 @@ const Megamenu = ({subCat}) => {
                         </Link>
                     </li>
                     <li>
-                        <Link href={`products/${subCat}?brands=${'WOMEN'}`}>
+                        <Link href={`products/${subCat}?brands=${'WOMEN'}`} onClick={()=>setMenuOpen(false)}>
                             <div className="ic">
                                 <WomenIcon />
                             </div>
@@ -49,7 +48,7 @@ const Megamenu = ({subCat}) => {
                         </Link>
                     </li>
                     <li>
-                        <Link href={`products/${subCat}?brands=${'KIDS'}`}>
+                        <Link href={`products/${subCat}?brands=${'KIDS'}`} onClick={()=>setMenuOpen(false)}>
                             <div className="ic">
                                 <KidIcon />
                             </div>
@@ -69,7 +68,7 @@ const Megamenu = ({subCat}) => {
                                 filters.brands.map((mp, index) => {
                                     return (
                                         
-                                        <li key={index}>
+                                        <li key={index} onClick={()=>setMenuOpen(false)}>
                                             <Link href={`products/${subCat}?brands=${mp.id}`}>
                                                 <span>{mp.name}</span>
                                             </Link>

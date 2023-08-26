@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import pr from '@/images/pr1.png'
 
 import 'swiper/css';
+import api from '@/api/api';
 
 const ProductCard = ({ data, ImageProductCard}) => {
     const userData = useSelector((state)=> state.userData.value);
@@ -16,13 +17,26 @@ const ProductCard = ({ data, ImageProductCard}) => {
     const [liked , setLiked] = useState(false);
     const hasOffer = true;
     data = data || {}
-    const {name,price,regular_price,image,alt_text,slug} = data;
+    const {name,price,regular_price,image,alt_text,slug,id,offertag} = data;
+
+    const handleLike = async ()=>{
+        const res = await api.get(`like-product/${id}`);
+        const data = res.data;
+        if(data.status){
+            setLiked(data.liked);
+        }
+    }
+
+    useEffect(()=>{
+        setLiked(data.isliked)
+    },[data])
+
     return (
         
             <article className={`le_pr-main-wrapper ${ImageProductCard?'le_pr-main-img-wrapper':''}`}>
                 {
                     isLoggedIn &&
-                    <Productlikebtn liked={liked} setLiked={setLiked} />
+                    <Productlikebtn liked={liked} handleLike={handleLike} />
                 }
                 <Link href={`product/${slug}`}>
                     <div className="le_pr-image-carousel">
@@ -51,9 +65,12 @@ const ProductCard = ({ data, ImageProductCard}) => {
                                 <h3>₹ {price?price:'₹999'} <span>+ tax</span></h3>
                             </div>
                         </div>
-                        <div className="le_pr-offer-strip">
-                            BUY 1 GET 1 FREE
-                        </div>
+                        {
+                            offertag &&    
+                            <div className="le_pr-offer-strip">
+                                {offertag}
+                            </div>
+                        }
                     </div>
                 </Link>
             </article>

@@ -28,7 +28,7 @@ const HomeBannerArea = ({data}) => {
         {
             loading?
             <div className='p-5'>
-                <div class="animate-pulse flex space-x-4 bg-gray-200 rounded-lg h-[500px]">
+                <div className="animate-pulse flex space-x-4 bg-gray-200 rounded-lg h-[500px]">
                 {/* <div class="rounded-full bg-slate-200 h-10 w-10"></div> */}
                 </div>
             </div>

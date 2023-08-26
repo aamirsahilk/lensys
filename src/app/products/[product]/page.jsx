@@ -19,17 +19,21 @@ const Category = ({params, searchParams}) => {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openRight, setOpenRight] = useState(false);
   const [filterQuery, setFilterQuery] = useState({});
   const router = useRouter();
   const pathname = usePathname();
 
+  const openDrawerRight = () => setOpenRight(true);
+  const closeDrawerRight = () => setOpenRight(false);
   const fetchProducts = useCallback(async(pr)=>{
+    setLoading(true);
     const paramString = convertObjtoString(searchParam);
     const response = await api.get(`products/${categoryParam}${'?'+paramString}`);
     setProducts(response.data);
     setTimeout(()=>{
       setLoading(false);
-    },1500)
+    },500)
   },[categoryParam, searchParam]);
 
   useEffect(() => {
@@ -68,18 +72,17 @@ const Category = ({params, searchParams}) => {
     return paramString;
   }
 
-  // useEffect(()=>{
-    
-  //   console.log('useEffect filter');
-  // },[filterQuery])
-
   const handleFilter = (e) =>{
     // console.log("filters", filterQuery, e.target.value, e.target.name);
-    const vl = e.target.value;
-    const name = e.target.name;
-    const newObj = {[name]: vl};
-    const mainObj = {...searchParam, ...newObj}
-    router.push(`${pathname}?${convertObjtoString(mainObj)}`);
+    if(e){
+      const vl = e.target.value;
+      const name = e.target.name;
+      const newObj = {[name]: vl};
+      const mainObj = {...searchParam, ...newObj}
+      router.push(`${pathname}?${convertObjtoString(mainObj)}`);
+    }else{
+      router.push(`${pathname}?`);
+    }
   }
 
   const handleClearAll = (resetForm) =>{
@@ -87,7 +90,7 @@ const Category = ({params, searchParams}) => {
     // resetForm();
   }
 
-  const handleSelect = (selectedvalue) =>{
+  const handleSelect = (selectedvalue) => {
     const newObj = {sortbyname: selectedvalue.value};
     const mainObj = {...searchParam, ...newObj}
     router.push(`${pathname}?${convertObjtoString(mainObj)}`);
@@ -97,14 +100,13 @@ const Category = ({params, searchParams}) => {
     <main className='le_archive-page py-5'>
       <div className="relative grid grid-cols-1 lg:grid-cols-5 ">
         <div className="relative pl-5">
-          <FilterArea handleFilter={handleFilter} categoryParam={categoryParam} handleClearAll={handleClearAll} />
+          <FilterArea handleFilter={handleFilter} categoryParam={categoryParam} handleClearAll={handleClearAll} filterSearchParam={searchParam} openDrawerRight={openDrawerRight} closeDrawerRight={closeDrawerRight} openRight={openRight} />
         </div>
         <div className="relative lg:col-span-4 px-5">
           <div className="archive-pr-wrapper">
             <div className="flex items-center w-full justify-between">
-              <h3 className='searched-text mb-0'>{categoryParam}</h3>
+              <h3 className='searched-text mb-0' onClick={openDrawerRight}>{categoryParam}</h3>
               <div>
-           
                 <Select options={options} onChange={handleSelect} styles={colourStyles} />
               </div>
             </div>

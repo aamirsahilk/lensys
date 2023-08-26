@@ -6,12 +6,29 @@ import searchIcon from '../../public/images/search.svg';
 import dropicon from '../../public/images/drop-icon.svg';
 import { useRouter } from 'next/navigation';
 
+import { usePathname, useSearchParams } from 'next/navigation'
+
 import api from '@/api/api';
 
 const HeaderSearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCatagories] = useState(null);
   const [selected, setSelected] = useState(null);
+
+  const searchParams = useSearchParams();
+  const current = new URLSearchParams(Array.from(searchParams.entries()));
+  const searchParamsToObject = () => {
+    const obj = {};
+    for (const [key, value] of searchParams) {
+      obj[key] = value;
+    }
+    return obj;
+  };
+  
+  useEffect(() => {
+    const searchParamsObject = searchParamsToObject();
+    searchParamsObject.search && setSearchQuery(searchParamsObject.search)
+  }, [])
 
 
   const fetchCategories = async() =>{
@@ -47,7 +64,7 @@ const HeaderSearchBar = () => {
           </select>
           <Image src={dropicon} alt="" />
         </div>
-        <Image src={searchIcon} width={"50px"} height={"50px"} alt="" />
+        <Image src={searchIcon} className='search-icon' width={"50px"} height={"50px"} alt="" />
         <input type="text" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} placeholder='Search Here...' />
       </form>
     </div>

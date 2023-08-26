@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const accessToken = localStorage.getItem('access_token');
-// console.log("auth", accessToken);
+const accessToken = localStorage.getItem('access_token');
 const api = axios.create({
     baseURL: 'https://techmatrick.com/lensys/',
     // headers: {

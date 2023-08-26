@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Productlikebtn = ({liked, setLiked}) => {
+const Productlikebtn = ({liked, handleLike}) => {
   var cs  = `le_pr-like-btn ${liked?'liked':''}`  
   return (
-    <button className={cs} onClick={()=>setLiked(!liked)}>
+    <button className={cs} onClick={handleLike}>
         <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" fill="none" viewBox="0 0 39 39">
             <g opacity=".65">
                 <circle cx="19.5" cy="19.5" r="19" fill="#fff" fillOpacity=".25" stroke="#000"/>

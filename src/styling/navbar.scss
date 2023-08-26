@@ -52,6 +52,7 @@
                     font-size: 13px;
                     font-weight: 400;
                     text-transform: uppercase;
+                    min-width: max-content;
                 }
             }
         }
@@ -129,13 +130,62 @@
 
 .header-search-bar-container{
     position: relative;
-    width: 170px;
+    width: 100%;
+    max-width: 350px;
+    $w: 120px;
 
-    img{
+    .search-icon{
         position: absolute;
-        left: 15px;
+        right: 15px;
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    .select-wrap{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0.5em;
+        max-width: $w;
+
+        img{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0.8em;
+            width: 12px;
+            filter: invert(100%) brightness(10000%);
+            pointer-events: none;
+        }
+
+        select{
+            background: transparent;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0.5em 1em;
+            padding-right: 2em;
+            color: white;
+            outline: none;
+            border: none;
+            box-shadow: none;
+            width: 100%;
+            border-right: 1px solid rgba(255, 255, 255, 0.31) !important;
+            appearance: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            // display: -webkit-box;
+            // -webkit-line-clamp: 1;
+            //         line-clamp: 1; 
+            // -webkit-box-orient: vertical;
+
+            option{
+                color: $dark !important;
+
+                &:checked{
+                    background: $green;
+                }
+            }
+        }
     }
 
     input{
@@ -145,8 +195,8 @@
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.31);
         border-radius: 100px;
-        padding-left: 50px !important;
-        font-size: 14px;
+        padding-left: $w + 20 !important;
+        font-size: 13px;
         text-transform: uppercase;
         outline: none;
         box-shadow: none;

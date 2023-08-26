@@ -27,6 +27,8 @@ import mailIcon from '../../public/images/go-mail-icon.svg'
 
 import CustomButton from './CustomButton';
 
+import customToast from '@/utils/CusToast';
+
 import LoginForm from './LoginForm';
 
 import SecHeading from './SecHeading';
@@ -41,9 +43,9 @@ const LoginSigup = ({handleOpen}) => {
     const recaptchaRef = useRef();
 
     // toasts
-    const customToast = (text = "toast text", status = "success")=>{
-        toast(text, {...toastOptions,type: status})
-    }
+    // const customToast = (text = "toast text", status = "success")=>{
+    //     toast(text, {...toastOptions,type: status})
+    // }
 
     const data = useSelector((state) => state.login.value);
     const userData = useSelector((state) => state.userData.value);
@@ -115,7 +117,7 @@ const LoginSigup = ({handleOpen}) => {
     return (
         <>
             
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <Tabs id="custom-animation" value={tab} className="lg-tabs">
                 <TabsHeader>
                     <Tab value="login">

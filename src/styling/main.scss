@@ -99,7 +99,8 @@
 .main-banner{
     position: relative;
     width: 100%;
-    min-height: 62vh;
+    height: 62vh;
+    min-height: 430px;
     transition: 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     display: block;
 

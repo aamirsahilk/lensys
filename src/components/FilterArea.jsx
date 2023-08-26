@@ -1,5 +1,8 @@
 import React, { Fragment, useEffect, useState, useCallback } from 'react'
 
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 // icons
 import MenIcon from '../icons/MenIcon'
 import WomenIcon from '../icons/WomenIcon'
@@ -13,13 +16,14 @@ import api from '@/api/api'
 
 import { usePathname, useSearchParams } from 'next/navigation'
 
-// import { Formik, Form, Field, ErrorMess } from 'formik'
-
 
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
+  Drawer,
+  Typography,
+  IconButton
 } from "@material-tailwind/react";
 
 function Icon({ id, open }) {
@@ -38,29 +42,57 @@ function Icon({ id, open }) {
   );
 }
 
-const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
+const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawerRight, closeDrawerRight,openRight }) => {
 
   const [filters, setFilters] = useState([]);
+  const [initValues, setInitValues] = useState({});
+  const [isMobile, setIsMobile] = useState(false)
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: initValues,
+    onSubmit: async (values) => { },
+  });
+
+  useEffect(() => {
+    setInitValues(filterSearchParam)
+  }, [filterSearchParam])
 
   const searchParams = useSearchParams();
   const current = new URLSearchParams(Array.from(searchParams.entries()));
   useEffect(() => {
-    console.log('param', current.toString());
+    console.log('param', current.toString(), filterSearchParam);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const fetchFilters = useCallback(async() =>{
-    const res = await api.get('filters/'+categoryParam);
+  const fetchFilters = useCallback(async () => {
+    const res = await api.get('filters/' + categoryParam);
     const data = res.data;
-    if(data){
+    if (data) {
       setFilters(data)
     }
-  },[categoryParam])
+  }, [categoryParam])
 
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchFilters();
   }, [fetchFilters])
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
+    closeDrawerRight();
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const [openAcc1, setOpenAcc1] = useState(true);
   const [openAcc2, setOpenAcc2] = useState(true);
@@ -68,6 +100,7 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
   const [openAcc4, setOpenAcc4] = useState(true);
   const [openAcc5, setOpenAcc5] = useState(true);
  
+
   const handleOpenAcc1 = () => setOpenAcc1(cur => !cur);
   const handleOpenAcc2 = () => setOpenAcc2(cur => !cur);
   const handleOpenAcc3 = () => setOpenAcc3(cur => !cur);
@@ -92,18 +125,23 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
     "Plastic"
   ]
 
-  const handleReadmore = (e)=>{
+  const handleReadmore = (e) => {
     var all = e.target.parentElement.querySelectorAll('.hidden');
-    all.forEach(function(e){
+    all.forEach(function (e) {
       e.classList.remove('hidden')
     });
     e.target.classList.add('hidden')
   }
 
-  const maxLength = 2;
+  const maxLength = 10;
 
+  const handleClearAll = (e) => {
+    formik.resetForm();
+    handleFilter();
+  }
 
-  return (
+  if(!isMobile){
+    return(
     <aside className='filter-side-bar'>
       <div className="filter-head">
         <h3>Filter</h3>
@@ -119,7 +157,18 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
               <AccordionBody>
                 <div className="im-cus-radio-container">
                   <div className="im-cus-radio">
-                    <input type="radio" name="subcategory" value="MEN" onClick={(e)=>handleFilter(e)} id="men" />
+                    <input
+                    type="radio"
+                    name='subcategory'
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value="MEN"
+                    onClick={(e)=>{
+                      formik.handleChange(e);
+                      handleFilter(e)
+                    }}
+                    id="men"
+                    checked={formik.values.subcategory === 'MEN'} />
                     <label htmlFor="men">
                       <div className="ic">
                         <MenIcon />
@@ -128,7 +177,18 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
                     </label>
                   </div>
                   <div className="im-cus-radio">
-                    <input type="radio" name="subcategory" value="WOMEN" onClick={(e)=>handleFilter(e)} id="women" />
+                  <input
+                    type="radio"
+                    name='subcategory'
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value="WOMEN"
+                    onClick={(e)=>{
+                      formik.handleChange(e);
+                      handleFilter(e)
+                    }}
+                    id="women"
+                    checked={formik.values.subcategory === 'WOMEN'} />
                     <label htmlFor="women">
                       <div className="ic">
                         <WomenIcon />
@@ -137,7 +197,18 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
                     </label>
                   </div>
                   <div className="im-cus-radio">
-                    <input type="radio" name="subcategory" value="KIDS" onClick={(e)=>handleFilter(e)} id="kids" />
+                  <input
+                    type="radio"
+                    name='subcategory'
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value="KIDS"
+                    onClick={(e)=>{
+                      formik.handleChange(e);
+                      handleFilter(e)
+                    }}
+                    id="kids" 
+                    checked={formik.values.subcategory === 'KIDS'}/>
                     <label htmlFor="kids">
                       <div className="ic">
                         <KidIcon />
@@ -149,7 +220,7 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
               </AccordionBody>
             </Accordion>
             {
-              filters.priceranges&&
+              filters.priceranges && filters.priceranges.length > 0 &&
               <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
                 <AccordionHeader onClick={handleOpenAcc2}>
                   <h4>PRICES</h4>
@@ -161,6 +232,18 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
                       filters.priceranges.map((mp, index) => {
                         return (
                           <div className="cus-checkbox-wrapper" key={index}>
+                            <input
+                            type="radio"
+                            name='pricerange'
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={mp.min+'-'+mp.max}
+                            onClick={(e)=>{
+                              formik.handleChange(e);
+                              handleFilter(e)
+                            }}
+                            id={`price-${index}`}
+                            checked={formik.values.pricerange === mp.min+'-'+mp.max} />
                             <input type="radio" value={mp.min+'-'+mp.max} name='pricerange' onClick={(e)=>handleFilter(e)} id={`price-${index}`} />
                             <label htmlFor={`price-${index}`}>
                               <span>{mp.min+'-'+mp.max}</span>
@@ -174,7 +257,7 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
               </Accordion>
             }
             {
-              filters.brands &&
+              filters.brands && filters.brands.length > 0 &&
               <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
                 <AccordionHeader onClick={handleOpenAcc2}>
                   <h4>BRANDS</h4>
@@ -206,7 +289,48 @@ const FilterArea = ({handleFilter, categoryParam, handleClearAll}) => {
         </div>
       </div>
     </aside>
-  )
+    )
+  }else{
+    return (
+      <Drawer
+        placement="right"
+        open={openRight}
+        onClose={closeDrawerRight}
+        className="p-4"
+        size={450}
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <Typography variant="h5" color="blue-gray">
+            Apply Coupon
+          </Typography>
+          <IconButton
+            variant="text"
+            color="blue-gray"
+            onClick={closeDrawerRight}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </IconButton>
+        </div>
+  
+  
+  
+      </Drawer>
+    )
+  }
+
 }
 
 export default FilterArea

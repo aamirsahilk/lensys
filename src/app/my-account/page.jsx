@@ -109,139 +109,131 @@ const MyAccount = () => {
 
   return (
 
-    <div className='my-acc-page md:grid md:grid-cols-12'>
-      <div className="md:col-span-3">
-        <Sidebar />
-      </div>
-      <div className="md:col-span-9">
-        <main className='myacc-container'>
-          <div className="acc-content-wrap my-acc-page-content p-5">
-            <Card className='mb-5'>
-              <CardBody>
-                <ul className="bread-crumbs">
-                  <li>
-                    <h1 className="heading">My Account</h1>
-                  </li>
-                </ul>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardBody>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-14">
-                  <div className="relative">
-                    <h1 className='heading mb-5 sm-grey'>My Details</h1>
-                    <Formik
-                      initialValues={initialValues}
-                      validationSchema={validationSchema}
-                      onSubmit={handleSubmit}
-                      enableReinitialize
-                    >
-                      {({isSubmitting })=>(
-                        <Form className="mt-8 mb-2 w-full max-w-[600px]">
-                          <div className="grid md:grid-cols-12 gap-6">
-                            <div className="md:col-span-6">
-                              <div className="form-group">
-                                <label htmlFor="firstName">First Name</label>
-                                <div className="inp-grp">
-                                  <Field type="text" id="name" name="name" />
-                                </div>
-                                <ErrorMessage name="name" component="div" className="error-message" />
+    
+      <main className='myacc-container'>
+        <div className="acc-content-wrap my-acc-page-content p-5">
+          <Card className='mb-5'>
+            <CardBody>
+              <ul className="bread-crumbs">
+                <li>
+                  <h1 className="heading">My Account</h1>
+                </li>
+              </ul>
+            </CardBody>
+          </Card>
+          <Card>
+            <CardBody>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-14">
+                <div className="relative">
+                  <h1 className='heading mb-5 sm-grey'>My Details</h1>
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                    enableReinitialize
+                  >
+                    {({isSubmitting })=>(
+                      <Form className="mt-8 mb-2 w-full max-w-[600px]">
+                        <div className="grid md:grid-cols-12 gap-6">
+                          <div className="md:col-span-6">
+                            <div className="form-group">
+                              <label htmlFor="firstName">First Name</label>
+                              <div className="inp-grp">
+                                <Field type="text" id="name" name="name" />
                               </div>
-                            </div>
-                            <div className="md:col-span-6">
-                              <div className="form-group">
-                                <label htmlFor="lastName">Last Name</label>
-                                <div className="inp-grp">
-                                  <Field type="text" id="lastname" name="lastname" />
-                                </div>
-                                <ErrorMessage name="lastname" component="div" className="error-message" />
-                              </div>
-                            </div>
-                            <div className="md:col-span-12">
-                              <div className="form-group">
-                                <label htmlFor="phone">Phone</label>
-                                <div className="inp-grp">
-                                  <Field type="text" id="phone" name="phone" readOnly />
-                                </div>
-                                <ErrorMessage name="phone" component="div" className="error-message" />
-                              </div>
-                            </div>
-                            <div className="md:col-span-12">
-                              <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <div className="inp-grp">
-                                  <Field type="email" id="email" name="email" readOnly />
-                                </div>
-                                <ErrorMessage name="email" component="div" className="error-message" />
-                              </div>
-                            </div>
-                            <div className="md:col-span-12">
-                              <button type="submit" className="main-btn dark full mt-5" disabled={isSubmitting}> 
-                                <span>{isSubmitting?'Please Wait...':'Save Details'}</span>
-                              </button>
+                              <ErrorMessage name="name" component="div" className="error-message" />
                             </div>
                           </div>
-                        </Form>
-                      )}
-                    </Formik>
-                  </div>
-                  <div className="relative">
-                    <h1 className='heading mb-5 sm-grey'>Change Password</h1>
-                    <Formik
-                      initialValues={initialValuesForPasswords}
-                      validationSchema={validationSchemaForPasswords}
-                      onSubmit={handleSubmitForPassword}
-                    >
-                      {({resetForm})=>(
-                        <Form className="mt-8 mb-2 w-full max-w-[600px]">
-                          <div className="grid md:grid-cols-12 gap-6">
-                            <div className="md:col-span-12">
-                              <div className="form-group">
-                                <label htmlFor="password">New Password</label>
-                                <div className="inp-grp">
-                                  <div className="pass-input">
-                                    <Field type={passType ? 'password' : 'text'} name="newPassword" />
-                                    <button type="button" className="pass-ico" onClick={() => setPassType((preState) => !preState)}>
-                                      {!passType ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                    </button>
-                                  </div>
-                                </div>
-                                <ErrorMessage name="newPassword" component="div" className="error-message" />
+                          <div className="md:col-span-6">
+                            <div className="form-group">
+                              <label htmlFor="lastName">Last Name</label>
+                              <div className="inp-grp">
+                                <Field type="text" id="lastname" name="lastname" />
                               </div>
-                            </div>
-                            <div className="md:col-span-12">
-                              <div className="form-group">
-                                <label htmlFor="password">Confirm Password</label>
-                                <div className="inp-grp">
-                                  <div className="pass-input">
-                                    <Field type={passType2 ? 'password' : 'text'} name="confirmPassword" />
-                                    <button type="button" className="pass-ico" onClick={() => setPassType2((preState) => !preState)}>
-                                      {!passType2 ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                    </button>
-                                  </div>
-                                </div>
-                                <ErrorMessage name="confirmPassword" component="div" className="error-message" />
-                              </div>
-                            </div>
-                            <div className="md:col-span-12">
-                              <button type="submit" className="main-btn dark full mt-5">
-                                <span>Change Password</span>
-                              </button>
+                              <ErrorMessage name="lastname" component="div" className="error-message" />
                             </div>
                           </div>
-                        </Form>
-                      )}
-                    </Formik>
-                  </div>
+                          <div className="md:col-span-12">
+                            <div className="form-group">
+                              <label htmlFor="phone">Phone</label>
+                              <div className="inp-grp">
+                                <Field type="text" id="phone" name="phone" readOnly />
+                              </div>
+                              <ErrorMessage name="phone" component="div" className="error-message" />
+                            </div>
+                          </div>
+                          <div className="md:col-span-12">
+                            <div className="form-group">
+                              <label htmlFor="email">Email</label>
+                              <div className="inp-grp">
+                                <Field type="email" id="email" name="email" readOnly />
+                              </div>
+                              <ErrorMessage name="email" component="div" className="error-message" />
+                            </div>
+                          </div>
+                          <div className="md:col-span-12">
+                            <button type="submit" className="main-btn dark full mt-5" disabled={isSubmitting}> 
+                              <span>{isSubmitting?'Please Wait...':'Save Details'}</span>
+                            </button>
+                          </div>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
                 </div>
-              </CardBody>
-            </Card>
-          </div>
-        </main>
-      </div>
-    </div>
-
-
+                <div className="relative">
+                  <h1 className='heading mb-5 sm-grey'>Change Password</h1>
+                  <Formik
+                    initialValues={initialValuesForPasswords}
+                    validationSchema={validationSchemaForPasswords}
+                    onSubmit={handleSubmitForPassword}
+                  >
+                    {({resetForm})=>(
+                      <Form className="mt-8 mb-2 w-full max-w-[600px]">
+                        <div className="grid md:grid-cols-12 gap-6">
+                          <div className="md:col-span-12">
+                            <div className="form-group">
+                              <label htmlFor="password">New Password</label>
+                              <div className="inp-grp">
+                                <div className="pass-input">
+                                  <Field type={passType ? 'password' : 'text'} name="newPassword" />
+                                  <button type="button" className="pass-ico" onClick={() => setPassType((preState) => !preState)}>
+                                    {!passType ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                  </button>
+                                </div>
+                              </div>
+                              <ErrorMessage name="newPassword" component="div" className="error-message" />
+                            </div>
+                          </div>
+                          <div className="md:col-span-12">
+                            <div className="form-group">
+                              <label htmlFor="password">Confirm Password</label>
+                              <div className="inp-grp">
+                                <div className="pass-input">
+                                  <Field type={passType2 ? 'password' : 'text'} name="confirmPassword" />
+                                  <button type="button" className="pass-ico" onClick={() => setPassType2((preState) => !preState)}>
+                                    {!passType2 ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                  </button>
+                                </div>
+                              </div>
+                              <ErrorMessage name="confirmPassword" component="div" className="error-message" />
+                            </div>
+                          </div>
+                          <div className="md:col-span-12">
+                            <button type="submit" className="main-btn dark full mt-5">
+                              <span>Change Password</span>
+                            </button>
+                          </div>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
+        </div>
+      </main>
 
   )
 }
