@@ -75,6 +75,7 @@ const Header = () => {
                     localStorage.setItem('access_token', res.data.access_token);
                 }else{
                     dispatch(updateUserData({loggedin:false}))
+                    // eslint-disable-next-line react-hooks/exhaustive-deps
                     customToast('Session expired please try to login again', 'error')
                 }
             }catch (err) {

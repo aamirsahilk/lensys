@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import DashboardSkeleton from "@/components/my-account/DashboardSkeleton"
 
-export default function productStepsLayout({ children }) {
+export default function MyaccountLayout({ children }) {
 
     const userData = useSelector(user=>user.userData.value)
     const isLoggedIn = userData.loggedin;

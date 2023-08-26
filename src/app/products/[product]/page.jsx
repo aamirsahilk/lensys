@@ -25,7 +25,7 @@ const Category = ({params, searchParams}) => {
   const pathname = usePathname();
 
   const openDrawerRight = () => setOpenRight(true);
-  const closeDrawerRight = useCallback(() => setOpenRight(false));
+  const closeDrawerRight = useCallback(() => setOpenRight(false), []);
   const fetchProducts = useCallback(async(pr)=>{
     setLoading(true);
     const paramString = convertObjtoString(searchParam);
