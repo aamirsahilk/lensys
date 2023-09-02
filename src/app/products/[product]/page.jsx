@@ -11,7 +11,7 @@ import api from '@/api/api'
 import ProductCardSkeleton from '@/components/skeleton/ProductCardSkeleton'
 
 import { useRouter, usePathname } from 'next/navigation'
-
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Category = ({params, searchParams}) => {
   const categoryParam = params.product;
@@ -105,9 +105,15 @@ const Category = ({params, searchParams}) => {
         <div className="relative lg:col-span-4 px-5">
           <div className="archive-pr-wrapper">
             <div className="flex items-center w-full justify-between">
-              <h3 className='searched-text mb-0' onClick={openDrawerRight}>{categoryParam}</h3>
+              <h3 className='searched-text mb-0' >{categoryParam}</h3>
               <div>
+                <button className="filter-btn sm:hidden" onClick={openDrawerRight}>
+                  <FilterListIcon />
+                  <span>Filters</span>
+                </button>
+                <div className='hidden sm:block'>
                 <Select options={options} onChange={handleSelect} styles={colourStyles} />
+                </div>
               </div>
             </div>
             <div className="flt-ot-bar flex items-center justify-between flex-wrap gap-5">

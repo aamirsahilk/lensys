@@ -136,7 +136,7 @@ const Cart = () => {
         }
     }
 
-    const handleCounter = async (e, coun, id) => {
+    const handleCounter = async (e, coun, id, isLens) => {
         var count = 0;
         if (e.target.dataset.action == "inc") {
             count = parseInt(coun) + 1;
@@ -147,8 +147,12 @@ const Cart = () => {
             }
         }
         const data = new FormData();
-        data.append('qty', count);
         data.append('cartid', id);
+        if(isLens){
+            data.append('qty2', count);
+        }else{
+            data.append('qty', count);
+        }
         const res = await api.post('updateqty', data);
         if (res.data) {
             fetchCart();

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import searchIcon from '../../public/images/search.svg';
 
 import dropicon from '../../public/images/drop-icon.svg';
+import crosswhite from '../../public/images/crosswhite.svg';
 import { useRouter } from 'next/navigation';
 
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -39,12 +40,15 @@ const HeaderSearchBar = () => {
   }
 
   const router = useRouter();
+
+  const handleRemove = ()=>{
+    setSearchQuery('');
+    router.push(`/products/${selected}`);
+  }
   
   const handleSubmit = (e)=>{
     e.preventDefault();
     router.push(`/products/${selected}?search=${searchQuery}`);
-    // router.push(`/products`);
-    console.log(selected, searchQuery);
   }
 
   useEffect(() =>{
@@ -65,7 +69,15 @@ const HeaderSearchBar = () => {
           </select>
           <Image src={dropicon} alt="" />
         </div>
-        <Image src={searchIcon} className='search-icon' width={"50px"} height={"50px"} alt="" />
+        {
+          searchQuery != '' ?
+          <div className='search-icon' onClick={handleRemove} >
+            <Image src={crosswhite}  width={"50px"} height={"50px"} alt="" />
+          </div>
+          :
+          <Image src={searchIcon} className='search-icon' width={"50px"} height={"50px"} alt="" />
+
+        }
         <input type="text" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} placeholder='Search Here...' />
       </form>
     </div>

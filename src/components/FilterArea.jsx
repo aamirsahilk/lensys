@@ -293,15 +293,15 @@ const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawer
   }else{
     return (
       <Drawer
-        placement="right"
+        placement="bottom"
         open={openRight}
         onClose={closeDrawerRight}
-        className="p-4"
+        className="p-4 filter-sidebar"
         size={450}
       >
         <div className="mb-6 flex items-center justify-between">
           <Typography variant="h5" color="blue-gray">
-            Apply Coupon
+            Filters
           </Typography>
           <IconButton
             variant="text"
@@ -324,7 +324,154 @@ const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawer
             </svg>
           </IconButton>
         </div>
-  
+
+        <aside className='filter-side-bar'>
+          <div className="filter-head pb-5">
+            <h3></h3>
+            <button onClick={handleClearAll}>Clear All</button>
+          </div>
+          <div className="filter-body">
+            <div className="filter-card">
+              <form action="">
+                <Accordion className='cus-acc' open={openAcc1} icon={<Icon  open={openAcc1} />}>
+                  <AccordionHeader onClick={handleOpenAcc1}>
+                    <h4>SHOP FOR</h4>
+                  </AccordionHeader>
+                  <AccordionBody>
+                    <div className="im-cus-radio-container">
+                      <div className="im-cus-radio">
+                        <input
+                        type="radio"
+                        name='subcategory'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value="MEN"
+                        onClick={(e)=>{
+                          formik.handleChange(e);
+                          handleFilter(e)
+                        }}
+                        id="men"
+                        checked={formik.values.subcategory === 'MEN'} />
+                        <label htmlFor="men">
+                          <div className="ic">
+                            <MenIcon />
+                          </div>
+                          <p>MEN</p>
+                        </label>
+                      </div>
+                      <div className="im-cus-radio">
+                      <input
+                        type="radio"
+                        name='subcategory'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value="WOMEN"
+                        onClick={(e)=>{
+                          formik.handleChange(e);
+                          handleFilter(e)
+                        }}
+                        id="women"
+                        checked={formik.values.subcategory === 'WOMEN'} />
+                        <label htmlFor="women">
+                          <div className="ic">
+                            <WomenIcon />
+                          </div>
+                          <p>WOMEN</p>
+                        </label>
+                      </div>
+                      <div className="im-cus-radio">
+                      <input
+                        type="radio"
+                        name='subcategory'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value="KIDS"
+                        onClick={(e)=>{
+                          formik.handleChange(e);
+                          handleFilter(e)
+                        }}
+                        id="kids" 
+                        checked={formik.values.subcategory === 'KIDS'}/>
+                        <label htmlFor="kids">
+                          <div className="ic">
+                            <KidIcon />
+                          </div>
+                          <p>KIDS</p>
+                        </label>
+                      </div>
+                    </div>
+                  </AccordionBody>
+                </Accordion>
+                {
+                  filters.priceranges && filters.priceranges.length > 0 &&
+                  <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
+                    <AccordionHeader onClick={handleOpenAcc2}>
+                      <h4>PRICES</h4>
+                    </AccordionHeader>
+                    <AccordionBody>
+                      <div className="checkbox-container">
+                        {
+                          filters.priceranges.length > 0 &&
+                          filters.priceranges.map((mp, index) => {
+                            return (
+                              <div className="cus-checkbox-wrapper" key={index}>
+                                <input
+                                type="radio"
+                                name='pricerange'
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={mp.min+'-'+mp.max}
+                                onClick={(e)=>{
+                                  formik.handleChange(e);
+                                  handleFilter(e)
+                                }}
+                                id={`price-${index}`}
+                                checked={formik.values.pricerange === mp.min+'-'+mp.max} />
+                                <input type="radio" value={mp.min+'-'+mp.max} name='pricerange' onClick={(e)=>handleFilter(e)} id={`price-${index}`} />
+                                <label htmlFor={`price-${index}`}>
+                                  <span>{mp.min+'-'+mp.max}</span>
+                                </label>
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                    </AccordionBody>
+                  </Accordion>
+                }
+                {
+                  filters.brands && filters.brands.length > 0 &&
+                  <Accordion className='cus-acc' open={openAcc2} icon={<Icon open={openAcc2} />}>
+                    <AccordionHeader onClick={handleOpenAcc2}>
+                      <h4>BRANDS</h4>
+                    </AccordionHeader>
+                    <AccordionBody>
+                      <div className="checkbox-container">
+                        {
+                          filters.brands.length > 0 &&
+                          filters.brands.map((mp, index) => {
+                              return (
+                                  <div className={`cus-checkbox-wrapper ${index+1 > maxLength?"hidden":''}`} key={index}>
+                                    <input type="radio" value={mp.id} onClick={(e)=>handleFilter(e)} name='brands' id={`brand-${index}`} />
+                                    <label htmlFor={`brand-${index}`}>
+                                      <span>{mp.name}</span>
+                                    </label>
+                                  </div>
+                              )
+                          })
+                        }
+                        {
+                          filters.brands &&
+                          filters?.brands.length > maxLength?<button type="button" className='main-btn link-btn mt-2' onClick={(e)=>handleReadmore(e)}><span>+{filters?.brands.length - maxLength} More</span></button>:''
+                        }
+                      </div>
+                    </AccordionBody>
+                  </Accordion>
+                }
+              </form>
+            </div>
+          </div>
+        </aside>
   
   
       </Drawer>

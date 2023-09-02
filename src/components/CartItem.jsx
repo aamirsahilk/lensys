@@ -25,26 +25,28 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
     const [size, setSize] = useState(null);
     const handleOpen = (value) => setSize(value);
     const [isMobile, setIsMobile] = useState(false);
+    const [isLens, setIsLens] = useState(false)
     
-   
     useEffect(() => {
         const handleResize = () => {
-          // Check the window width and set the class accordingly
           if (window.innerWidth < 768) {
             setIsMobile(true);
           } else {
             setIsMobile(false);
           }
         };
-    
-        // Add event listener for window resize
         window.addEventListener('resize', handleResize);
-    
-        // Clean up the event listener on component unmount
         return () => {
           window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(()=>{
+      if(data?.productdetails?.categoryid == 4){
+        setIsLens(true)
+      }
+      // console.log("jdbjkcbd", isLens, data.productdetails);
+    },[data])
   return (
     <> 
         <div className='cart-item flex gap-5'>
@@ -71,7 +73,25 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
                                 </button>
                             </>
                         }
-                        <QtyCounter counter={data?.qty} handleCounter={handleCounter} cartId={data?.cartid} />
+                        <div className="flex items-center gap-2 flex-wrap"> 
+                        {
+                          data?.qty > 0 &&
+                          <div>
+                            {isLens && <label className='mt-2'>Right Eye <b>{data?.powerRight}</b></label>}
+                            {
+                              data?.qty > 0 &&
+                              <QtyCounter counter={data?.qty} handleCounter={handleCounter} cartId={data?.cartid} />
+                            }
+                          </div>
+                        }
+                          {
+                            isLens && data?.qty2 > 0 &&
+                            <div>
+                              <label htmlFor="" className='mt-2'>Left Eye <b>{data?.powerLeft}</b></label>
+                              <QtyCounter isLens={isLens} counter={data?.qty2} handleCounter={handleCounter} cartId={data?.cartid} />
+                            </div>
+                          }
+                        </div>
                     </div>
                     <div className='flex flex-col items-end h-full justify-between'>
                         <p className="price">{'₹ '+data?.subtotal}</p>

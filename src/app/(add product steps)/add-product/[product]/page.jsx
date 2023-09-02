@@ -56,7 +56,6 @@ export default function AddProductSteps({params, searchParams}) {
 
   const productData = useSelector((state)=> state.productData.value );
   const userdata = useSelector((state)=> state.userData.value );
-  console.log("product dara", productData);
 
   const handleNext = () => {
     if(activeStep < steps.length - 1){

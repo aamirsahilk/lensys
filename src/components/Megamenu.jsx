@@ -32,7 +32,7 @@ const Megamenu = ({subCat,setMenuOpen}) => {
                 <h3>SHOP BY GENDER</h3>
                 <ul className="gender-list">
                     <li>
-                        <Link href={`products/${subCat}?brands=${'MEN'}`} onClick={()=>setMenuOpen(false)}>
+                        <Link href={`products/${subCat}?subcategory=${'MEN'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
                             <div className="ic">
                                 <MenIcon />
                             </div>
@@ -40,7 +40,7 @@ const Megamenu = ({subCat,setMenuOpen}) => {
                         </Link>
                     </li>
                     <li>
-                        <Link href={`products/${subCat}?brands=${'WOMEN'}`} onClick={()=>setMenuOpen(false)}>
+                        <Link href={`products/${subCat}?subcategory=${'WOMEN'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
                             <div className="ic">
                                 <WomenIcon />
                             </div>
@@ -48,7 +48,7 @@ const Megamenu = ({subCat,setMenuOpen}) => {
                         </Link>
                     </li>
                     <li>
-                        <Link href={`products/${subCat}?brands=${'KIDS'}`} onClick={()=>setMenuOpen(false)}>
+                        <Link href={`products/${subCat}?subcategory=${'KIDS'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
                             <div className="ic">
                                 <KidIcon />
                             </div>
@@ -68,7 +68,7 @@ const Megamenu = ({subCat,setMenuOpen}) => {
                                 filters.brands.map((mp, index) => {
                                     return (
                                         
-                                        <li key={index} onClick={()=>setMenuOpen(false)}>
+                                        <li key={index} onClick={()=>setMenuOpen && setMenuOpen(false)}>
                                             <Link href={`products/${subCat}?brands=${mp.id}`}>
                                                 <span>{mp.name}</span>
                                             </Link>

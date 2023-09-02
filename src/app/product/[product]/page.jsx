@@ -9,13 +9,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import offerImage from '../../../images/offer-banner.jpg'
 import ProductCard from '../../../components/ProductCard'
+import { useRouter } from 'next/navigation'
 
 import ContactLensPowerSelect from '@/components/ContactLensPowerSelect'
 
 import api from '@/api/api'
 
 const ProductInner = ({params}) => {
-
+  const [isLens, setIsLens] = useState(false);
   // 1 = eye
   // 2 = sunglass
   // 3 = colorcontact
@@ -23,13 +24,14 @@ const ProductInner = ({params}) => {
   const productSlug = params.product;
   const [product, setProduct] = useState({});
   const [colorId, setColorId] = useState(null);
+  const [lensObj, setLensObj] = useState({});
   const fetchProduct = useCallback(async()=>{
     const response = await api.get(`product/${productSlug}`);
     const data = response.data;
     setProduct(p=>data);
-    setColors(data.colors || []);
-    setColor(data.colors ? data.colors[0].color_name : '')
-    setColorId(data.colors ? data.colors[0].id : '')
+    setColors(data?.colors || []);
+    setColor(data?.colors ? data?.colors[0]?.color_name : '')
+    setColorId(data?.colors ? data?.colors[0]?.id : '')
   },[productSlug])
  
   const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras, categoryid} = product;
@@ -38,10 +40,53 @@ const ProductInner = ({params}) => {
     fetchProduct();
   }, [fetchProduct])
 
+  useEffect(() => {
+    if(categoryid == 4 && categoryid == 3){
+      setIsLens(true)
+    }
+  },[categoryid])
+
+  const { push } = useRouter();
+
+  const addToCart = async () => {
+    // return
+    if(categoryid == 4 && categoryid == 3){
+      if(Object.keys(lensObj).length === 0){
+        return
+      }
+      var formData = new FormData();
+      Object.keys(lensObj).forEach((key) => {
+          formData.append(key, lensObj[key]);
+      });
+      formData.append('productid', id);
+      const res = await api.post('addtocart', formData);
+      const data = res.data;
+      if(data.status){
+        push('/cart');
+        console.log("cart", data);
+      }
+    }else{
+      var formData = new FormData();
+      formData.append('productid', id);
+      // if(categoryid != 2){
+      formData.append('colorid', colorId);
+      // }
+      const res = await api.post('addtocart', formData);
+      const data = res.data;
+      if(data.status){
+        push('/cart');
+        console.log("cart", data);
+      }
+    }
+  }
+
+  useEffect(()=>{
+    console.log('lensObj', lensObj);
+  }, [lensObj])
+
   const fetchOtherDetails = useCallback(async()=>{
-    console.log('colorId', colorId);
     if(colorId){
-      const response = await api.get(`productimages/${colorId}`);
+      const response = await api.get(`productimages${colorId ? "/"+colorId : ''}`);
       const data = response.data;
       setProduct((state)=>{return {...state, ...data}});
     }
@@ -77,7 +122,7 @@ const ProductInner = ({params}) => {
                   <p>Delivered in 6-7 operational days</p>
                 </div>
                 {
-                  colors &&
+                  colors.length > 0 &&
                   <div className="color-selector-wrapper mt-5">
                       <p className="para dark">
                         Color <span>{color}</span>
@@ -107,16 +152,24 @@ const ProductInner = ({params}) => {
                       </div>
                   </div>
                 }
-                <CheckPincode />
+                {/* <CheckPincode /> */}
                 {
-                  categoryid == 4 ? <ContactLensPowerSelect /> : ''
+                  isLens ? <ContactLensPowerSelect setLensObj={setLensObj} /> : ''
                 }
                 
                 <div className="flex flex-wrap gap-2 mt-8">
-                  <CustomButton secondary={true} big={true}>ONLY FRAME</CustomButton>
-                  <Link href={`add-product/${slug}?pid=${id}&color=${colorId}`} className='main-btn big'>
-                    <span>SELECT LENSE</span>
-                  </Link>
+                  {
+                    isLens || categoryid == 2 ?
+                    <button onClick={addToCart} className='main-btn big'>
+                      <span>Addd To Cart</span>
+                    </button>:
+                    <>
+                      <button onClick={addToCart} className='main-btn big dark'>ONLY FRAME</button>
+                      <Link href={`add-product/${slug}?pid=${id}&color=${colorId}`} className='main-btn big'>
+                        <span>SELECT LENSE</span>
+                      </Link>
+                    </>
+                  }
                   {/* <CustomButton big={true} headerBtn={true}>SELECT LENSE</CustomButton> */}
                 </div>
                 <div className="relative mt-5">

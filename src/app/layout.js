@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Favicon from '../../public/images/lensys-favicon.png'
 
 import LayoutProvider from './LayoutProvider'
+import ProgressProviders from '@/components/ProgressProviders'
 
 const inter = Inter({ subsets: ['latin'] })
 const open  = Open_Sans({ subsets: ['latin'] })
@@ -26,7 +27,9 @@ export default function RootLayout({ children }) {
       <body className={open.className} data-body="dc">
         <Providers>
           <LayoutProvider>
+            {/* <ProgressProviders> */}
             {children}
+            {/* </ProgressProviders> */}
           </LayoutProvider >
         </Providers>
       </body>
