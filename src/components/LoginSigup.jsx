@@ -38,6 +38,7 @@ const LoginSigup = ({handleOpen}) => {
     const [passType, setPassType] = useState(true);
     const [register, setRegister] = useState({status:false});
     const [tab, setTab] = useState('login');
+    const [loginEr, setLoginEr] = useState('');
     const dispatch = useDispatch();
     const toastOptions = { hideProgressBar: false, autoClose: 2000, type: 'success' };
     const recaptchaRef = useRef();
@@ -94,8 +95,12 @@ const LoginSigup = ({handleOpen}) => {
         });
         try{
             const res = await api.post('login', formData);
-            res.data.status ? customToast('Logged In Successfully') : customToast('Wrong Credentials', 'error')
-            handleOpen('close');
+            if(res.data.status){
+                customToast('Logged In Successfully') 
+                handleOpen('close');
+            }else{
+                setLoginEr('Bad credentials please try again')
+            }
             if(res.data.status){
                 dispatch(updateUserData({...res.data, loggedin:true}));
                 localStorage.setItem('access_token', res.data.access_token);
@@ -116,7 +121,6 @@ const LoginSigup = ({handleOpen}) => {
 
     return (
         <>
-            
             {/* <ToastContainer /> */}
             <Tabs id="custom-animation" value={tab} className="lg-tabs">
                 <TabsHeader>
@@ -142,6 +146,12 @@ const LoginSigup = ({handleOpen}) => {
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 </p> */}
                             </div>
+                                {
+                                    loginEr != '' &&
+                                    <div className="error-code-bar mb-2">
+                                        <span>{loginEr}</span>
+                                    </div>
+                                }
                                 <LoginForm loginSubmit={loginSubmit} />
                         </div>
                     </TabPanel>
@@ -176,7 +186,6 @@ const LoginSigup = ({handleOpen}) => {
                                 >
                                     {({ isSubmitting }) => (
                                         <Form>
-                                           
                                             <div className="grid grid-cols-4 gap-4">
                                                 <div className="col-span-2">
                                                     <div className="form-group">
@@ -236,6 +245,7 @@ const LoginSigup = ({handleOpen}) => {
                                         </Form>
                                     )}
                                 </Formik>
+                                
                             </div>
                         }
                     </TabPanel>

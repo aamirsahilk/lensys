@@ -41,7 +41,7 @@ const ProductInner = ({params}) => {
   }, [fetchProduct])
 
   useEffect(() => {
-    if(categoryid == 4 && categoryid == 3){
+    if(categoryid == 4 || categoryid == 3){
       setIsLens(true)
     }
   },[categoryid])
@@ -164,9 +164,11 @@ const ProductInner = ({params}) => {
                       <span>Addd To Cart</span>
                     </button>:
                     <>
-                      <button onClick={addToCart} className='main-btn big dark'>ONLY FRAME</button>
+                      <button onClick={addToCart} className='main-btn big dark'>
+                        <span>ONLY FRAME</span>
+                      </button>
                       <Link href={`add-product/${slug}?pid=${id}&color=${colorId}`} className='main-btn big'>
-                        <span>SELECT LENSE</span>
+                        <span>SELECT LENS</span>
                       </Link>
                     </>
                   }

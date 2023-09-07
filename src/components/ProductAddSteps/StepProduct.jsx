@@ -52,8 +52,9 @@ const StepProduct = ({id,colorId}) => {
                     }
                     {/* <span>{productData.lensType} • {productData.lensPackage}</span> */}
                     </p>
-                    <div className="le_pr-price">
-                        <h3>₹{product?product.regular_price:''} {productAddedInCart.lensPackage?`+${productAddedInCart.lensPackage}`:''} <span>+ tax</span></h3>
+                    <div className="le_pr-price flex justify-between">
+                        <h3>₹{product?product.price:''} {productAddedInCart.lensPackage?`+${productAddedInCart.lensPackage}`:''} <span>+ tax</span></h3>
+                        <h3><span>Total : </span>₹{(product?parseInt(product.price) : 0 )+ (productAddedInCart.lensPackage ? parseInt(productAddedInCart.lensPackage) : 0)}</h3>
                     </div>
                 </div>
             </div>
