@@ -121,7 +121,7 @@ export default function AddProductSteps({params, searchParams}) {
     });
     formData.append('colorid', color);
     formData.append('productid', pid);
-    const res = await api.post('addtocart', formData);
+    const res = await api.post(`addtocart?auth=${userdata.access_token}`, formData);
     const data = res.data;
     if(data.status){
       push('/cart');

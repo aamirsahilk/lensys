@@ -10,6 +10,7 @@ import Image from 'next/image'
 import offerImage from '../../../images/offer-banner.jpg'
 import ProductCard from '../../../components/ProductCard'
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux'
 
 import ContactLensPowerSelect from '@/components/ContactLensPowerSelect'
 
@@ -21,6 +22,7 @@ const ProductInner = ({params}) => {
   // 2 = sunglass
   // 3 = colorcontact
   // 4 = corrective
+  const userdata = useSelector((state)=> state.userData.value );
   const productSlug = params.product;
   const [product, setProduct] = useState({});
   const [colorId, setColorId] = useState(null);
@@ -59,7 +61,7 @@ const ProductInner = ({params}) => {
           formData.append(key, lensObj[key]);
       });
       formData.append('productid', id);
-      const res = await api.post('addtocart', formData);
+      const res = await api.post(`addtocart?auth=${userdata.access_token}`, formData);
       const data = res.data;
       if(data.status){
         push('/cart');
@@ -71,7 +73,7 @@ const ProductInner = ({params}) => {
       // if(categoryid != 2){
       formData.append('colorid', colorId);
       // }
-      const res = await api.post('addtocart', formData);
+      const res = await api.post(`addtocart?auth=${userdata.access_token}`, formData);
       const data = res.data;
       if(data.status){
         push('/cart');

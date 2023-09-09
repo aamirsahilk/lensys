@@ -28,6 +28,7 @@ import mailIcon from '../../public/images/go-mail-icon.svg'
 import CustomButton from './CustomButton';
 
 import customToast from '@/utils/CusToast';
+// import { ToastContainer } from 'react-toastify';
 
 import LoginForm from './LoginForm';
 
@@ -121,7 +122,7 @@ const LoginSigup = ({handleOpen}) => {
 
     return (
         <>
-            {/* <ToastContainer /> */}
+            <ToastContainer />
             <Tabs id="custom-animation" value={tab} className="lg-tabs">
                 <TabsHeader>
                     <Tab value="login">

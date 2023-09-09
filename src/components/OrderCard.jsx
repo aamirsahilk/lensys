@@ -35,6 +35,7 @@ import upload from '@/images/upload-icon.svg'
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import customToast from '@/utils/CusToast';
+import { useSelector } from 'react-redux';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -48,6 +49,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
     const handleOpen2 = (value) => setSize2(value);
     const [isMobile, setIsMobile] = useState(false);
     const [initValues, setInitValues] = useState({});
+    const userdata = useSelector((state)=> state.userData.value );
 
 
     useEffect(() => {
@@ -91,7 +93,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                 formData .append('file', selectedFile);
                 formData.append('cartid', cartId);
                 formData.append('orderid', orderId);
-                const res = await api.post('upload-prescription', formData);
+                const res = await api.post(`upload-prescription?auth=${userdata.access_token}`, formData);
                 const dt = res.data;
                 if(dt.status){
                     customToast('Your prescription has been successfully uploaded');
@@ -184,7 +186,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
             });
             formData.append('cartid', cartId);
             formData.append('orderid', orderId);
-            const res = await api.post('upload-prescription', formData);
+            const res = await api.post(`upload-prescription?auth=${userdata.access_token}`, formData);
             const data = res.data;
             if(data.status){
                 customToast('Your prescription has been successfully uploaded');

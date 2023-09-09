@@ -5,7 +5,7 @@ import offerImage from '@/images/offer.svg'
 import infoIcon from '@/images/info.svg'
 import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateCartCount } from '@/store/features/cartcount/cartCountSlice'
 import axios from 'axios'
 
@@ -69,6 +69,10 @@ const Cart = () => {
     const openDrawerRight = () => setOpenRight(true);
     const closeDrawerRight = () => setOpenRight(false);
 
+    const userData = useSelector(state=>state.userData.value);
+
+    
+
     const getStates = useCallback(async() => {
         const res = await api.get('states');
         setStates(res.data)
@@ -94,7 +98,7 @@ const Cart = () => {
         Object.keys(values).forEach((key) => {
             dt.append(key, values[key]);
         });
-        const response = await api.post('create-order', dt);
+        const response = await api.post(`create-order?auth=${userData.access_token}`, dt);
         const data = await response.data;
         console.log('data', data);
         const options = {
@@ -153,13 +157,13 @@ const Cart = () => {
         }else{
             data.append('qty', count);
         }
-        const res = await api.post('updateqty', data);
+        const res = await api.post(`updateqty?auth=${userData.access_token}`, data);
         if (res.data) {
             fetchCart();
         }
     }
     const fetchCart = useCallback(async () => {
-        const res = await api.get('cartitems')
+        const res = await api.get(`cartitems?auth=${userData.access_token}`)
         // if(res.data.status){
         setCartItems(res.data.cartitems || []);
         setCart(res.data || {});
@@ -178,7 +182,7 @@ const Cart = () => {
     const handleRemoveCart = async (id) => {
         const formData = new FormData();
         formData.append('cartid', id);
-        const res = await api.post('removecartitem', formData)
+        const res = await api.post(`removecartitem?auth=${userData.access_token}`, formData)
         fetchCart();
     }
 

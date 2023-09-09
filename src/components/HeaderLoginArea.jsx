@@ -32,8 +32,9 @@ import LoginSigup from './LoginSigup'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUserData } from '@/store/features/userdata/UserDataSlice'
+import { updateCartCount } from '@/store/features/cartcount/cartCountSlice'
 
-import { toast, ToastContainer } from "react-toastify";
+import customToast from '@/utils/CusToast'
 
 const HeaderLoginArea = () => {
   const [size, setSize] = useState(null);
@@ -42,22 +43,22 @@ const HeaderLoginArea = () => {
   const userData = useSelector((state)=> state.userData.value);
   const dispatch = useDispatch();
 
-  const toastOptions = { hideProgressBar: false, autoClose: 2000, type: 'success' };
 
-  // toasts
-  const customToast = (text = "toast text", status = "success")=>{
-      toast(text, {...toastOptions,type: status})
-  }
   
   
   const isLoggedIn = userData.loggedin;
 
   const LogoutClick = ()=>{
       // console.log("logout");
-      localStorage.removeItem('token');
+      localStorage.removeItem('access_token');
       dispatch(updateUserData({loggedin:false}));
+      dispatch(updateCartCount(0));
       customToast('Logged Out','error')
   }
+
+  useEffect(() => {
+    console.log("headerLoginArea data", userData)
+  },[userData])
 
 
 
@@ -86,7 +87,7 @@ const HeaderLoginArea = () => {
  
     return (
       <>
-      <ToastContainer />
+  
       {
 
   !isLoggedIn?
@@ -132,8 +133,8 @@ const HeaderLoginArea = () => {
                 <div className="flex items-center gap-4 border-b border-blue-gray-50 pb-4 mb-4">
                   {/* <Avatar src={av.src} alt="candice wu" /> */}
                   <div>
-                    <Typography variant="h6" color="blue-gray">Taha Ratlam Wala</Typography>
-                    <Typography variant="small" color="gray" className="font-normal">User@1256</Typography>
+                    <Typography variant="h6" color="blue-gray">{userData.name}</Typography>
+                    {/* <Typography variant="small" color="gray" className="font-normal">User@1256</Typography> */}
                   </div>
                 </div>
                 <List className="p-0">

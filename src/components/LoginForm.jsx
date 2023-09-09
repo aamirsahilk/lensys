@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import api from '@/api/api';
-
+import { useSelector } from 'react-redux';
 
 const LoginForm = (props) => {
     const [passType, setPassType] = useState(true);
@@ -21,7 +21,7 @@ const LoginForm = (props) => {
             'Password must contain at least 1 letter, 1 number, 1 symbol, and be 8 characters long'
         )
     });
-
+    const userdata = useSelector((state)=> state.userData.value );
     const validationSchema2 = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required('Email is required')
     });
@@ -30,7 +30,7 @@ const LoginForm = (props) => {
         console.log('hkkh', values);
         const data = new FormData();
         data.append('email', values.email);
-        const res = await api.post('forgot-password', data);
+        const res = await api.post(`forgot-password`, data);
         const dt = res.data;
         setForgotStatus(dt);
         setTimeout(() => {
@@ -44,8 +44,8 @@ const LoginForm = (props) => {
             !forgot?
             <Formik
                 initialValues={{
-                    email: 'taha.h5363@gmail.com',
-                    password: 'taha@123',
+                    email: 'behlah13@gmail.com',
+                    password: 'behlah@123',
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
@@ -70,7 +70,7 @@ const LoginForm = (props) => {
                                     <div className="inp-grp">
                                         <div className="pass-input">
                                             <Field type={passType ? 'password' : 'text'} name="password" />
-                                            <button className="pass-ico" onClick={() => setPassType((prevState) => !prevState)}>
+                                            <button type="button" className="pass-ico" onClick={() => setPassType((prevState) => !prevState)}>
                                                 {!passType ? <VisibilityOffIcon /> : <VisibilityIcon />}
                                             </button>
                                         </div>

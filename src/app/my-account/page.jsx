@@ -36,6 +36,10 @@ const MyAccount = () => {
   
   const userData = user;
 
+  useEffect(() =>{
+    console.log('userdata', userData)
+  }, [userData])
+
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('First Name is required'),
     lastname: Yup.string().required('Last Name is required'),
@@ -63,9 +67,6 @@ const MyAccount = () => {
     email: userData?.email || '',
   }
 
-  useEffect(()=>{
-    console.log('user', user.profile);
-  }, [user])
 
   const initialValuesForPasswords = {
     newPassword: '',
@@ -81,7 +82,7 @@ const MyAccount = () => {
         formData.append(key, values[key]);
         obj = {...obj, ...{[key]:values[key]}}
     });
-    const res = await api.post('update-profile', formData);
+    const res = await api.post(`update-profile?auth=${userData.access_token}`, formData);
     const data = res.data;
     if(data.status){
       dispatch(updateUserData({...user, ...{profile: obj}}))
@@ -96,7 +97,7 @@ const MyAccount = () => {
   const handleSubmitForPassword = async (values, {resetForm }) => {
     var formData = new FormData();
     formData.append('password', values.newPassword);
-    const res = await api.post('update-password', formData);
+    const res = await api.post(`update-password?auth=${userData.access_token}`, formData);
     const data = res.data;
     if(data.status){
       resetForm();
