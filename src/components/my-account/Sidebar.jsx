@@ -111,7 +111,7 @@ export default function Sidebar({link, setLink}) {
                             My Orders
                     </ListItem>
                 </Link>
-                <ListItem>
+                {/* <ListItem>
                     <ListItemPrefix>
                         <Cog6ToothIcon className="h-5 w-5" />
                     </ListItemPrefix>
@@ -122,7 +122,7 @@ export default function Sidebar({link, setLink}) {
                         <PowerIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     Log Out
-                </ListItem>
+                </ListItem> */}
             </List>
         </Card>
     );
