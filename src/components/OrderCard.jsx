@@ -233,7 +233,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
 
                         </div>
                         <div className='flex flex-col items-end h-full justify-between'>
-                            <Popover placement="bottom-end">
+                            {/* <Popover placement="bottom-end">
                                 <PopoverHandler>
                                     <button className="more-order-opt">
                                         <MoreHorizIcon />
@@ -243,23 +243,19 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                     <List className="p-0">
                                         <button className="text-initial" >
                                             <ListItem>
-                                                {/* <ListItemPrefix>
-                                                    <InsertEmoticonIcon />
-                                                </ListItemPrefix> */}
+                                               
                                                 View Invoice
                                             </ListItem>
                                         </button>
                                         <button className="text-initial" onClick={() => handleOpen("sm")}>
                                             <ListItem>
-                                                {/* <ListItemPrefix>
-                                                    <InsertEmoticonIcon />
-                                                </ListItemPrefix> */}
+                                                
                                                 View Order Details
                                             </ListItem>
                                         </button>
                                     </List>
                                 </PopoverContent>
-                            </Popover>
+                            </Popover> */}
                            
                             <div className="flex items-center gap-2">
                                 <button className="main-btn mt-2 min-w-[max-content]" onClick={() => handleOpen2("lg")} >

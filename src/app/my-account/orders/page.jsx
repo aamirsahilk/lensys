@@ -171,7 +171,7 @@ const Orders = () => {
                         orders?.map((item,index)=>(
                           <tr key={index}>
                             <td>
-                              <Link href="/my-account/orders/1">{item.order_id}</Link>
+                              <Link href={`my-account/orders/${item.order_id}`}>{item.order_id}</Link>
                             </td>
                             <td>
                               <span className={`status ${item.order_status}`}>
