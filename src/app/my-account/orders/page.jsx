@@ -7,6 +7,7 @@ import CartItem from '@/components/CartItem';
 import Pagination from '@/components/Pagination';
 
 import OrderCard from '@/components/OrderCard';
+import { useSelector } from 'react-redux';
 
 import {
   Card,
@@ -49,6 +50,7 @@ const Orders = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   const [orders, setOrders] = useState([]);
+  const userData = useSelector(state=>state.userData.value);
 
   useEffect(() => {
     const handleResize = () => {
@@ -82,7 +84,7 @@ const Orders = () => {
   };
 
   const fetchOrders = async()=>{
-    const res = await api.get('orders');
+    const res = await api.get(`orders?auth=${userData.access_token}`);
     const data = res.data;
     setOrders(data || [])
   }
@@ -96,7 +98,7 @@ const Orders = () => {
   }, [])
 
   const paymentProceed = async (id) => {
-      const res = await api.get('paymentprocess/' + id);
+      const res = await api.get(`paymentprocess/${id}?auth=${userData.access_token}`);
       const data = res.data;
       if (data.status) {
         fetchOrders();
@@ -105,7 +107,7 @@ const Orders = () => {
       }
   }
   const retryPayment = async (id) => {
-    const response = await api.get('retry-payment/'+id);
+    const response = await api.get(`retry-payment/${id}?auth=${userData.access_token}`);
     const data = await response.data;
     const options = {
         key: data.rkey,
@@ -234,7 +236,7 @@ const Orders = () => {
                     </tbody>
                   </table>
                   
-                  <Pagination pageCount={pageCount} handlePageClick={handlePageClick} />
+                  {/* <Pagination pageCount={pageCount} handlePageClick={handlePageClick} /> */}
                 </CardBody>
               </Card>
             </div>

@@ -140,41 +140,24 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
 
     const validationSchema = Yup.object({
         rightEye: Yup.object({
-          rsd: Yup.number().required('Sph is required'),
-          rcd: Yup.number().required('Cyl is required'),
-          rad: Yup.number().required('Axis is required'),
-          rsn: Yup.number().required('Sph is required'),
-          rcn: Yup.number().required('Cyl is required'),
-          ran: Yup.number().required('Axis is required'),
+          rsd: Yup.number(),
+          rcd: Yup.number(),
+          rad: Yup.number(),
+          rsn: Yup.number(),
+          rcn: Yup.number(),
+          ran: Yup.number(),
         }),
         leftEye: Yup.object({
-        lsd: Yup.number().required('Sph is required'),
-        lcd: Yup.number().required('Cyl is required'),
-        lad: Yup.number().required('Axis is required'),
-        lsn: Yup.number().required('Sph is required'),
-        lcn: Yup.number().required('Cyl is required'),
-        lan: Yup.number().required('Axis is required'),
+        lsd: Yup.number(),
+        lcd: Yup.number(),
+        lad: Yup.number(),
+        lsn: Yup.number(),
+        lcn: Yup.number(),
+        lan: Yup.number(),
         }),
       });
       
-
-      useEffect(()=>{
-        if(data.prescription.status){
-            const isReadOnly = !formik.values.isReadOnly;
-            formik.setValues({ ...formik.values, isReadOnly });
-            console.log('file', data.prescription.file);
-            console.log('file');
-            if(data.prescription.file){
-                setTab(2);
-                setSelectedFile(data.prescription.file)
-            }else{
-                setTab(1);
-                setInitValues(data.prescription.jsondta)
-            }
-        }
-      }, [data, formik])
-
-    const formik = useFormik({
+      const formik = useFormik({
         enableReinitialize: true,
         initialValues: initValues,
         validationSchema,
@@ -196,6 +179,24 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
             
         },
     });
+
+      useEffect(()=>{
+        if(data.prescription.status){
+            const isReadOnly = !formik.values.isReadOnly;
+            formik.setValues({ ...formik.values, isReadOnly });
+            console.log('file', data.prescription.file);
+            console.log('file');
+            if(data.prescription.file){
+                setTab(2);
+                setSelectedFile(data.prescription.file)
+            }else{
+                setTab(1);
+                setInitValues(data.prescription.jsondta)
+            }
+        }
+      }, [data, formik])
+
+   
 
     return (
         <>

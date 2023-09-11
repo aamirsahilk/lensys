@@ -24,6 +24,7 @@ import {
   import api from '@/api/api';
 
 import OrderCard from '@/components/OrderCard';
+import { useSelector } from 'react-redux';
 
 
 
@@ -31,9 +32,10 @@ const SingleOrder = ({params}) => {
     const orderId = params.order;
     const [orders, setOrders] = useState([]);
     const [order, setOrder] = useState({});
+    const userData = useSelector(state=>state.userData.value);
 
     const fetchOrder = useCallback(async() => {
-        const res = await api.get('order-details/'+orderId);
+        const res = await api.get(`order-details/${orderId}?auth=${userData.access_token}`);
         const data = res.data;
         setOrders(data.order_items || []);
         setOrder(data || {});

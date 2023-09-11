@@ -8,7 +8,7 @@ const nextConfig = {
   //     },
   //   ]
   // },
-  images: {
+images: {
     remotePatterns: [
       {
         protocol: 'https',
@@ -19,6 +19,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'techmatrick.com',
+        // hostname: 'lensys.in',
         // port: '',
         // pathname: '/account123/**',
       },

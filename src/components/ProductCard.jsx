@@ -20,7 +20,7 @@ const ProductCard = ({ data, ImageProductCard}) => {
     const {name,price,regular_price,image,alt_text,slug,id,offertag} = data;
 
     const handleLike = async ()=>{
-        const res = await api.get(`like-product/${id}`);
+        const res = await api.get(`like-product/${id}?auth=${userData.access_token}`);
         const data = res.data;
         if(data.status){
             setLiked(data.liked);
@@ -40,22 +40,25 @@ const ProductCard = ({ data, ImageProductCard}) => {
                 }
                 <Link href={`product/${slug}`}>
                     <div className="le_pr-image-carousel">
-                        <Swiper
-                            spaceBetween={0}
-                            slidesPerView={1}
-                            // onSlideChange={}
-                            // onSwiper={}
-                        >
-                            {
-                                [...Array(3)].map((item, index)=>(
-                                    <SwiperSlide key={index}>
-                                        <div className="le_pr-image">
-                                            <Image src={pr} width={300} height={300} alt="" />
-                                        </div>
-                                    </SwiperSlide>
-                                ))
-                            }
-                        </Swiper>
+                        {
+                            image &&
+                            <Swiper
+                                spaceBetween={0}
+                                slidesPerView={1}
+                                // onSlideChange={}
+                                // onSwiper={}
+                            >
+                                {
+                                    // [...Array(3)].map((item, index)=>(
+                                        <SwiperSlide >
+                                            <div className="le_pr-image">
+                                                <Image src={image} width={300} height={300} alt="" />
+                                            </div>
+                                        </SwiperSlide>
+                                    // ))
+                                }
+                            </Swiper>
+                        }
                     </div>
                     <div className="le_pr-con-wrap">
                         <div className="le_pr-content">

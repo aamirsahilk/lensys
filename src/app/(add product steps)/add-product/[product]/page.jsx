@@ -66,8 +66,8 @@ export default function AddProductSteps({params, searchParams}) {
       if(userdata.loggedin){
         addToCart();
       }else{
-        addToCart();
-        // setSize(isMobile? 'xl': size || "md");
+        // addToCart();
+        setSize(isMobile? 'xl': size || "md");
       }
     }
   };

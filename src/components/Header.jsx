@@ -62,11 +62,7 @@ const Header = () => {
         }
         const regen = async() => {
             try{
-                const res = await api.get('reGenToken',{},{
-                    headers: {
-                        'Authorization': `${accessToken}`
-                    }
-                })  
+                const res = await api.get(`reGenToken?auth=${accessToken}`)  
                 if(res.data.status){
                     dispatch(updateUserData({...res.data, ...{loggedin:true}}))
                     // eslint-disable-next-line react-hooks/exhaustive-deps

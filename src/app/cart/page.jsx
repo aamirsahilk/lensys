@@ -100,7 +100,7 @@ const Cart = () => {
         });
         const response = await api.post(`create-order?auth=${userData.access_token}`, dt);
         const data = await response.data;
-        console.log('data', data);
+        console.log(data, "rzor");
         const options = {
             key: data.rkey,
             amount: data.amount,
@@ -108,10 +108,17 @@ const Cart = () => {
             name: data.companyname,
             description: 'Test Payment',
             handler: (ress) => {
+                console.log('razorpay', ress);
                 if (ress) {
                     paymentProceed(ress.razorpay_payment_id)
                 }
             },
+            modal: {
+                ondismiss: function () {
+                    console.log('Checkout form closed');
+                    push('/my-account/orders');
+                }
+            }
         };
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
@@ -168,13 +175,13 @@ const Cart = () => {
         setCartItems(res.data.cartitems || []);
         setCart(res.data || {});
         setGrandTotal(res.data.grandtotal)
-        dispatch(updateCartCount(res.data.cartcount));
+        dispatch(updateCartCount(res.data.cartcount || 0));
         // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[userData])
 
     const fetchCoupons = async () => {
-        const res = await api.get('coupons')
+        const res = await api.get(`coupons?auth=${userData.access_token}`)
         setCoupons(res.data || []);
     }
 
@@ -207,7 +214,7 @@ const Cart = () => {
         address: Yup.string().required('Address is required'),
         state: Yup.string().required('State is required'),
         city: Yup.string().required('City is required'),
-        zipcode: Yup.string().required('zipcode is required'),
+        zipcode: Yup.string().required('zipcode is required').matches(/^\d{2,6}$/, 'Invalid ZIP code'),
     });
     const validationSchemaForCoupon = Yup.object().shape({
         coupon: Yup.string().required('Coupon code is required'),
@@ -218,6 +225,7 @@ const Cart = () => {
 
     return (
         <>
+
             <Script id="razorpay-checkout-js" src="https://checkout.razorpay.com/v1/checkout.js" />
             <main className='cart-page pt-8 pb-8'>
                 {
@@ -229,15 +237,16 @@ const Cart = () => {
                                         <>
                                             <Formik
                                                 initialValues={{
-                                                    email: 'taha@gmail.com',
-                                                    fname: 'Taha',
-                                                    lname: 'Ratlam W',
-                                                    phone: '7470560626',
+                                                    email: userData.email,
+                                                    fname: userData.name,
+                                                    lname: userData.lastname,
+                                                    phone: userData.phone,
                                                     city: cities.length > 0 && cities[0].city,
                                                     state: states.length > 0 && states[0].name,
-                                                    address: 'kbkbjd',
-                                                    zipcode: '452002'
+                                                    address: '',
+                                                    zipcode: ''
                                                 }}
+                                                enableReinitialize
                                                 validationSchema={validationSchema}
                                                 onSubmit={(values) => {
                                                     console.log('submit..');
@@ -306,9 +315,9 @@ const Cart = () => {
                                                                     <div className="form-group ">
                                                                         <div className="inp-grp">
                                                                             <Field as="select" name="state" placeholder="State" onChange={(e) => getCities(e.target.value)}>
-                                                                                {
+                                                                                {   
                                                                                     states.map((state, index) => (
-                                                                                        <option value={state.name} key={index}>
+                                                                                        <option value={state.id} key={index}>
                                                                                             {state.name}
                                                                                         </option>
                                                                                     ))
