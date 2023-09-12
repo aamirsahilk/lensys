@@ -64,6 +64,7 @@ const Megamenu = ({subCat,setMenuOpen}) => {
                     <ul className="grid grid-cols-1 md:grid-cols-2">
                       
                             {
+                                
                                 filters.brands.length > 0 &&
                                 filters.brands.map((mp, index) => {
                                     return (
