@@ -209,7 +209,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                     <div className='flex items-start h-full justify-between w-full'>
                         <div>
                             <h3>{data?.productdetails.product_name}</h3>
-                            <p className="price mb-2">{data?.subtotal}</p>
+                            <p className="price mb-2">₹ {data?.subtotal}</p>
                             <p>
                                 {
                                     data?.productdetails.attributes &&
@@ -219,15 +219,18 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                 }
                             </p>
                             {
-                                data?.prescription?.status ?
+                                data?.productdetails.categoryid == 1 &&
+                                <>
+                               { data?.prescription?.status ?
                                 <div className="flex items-center gap-2 error-code-bar success mt-2">
                                     {/* <ErrorOutlineIcon /> */}
                                     <span>Your order will be delivered soon</span>
                                 </div>
                                 :<div className="flex items-center gap-2 error-code-bar mt-2">
-                                <ErrorOutlineIcon />
-                                <span>Please upload your lens details</span>
-                            </div>
+                                    <ErrorOutlineIcon />
+                                    <span>Please upload your lens details</span>
+                                </div>}
+                                </>
                                 
                             }
 
@@ -256,12 +259,14 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                     </List>
                                 </PopoverContent>
                             </Popover> */}
-                           
+                           {
+                            data?.productdetails.categoryid == 1 &&
                             <div className="flex items-center gap-2">
                                 <button className="main-btn mt-2 min-w-[max-content]" onClick={() => handleOpen2("lg")} >
                                     <span className='text-sm/[14px]'>{data?.prescription?.status?'View Prescription':'Select Lens Power'}</span>
                                 </button>
                             </div>
+                           }
                             {/* <button className='delete-btn' type="button" onClick={(e) => handleRemoveCart(data?.cartid)}>
                                 <span>Remove</span>
                                 <Image src={deleteIcon} alt="" />

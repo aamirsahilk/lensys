@@ -125,8 +125,7 @@ const Cart = () => {
     };
 
     const handleCoupon = async (coupon)=>{
-        console.log('coupon', coupon);
-        const res = await api.get('apply-coupon/'+coupon);
+        const res = await api.get(`apply-coupon/${coupon}?auth=${userData.access_token}`);
         const data = res.data
         if(data.status){
             setOpenRight(false);
@@ -140,7 +139,7 @@ const Cart = () => {
     }
 
     const handleRemoveCoupon = async (coupon)=>{
-        const res = await api.get('remove-coupon');
+        const res = await api.get(`remove-coupon?auth=${userData.access_token}`);
         const data = res.data
         if(data.status){
             fetchCart();
@@ -203,8 +202,12 @@ const Cart = () => {
 
     useEffect(() => {
         setDomLoaded(true)
-        fetchCoupons();
+        // fetchCoupons();
     },[])
+    useEffect(() => {
+        // setDomLoaded(true)
+        fetchCoupons();
+    },[userData])
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -260,10 +263,10 @@ const Cart = () => {
                                                                 <h3 className="it-head mb-5">
                                                                     Personal Details
                                                                 </h3>
-                                                                <div className="info-line flex no-wrap gap-2">
+                                                                {/* <div className="info-line flex no-wrap gap-2">
                                                                     <Image src={infoIcon} alt="" width={25} height={25} />
                                                                     <span>Lorem Ipsum is simply dummy text of the</span>
-                                                                </div>
+                                                                </div> */}
                                                                 <div className="grid mt-8 mb-8 grid-cols-1 md:grid-cols-2 gap-5">
                                                                     <div className="form-group">
                                                                         <div className="inp-grp">
@@ -279,23 +282,23 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group col-span-2">
                                                                         <div className="inp-grp">
-                                                                            <Field type="text" name="phone" placeholder="Phone Number" />
+                                                                            <Field type="text" name="phone" placeholder="Phone Number" readOnly />
                                                                             <ErrorMessage name="phone" component="div" className="error-message" />
                                                                         </div>
                                                                     </div>
                                                                     <div className="form-group col-span-2">
                                                                         <div className="inp-grp">
-                                                                            <Field type="text" name="email" placeholder="Email" />
+                                                                            <Field type="text" name="email" placeholder="Email" readOnly />
                                                                             <ErrorMessage name="email" component="div" className="error-message" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="info-line flex no-wrap items-start gap-2">
+                                                                {/* <div className="info-line flex no-wrap items-start gap-2">
                                                                     <Image src={infoIcon} alt="" width={25} height={25} />
                                                                     <span>
                                                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys
                                                                     </span>
-                                                                </div>
+                                                                </div> */}
                                                                 <h3 className="it-head mb-5 mt-10">
                                                                     Shipping Details
                                                                 </h3>
@@ -314,7 +317,8 @@ const Cart = () => {
                                                     </div> */}
                                                                     <div className="form-group ">
                                                                         <div className="inp-grp">
-                                                                            <Field as="select" name="state" placeholder="State" onChange={(e) => getCities(e.target.value)}>
+                                                                            <Field disabled={false} as="select" name="state" onChange={(e) => getCities(e.target.value)}>
+                                                                                
                                                                                 {   
                                                                                     states.map((state, index) => (
                                                                                         <option value={state.id} key={index}>
@@ -329,7 +333,7 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group">
                                                                         <div className="inp-grp">
-                                                                            <Field as="select" name="city" placeholder="city">
+                                                                            <Field disabled={false} as="select" name="city" placeholder="city">
                                                                                 {
                                                                                     cities.map((city, index) => (
                                                                                         <option value={city.city} key={index}>
@@ -389,23 +393,40 @@ const Cart = () => {
 
                                                             </div>
                                                             <div className="relative md:col-span-5 sticky top-20 self-start">
-                                                                <Accordion open={open} icon={<Icon id={1} open={open ? 1 : 0} />}>
+                                                                <Accordion open={open} icon={<Icon id={1} open={open ? 1 : 0} />} className=''>
                                                                     <AccordionHeader className='cart-total-btn' onClick={handleOpen}>
                                                                         <h3 className="it-head">
                                                                             Total: <span>₹ {grandTotal || ''}</span>
                                                                         </h3>
                                                                     </AccordionHeader>
-                                                                    <AccordionBody>
-                                                                        <div className="cart-items-list">
+                                                                    <AccordionBody className="">
+                                                                        <p className='cart-tot-det'>
                                                                             {
-                                                                                cartItems.length > 0 ?
-                                                                                    cartItems?.map((item, index) => (
-                                                                                        <CartItem handleCounter={handleCounter} counter={counter} data={item} handleRemoveCart={handleRemoveCart} key={index} />
-                                                                                    )) : <NoResult message={"You don&apos;t have any items added in cart"} />
+                                                                                cart.discount != 0&&
+                                                                                <div>
+                                                                                <span>Discount : </span>
+                                                                                <span>{cart.discount}</span>
+                                                                                
+                                                                                </div>
                                                                             }
-                                                                        </div>
+                                                                            {
+                                                                                cart.shipping != 0&&
+                                                                                <div>
+                                                                                <span>Shipping : </span>
+                                                                                <span>{cart.shipping}</span>
+                                                                                </div>
+                                                                            }
+                                                                        </p>
                                                                     </AccordionBody>
                                                                 </Accordion>
+                                                                <div className="cart-items-list mb-5">
+                                                                    {
+                                                                        cartItems.length > 0 ?
+                                                                            cartItems?.map((item, index) => (
+                                                                                <CartItem handleCounter={handleCounter} counter={counter} data={item} handleRemoveCart={handleRemoveCart} key={index} />
+                                                                            )) : <NoResult message={"You don&apos;t have any items added in cart"} />
+                                                                    }
+                                                                </div>
                                                                 {
                                                                     cart.discount != 0?
                                                                     <>

@@ -90,9 +90,9 @@ const SecondStep = ({id, colorId}) => {
                             <li>
                               <button onClick={()=>setTab(1)} className={`${tab == 1?'active':''}`}>Lens</button>
                             </li>
-                            <li>
+                            {/* <li>
                               <button onClick={()=>setTab(2)} className={`${tab == 2?'active':''}`}>Tint</button>
-                            </li>
+                            </li> */}
                           </ul>
                         </div>
                         <div className="l-t-tab-area pt-8">

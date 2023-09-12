@@ -16,7 +16,7 @@ const ProductImageSlider = ({lenstype}) => {
     const [products, setProducts] = useState(null)
  
     const fetchCategories = async() =>{
-        const res = await api.get(`featured-products/${lenstype}`);
+        const res = await api.get(`products/${lenstype}`);
         setProducts(res.data)
     }
 
@@ -55,7 +55,7 @@ const ProductImageSlider = ({lenstype}) => {
                         products && products.length? products.map((product, index) => {
                             return (
                                 <SwiperSlide key={index}>
-                                    <ProductCard ImageProductCard={true} data={product} />
+                                    <ProductCard data={product} />
                                 </SwiperSlide>
                             )
                         }):<p className='no-res'>No Results</p>

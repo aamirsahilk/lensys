@@ -84,7 +84,7 @@ const SingleOrder = ({params}) => {
                                                 Order Total
                                             </td>  
                                             <td>
-                                                {order?.order_total}
+                                            ₹ {order?.order_total}
                                             </td>
                                         </tr>
                                         <tr>
@@ -92,7 +92,7 @@ const SingleOrder = ({params}) => {
                                                 Shipping Charge
                                             </td>  
                                             <td>
-                                                {order?.shippingcharge}
+                                            ₹ {order?.shippingcharge}
                                             </td>
                                         </tr>
                                         <tr>
@@ -100,7 +100,7 @@ const SingleOrder = ({params}) => {
                                                 Discount
                                             </td>  
                                             <td>
-                                                {order?.discount_amount}
+                                            ₹ {order?.discount_amount}
                                             </td>
                                         </tr>
                                         <tr>
@@ -108,7 +108,7 @@ const SingleOrder = ({params}) => {
                                                 <b>Total Amount</b>
                                             </td>  
                                             <td>
-                                                <b>{order?.total_amount}</b>
+                                                <b>₹ {order?.total_amount}</b>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -152,14 +152,14 @@ const SingleOrder = ({params}) => {
                                                 <b>Total Paid</b>
                                             </td>  
                                             <td>
-                                                <b>{order?.total_paid_amount || '-'}</b>
+                                                <b>₹ {order?.total_paid_amount || '-'}</b>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button className='main-btn block-btn dark'>
+                                {/* <button className='main-btn block-btn dark'>
                                     <span>Download Invoice</span>
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                     </CardBody>

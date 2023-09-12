@@ -32,6 +32,7 @@ import LoginSigup from '@/components/LoginSigup'
 import ContactLensPowerSelect from '@/components/ContactLensPowerSelect'
 
 import api from '@/api/api'
+import OfferSlider from '@/components/OfferSlider'
 
 const ProductInner = ({params}) => {
   const [isLens, setIsLens] = useState(false);
@@ -53,7 +54,7 @@ const ProductInner = ({params}) => {
     setColorId(data?.colors ? data?.colors[0]?.id : '')
   },[productSlug])
  
-  const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras, categoryid} = product;
+  const {id,slug,product_name, product_price, regular_price, currency, product_description, attributes, qty, image, extras, categoryid, short_desc, couponimages} = product;
 
   const [isMobile, setIsMobile] = useState(false);
   const [size, setSize] = useState(null);
@@ -177,16 +178,18 @@ const ProductInner = ({params}) => {
                   <SecHeading>
                     {product_name || 'Spectus'}
                   </SecHeading>
-                  <p className="para mt-5">
-                    AMIN-Titanium <br />
-                    Hexagon Glasses in Titanium
-                  </p>
+                  {
+                    short_desc &&
+                    <p className="para mt-5">
+                      {short_desc}
+                    </p>
+                  }
                   <div className="price-wrapper mt-5">
                     <p>{currency || '₹'} {product_price || '1600.00'} <span>( inc VAT )</span></p>
                   </div>
-                  <div className="act-msg suc">
+                  {/* <div className="act-msg suc">
                     <p>Delivered in 6-7 operational days</p>
-                  </div>
+                  </div> */}
                   {
                     colors.length > 0 &&
                     <div className="color-selector-wrapper mt-5">
@@ -267,11 +270,12 @@ const ProductInner = ({params}) => {
               </div>
           </section>
           <div className="seprator"></div>
-          <Link href="" className="le_offer-link-banner">
+          {/* <Link href="" className="le_offer-link-banner">
             <Image src={offerImage} alt="offer" className='w-full'/>
-          </Link>
+          </Link> */}
+          <OfferSlider data={couponimages} />
           <div className="seprator"></div>
-          <section className="sec pr-inner-pr-grid-sec">
+          {/* <section className="sec pr-inner-pr-grid-sec">
             <div className="container mx-auto">
               <SecHeading centerLine={true}>
                 <span>Find</span> The Perfect Fit
@@ -303,7 +307,7 @@ const ProductInner = ({params}) => {
                   </div>
               </div>
             </div>
-          </section>
+          </section> */}
       </main>
     </>
   )

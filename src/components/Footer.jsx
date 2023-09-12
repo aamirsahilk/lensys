@@ -3,8 +3,19 @@ import React from 'react'
 import Image from 'next/image'
 import logo from '../images/logo.png'
 import NewsLetter from './NewsLetter'
+import api from '@/api/api'
+import { useState, useEffect } from 'react'
 
 const Footer = () => {
+    const [categories, setCatagories] = useState([])
+    const fetchCategories = async() =>{
+        const response = await api.get('categories');
+        setCatagories(response.data)
+    }
+
+    useEffect(() =>{
+        fetchCategories();
+    },[])
   return (
     <footer className="main-footer">
         <div className="container mx-auto">
@@ -24,7 +35,7 @@ const Footer = () => {
                     </h3>
                     <NewsLetter />
                 </div>
-                <div className="relative">
+                {/* <div className="relative">
                     <h3 className="ft-head">
                         Quick Links
                     </h3>
@@ -55,46 +66,33 @@ const Footer = () => {
                             </Link>
                         </li>
                     </ul>
-                </div>
+                </div> */}
                 <div className="relative">
                 <h3 className="ft-head">
-                        Quick Links
+                        Categories
                     </h3>
                     <ul className="ft-list">
-                        <li>
-                            <Link href="">
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="">
-                                About Us
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="">
-                                Career
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="">
-                                Store Locator
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="">
-                                Contact Us
-                            </Link>
-                        </li>
+                        {   
+                            categories.length > 0 &&
+                            categories?.map((cat,index)=>(
+                                <li className='' key={index}>
+                                    <Link href={'products/'+cat.id}>
+                                        <span>{cat.name}</span>
+                                    </Link>
+                           
+                                </li>
+                            ))
+                        }
+                      
                     </ul>
                 </div>
                 <div className="relative">
                 <h3 className="ft-head">
-                        Quick Links
+                        Contact Details
                     </h3>
                     <ul className="ft-list">
                         <li>
-                            <Link href="">
+                            <Link href="tel:917470560626" passHref={true}>
                                 Home
                             </Link>
                         </li>

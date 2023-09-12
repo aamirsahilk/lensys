@@ -29,6 +29,7 @@ const OfferGridArea = () => {
             <br />
             <div className="le_offer-grid ">
                 {
+                    banners&&
                     banners?.map((banner,index) =>(
                         <Link href={banner.link} key={index}>
                             <Image className='' src={banner.image} alt={banner.alttext} width={500} height={500} />

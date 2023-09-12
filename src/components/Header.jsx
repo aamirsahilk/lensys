@@ -66,7 +66,7 @@ const Header = () => {
                 if(res.data.status){
                     dispatch(updateUserData({...res.data, ...{loggedin:true}}))
                     // eslint-disable-next-line react-hooks/exhaustive-deps
-                    dispatch(updateCartCount(res.data.cartcount));
+                    dispatch(updateCartCount(res.data.cartcount || 0));
                     // eslint-disable-next-line react-hooks/exhaustive-deps
                     localStorage.setItem('access_token', res.data.access_token);
                 }else{

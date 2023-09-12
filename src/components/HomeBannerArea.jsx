@@ -19,6 +19,7 @@ const HomeBannerArea = ({data}) => {
         const res = await api.get('/banner/1');
         setLoading(false)
         setBanners(res.data)
+        console.log(res.data, "banners");
     }
     useEffect(() => {
         fetchBanner();
@@ -52,11 +53,12 @@ const HomeBannerArea = ({data}) => {
                 modules={[Navigation,Autoplay]}
                 >
                 {
+                    banners&&
                     banners?.map((banner,index) => (
                         <SwiperSlide key={index}>
                             <Link href={banner.link} className="main-banner" passHref={true} >
                                 <picture>
-                                    <source srcet={banner.phone} media="max-width:600px"/>
+                                    <source srcSet={banner.phone} media="(max-width:600px)"/>
                                     <Image src={banner.image} width={1920} height={1080} alt={banner.alttext} />
                                 </picture>
                                 {/* <div className="container">
