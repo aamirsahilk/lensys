@@ -69,7 +69,7 @@ const Megamenu = ({subCat,setMenuOpen}) => {
                                     return (
                                         
                                         <li key={index} onClick={()=>setMenuOpen && setMenuOpen(false)}>
-                                            <Link href={`products/${subCat}?brands=${mp.id}`}>
+                                            <Link href={`products/${subCat}?brand=${mp.id}`}>
                                                 <span>{mp.name}</span>
                                             </Link>
                                         </li>

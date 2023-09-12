@@ -11,6 +11,7 @@ import TestimonialsSec from '@/components/TestimonialsSec'
 import { toast, ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@material-tailwind/react";
 import HomeCatSlider from '@/components/HomeCatSlider'
+import Link from 'next/link'
 
 
 export default function Home() {
@@ -27,12 +28,19 @@ export default function Home() {
         <div className='container mx-auto'>
           <div className='relative'>
             <SecHeading centerLine={true}>
-                Contact lenses
+                Corrective Contact lenses
             </SecHeading>
-            <ProductImageSlider />
-            <CustomButton arrow={true} center={true} cusclassName={'mt-14'}>
-              View All
-            </CustomButton>
+            <ProductImageSlider lenstype={'corrective-contact-lens'} />
+          </div>
+        </div>
+      </section>
+      <section className='home_pr-slider-sec sec'>
+        <div className='container mx-auto'>
+          <div className='relative'>
+            <SecHeading centerLine={true}>
+                Color Contact lenses
+            </SecHeading>
+            <ProductImageSlider lenstype={'color-contact-lens'} />
           </div>
         </div>
       </section>

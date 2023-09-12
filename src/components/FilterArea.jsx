@@ -61,7 +61,7 @@ const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawer
   const searchParams = useSearchParams();
   const current = new URLSearchParams(Array.from(searchParams.entries()));
   useEffect(() => {
-    console.log('param', current.toString(), filterSearchParam);
+    // console.log('param', current.toString(), filterSearchParam);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -269,7 +269,7 @@ const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawer
                       filters.brands.map((mp, index) => {
                           return (
                               <div className={`cus-checkbox-wrapper ${index+1 > maxLength?"hidden":''}`} key={index}>
-                                <input type="radio" value={mp.id} onClick={(e)=>handleFilter(e)} name='brands' id={`brand-${index}`} />
+                                <input type="radio" value={mp.id} onClick={(e)=>handleFilter(e)} name='brand' id={`brand-${index}`} />
                                 <label htmlFor={`brand-${index}`}>
                                   <span>{mp.name}</span>
                                 </label>

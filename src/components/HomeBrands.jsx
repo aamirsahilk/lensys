@@ -59,9 +59,9 @@ const HomeBrands = () => {
                         {
                             logos?.map((logo, index) =>(
                                 <SwiperSlide key={index}>
-                                    <Link href={`product/${logo.id}`} className="brand-wrapper">
+                                    <div className="brand-wrapper">
                                         <Image src={logo.image} alt={logo.alt_text} width={200} height={100}  />
-                                    </Link>
+                                    </div>
                                 </SwiperSlide>
                             ))
                         }
