@@ -23,9 +23,9 @@ const ProductInnerTabs = ({data}) => {
                 <Tab value="det">
                 Details
                 </Tab>
-                <Tab value="ship">
+                {/* <Tab value="ship">
                 Shipping
-                </Tab>
+                </Tab> */}
           
             </TabsHeader>
             <TabsBody className='mt-8'>

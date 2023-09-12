@@ -6,6 +6,11 @@ import NewsLetter from './NewsLetter'
 import api from '@/api/api'
 import { useState, useEffect } from 'react'
 
+import instagram from '../../public/images/instagram.png'
+import facebook from '../../public/images/facebook.png'
+import twitter from '../../public/images/twitter.png'
+import linkedin from '../../public/images/linkedin.png'
+
 const Footer = () => {
     const [categories, setCatagories] = useState([])
     const fetchCategories = async() =>{
@@ -30,10 +35,10 @@ const Footer = () => {
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                         </p>
                     </div>
-                    <h3 className="ft-head">
+                    {/* <h3 className="ft-head">
                         Subscribe to our newsletter
                     </h3>
-                    <NewsLetter />
+                    <NewsLetter /> */}
                 </div>
                 {/* <div className="relative">
                     <h3 className="ft-head">
@@ -86,34 +91,51 @@ const Footer = () => {
                       
                     </ul>
                 </div>
-                <div className="relative">
+                <div className="relative lg:col-span-2">
                 <h3 className="ft-head">
                         Contact Details
                     </h3>
-                    <ul className="ft-list">
+                    <ul className="con-list ft-list">
                         <li>
-                            <Link href="tel:917470560626" passHref={true}>
-                                Home
+                            <span>Phone</span>
+                            <a href="tel:917470560626">
+                                +91 7470560626
+                            </a>
+                        </li>
+                        <li>
+                            <span>Mail</span>
+                            <a href="mailto:support@lensys.in">
+                                support@lensys.in
+                            </a>
+                        </li>
+                        <li>
+                            <span>Location</span>
+                            <a href="mailto:support@lensys.in">
+                                309, 2/A New Uday nagar <br/> 
+                                navi mumbai, maharashtra, India
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    <ul className='soc-list'>
+                        <li>
+                            <Link href={'Facebook.com'}>
+                                <Image width={37} height={37} src={facebook} alt="" />
                             </Link>
                         </li>
                         <li>
-                            <Link href="">
-                                About Us
+                            <Link href={'Facebook.com'}>
+                                <Image width={37} height={37} src={instagram} alt="" />
                             </Link>
                         </li>
                         <li>
-                            <Link href="">
-                                Career
+                            <Link href={'Facebook.com'}>
+                                <Image width={37} height={37} src={twitter} alt="" />
                             </Link>
                         </li>
                         <li>
-                            <Link href="">
-                                Store Locator
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="">
-                                Contact Us
+                            <Link href={'Facebook.com'}>
+                                <Image width={37} height={37} src={linkedin} alt="" />
                             </Link>
                         </li>
                     </ul>
@@ -123,7 +145,7 @@ const Footer = () => {
         <div className="ft-bottom">
             <div className="container mx-auto">
                 <p className="para text-center">
-                    Copyright 2023 | Lensys Pvt. Ltd | <Link href="">Code & Design Credits</Link>
+                    Copyright 2023 | Lensys Pvt. Ltd | <Link href="https://techmatrick.com" passHref={true} target="_blank">Code & Design Credits</Link>
                 </p>
             </div>
         </div>

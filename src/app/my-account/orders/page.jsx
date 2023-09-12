@@ -207,14 +207,12 @@ const Orders = () => {
                                   </PopoverHandler>
                                   <PopoverContent className="p-2 z-50">
                                     <List className="p-0">
-                                      <button className="text-initial" onClick={() => handleOpen2("lg")}>
+                                      {/* <button className="text-initial" onClick={() => handleOpen2("lg")}>
                                         <ListItem>
-                                          {/* <ListItemPrefix>
-                                                            <InsertEmoticonIcon />
-                                                        </ListItemPrefix> */}
+                                          
                                           View Invoice
                                         </ListItem>
-                                      </button>
+                                      </button> */}
                                       <Link href={`my-account/orders/${item.order_id}`} className="text-initial">
                                         <ListItem>
                                           {/* <ListItemPrefix>

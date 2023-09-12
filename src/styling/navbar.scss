@@ -266,6 +266,10 @@
         display: grid;
         grid-template-columns: 250px 1fr 1fr;
         gap: 20px;
+
+        &.blocg{
+            display: block !important;
+        }
         
         .col:not(:last-child){
             border-right: 1px solid rgba(0, 0, 0, 0.20);

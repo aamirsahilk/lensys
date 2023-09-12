@@ -2292,3 +2292,32 @@ input.error{
   .cart-page .absolute.backdrop-blur-sm{
     position: fixed !important;
   }
+  .con-list{
+    position: relative;
+
+    li{
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+    
+        span{
+            font-weight: 600;
+            color: white;
+            padding: 10px 0;
+        }
+    }
+  }
+  .soc-list{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.2em;
+
+    li{
+
+        a{
+            display: inline-block;
+        }
+    }
+  }

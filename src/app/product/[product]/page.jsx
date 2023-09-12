@@ -45,6 +45,7 @@ const ProductInner = ({params}) => {
   const [product, setProduct] = useState({});
   const [colorId, setColorId] = useState(null);
   const [lensObj, setLensObj] = useState({});
+  const [lensError, setLensError] = useState(false);
   const fetchProduct = useCallback(async()=>{
     const response = await api.get(`product/${productSlug}`);
     const data = response.data;
@@ -90,8 +91,12 @@ const ProductInner = ({params}) => {
   const addToCart = async () => {
     // return
     if(userdata.loggedin){
-      if(categoryid == 4 && categoryid == 3){
+      if(categoryid == 4 || categoryid == 3){
         if(Object.keys(lensObj).length === 0){
+          setLensError(true);
+          setTimeout(() => {
+            setLensError(false);
+          }, 2500);
           return
         }
         var formData = new FormData();
@@ -103,7 +108,6 @@ const ProductInner = ({params}) => {
         const data = res.data;
         if(data.status){
           push('/cart');
-          console.log("cart", data);
         }
       }else{
         var formData = new FormData();
@@ -115,7 +119,6 @@ const ProductInner = ({params}) => {
         const data = res.data;
         if(data.status){
           push('/cart');
-          console.log("cart", data);
         }
       }
     }else{
@@ -224,6 +227,12 @@ const ProductInner = ({params}) => {
                   {/* <CheckPincode /> */}
                   {
                     isLens ? <ContactLensPowerSelect setLensObj={setLensObj} /> : ''
+                  }
+                  {
+                    lensError &&
+                    <div className="act-msg error">
+                      <p>Please select qnty</p>
+                    </div>
                   }
                   
                   <div className="flex flex-wrap gap-2 mt-8">

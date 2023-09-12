@@ -27,36 +27,40 @@ const Megamenu = ({subCat,setMenuOpen}) => {
 
   return (
     <div className='mega-menu-wrapper'>
-        <div className="mega-menu-inner">
-            <div className="col">
-                <h3>SHOP BY GENDER</h3>
-                <ul className="gender-list">
-                    <li>
-                        <Link href={`products/${subCat}?subcategory=${'MEN'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
-                            <div className="ic">
-                                <MenIcon />
-                            </div>
-                            <span>MEN</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={`products/${subCat}?subcategory=${'WOMEN'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
-                            <div className="ic">
-                                <WomenIcon />
-                            </div>
-                            <span>WOMEN</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={`products/${subCat}?subcategory=${'KIDS'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
-                            <div className="ic">
-                                <KidIcon />
-                            </div>
-                            <span>KIDS</span>
-                        </Link>
-                    </li>
-                </ul>
-            </div>
+        <div className={`mega-menu-inner ${subCat === 'corrective-contact-lens' || subCat === 'color-contact-lens'?'blocg':''}`}>
+            {
+                subCat === 'corrective-contact-lens' || subCat === 'color-contact-lens'  ?
+                null:
+                <div className="col">
+                    <h3>SHOP BY GENDER</h3>
+                    <ul className="gender-list">
+                        <li>
+                            <Link href={`products/${subCat}?subcategory=${'MEN'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
+                                <div className="ic">
+                                    <MenIcon />
+                                </div>
+                                <span>MEN</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={`products/${subCat}?subcategory=${'WOMEN'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
+                                <div className="ic">
+                                    <WomenIcon />
+                                </div>
+                                <span>WOMEN</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={`products/${subCat}?subcategory=${'KIDS'}`} onClick={()=>setMenuOpen && setMenuOpen(false)}>
+                                <div className="ic">
+                                    <KidIcon />
+                                </div>
+                                <span>KIDS</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            }
             {
                 filters.brands &&
                 <div className="col">

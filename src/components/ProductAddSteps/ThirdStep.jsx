@@ -49,7 +49,7 @@ const ThirdStep = ({id, colorId}) => {
                             </button>
                           </li>
                           
-                          <li>
+                          {/* <li>
                             <button data-value="2" className={`${tab==2?'active':''}`} onClick={()=>{tabChange(2);handleCLick(e)}}>
                               <span>upload prescription</span>
                             </button>
@@ -58,7 +58,7 @@ const ThirdStep = ({id, colorId}) => {
                             <button data-value="3" className={`${tab==1?'active':''}`} onClick={()=>{tabChange(1);handleCLick(e)}}>
                               <span>Enter Manually</span>
                             </button>
-                          </li>
+                          </li> */}
                         </ul>
                         <div className="tab-content">
                           {

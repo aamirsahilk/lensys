@@ -245,8 +245,8 @@ const Cart = () => {
                                                     fname: userData.name,
                                                     lname: userData.lastname,
                                                     phone: userData.phone,
-                                                    // city: cities.length > 0 && cities[0].city,
-                                                    // state: states.length > 0 && states[0].id,
+                                                    city: cities.length > 0 && cities[0].city,
+                                                    state: states.length > 0 && states[0].id,
                                                     address: '',
                                                     zipcode: ''
                                                 }}
