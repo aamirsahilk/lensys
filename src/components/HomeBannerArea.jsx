@@ -1,8 +1,9 @@
 'use client'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import banner1 from '../../public/images/banner1.jpg'
 // import banner1 from '../images/banner1.jpg'
+import { Navigation, Autoplay } from "swiper";
 import Link from 'next/link';
 import Image from 'next/image';
 import api from '@/api/api';
@@ -23,6 +24,8 @@ const HomeBannerArea = ({data}) => {
         fetchBanner();
         setIsClient(true);
     },[])
+    const navigationPrevRef = useRef();
+    const navigationNextRef = useRef();
     return (
         <>
         {
@@ -38,13 +41,20 @@ const HomeBannerArea = ({data}) => {
                 <Swiper
                 spaceBetween={50}
                 slidesPerView={1}
+                loop={true}
+                navigation={{ prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current, }} 
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }}
                 onSlideChange={() => {}}
                 onSwiper={(swiper) => {}}
+                modules={[Navigation,Autoplay]}
                 >
                 {
                     banners?.map((banner,index) => (
                         <SwiperSlide key={index}>
-                            <Link href={banner.link} className="main-banner">
+                            <Link href={banner.link} className="main-banner" passHref={true} >
                                 <picture>
                                     <source srcet={banner.phone} media="max-width:600px"/>
                                     <Image src={banner.image} width={1920} height={1080} alt={banner.alttext} />
