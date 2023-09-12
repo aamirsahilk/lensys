@@ -32,10 +32,10 @@ const LoginForm = (props) => {
         data.append('email', values.email);
         const res = await api.post(`forgot-password`, data);
         const dt = res.data;
-        setForgotStatus(dt);
-        setTimeout(() => {
-            setForgotStatus({});
-        }, 2500);
+        setForgotStatus({...dt,message:"We've sent an password change email, Check your email id "});
+        // setTimeout(() => {
+        //     setForgotStatus({});
+        // }, 2500);
     }
 
     return (

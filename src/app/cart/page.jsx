@@ -64,6 +64,7 @@ const Cart = () => {
     const [couponInvalid , setCouponInvalid ] = useState(false);
 
     const [states, setStates] = useState([]);
+    const [state, setState] = useState([]);
     const [cities, setCities] = useState([]);
 
     const openDrawerRight = () => setOpenRight(true);
@@ -244,12 +245,12 @@ const Cart = () => {
                                                     fname: userData.name,
                                                     lname: userData.lastname,
                                                     phone: userData.phone,
-                                                    city: cities.length > 0 && cities[0].city,
-                                                    state: states.length > 0 && states[0].name,
+                                                    // city: cities.length > 0 && cities[0].city,
+                                                    // state: states.length > 0 && states[0].id,
                                                     address: '',
                                                     zipcode: ''
                                                 }}
-                                                enableReinitialize
+                                                // enableReinitialize
                                                 validationSchema={validationSchema}
                                                 onSubmit={(values) => {
                                                     console.log('submit..');
@@ -263,10 +264,7 @@ const Cart = () => {
                                                                 <h3 className="it-head mb-5">
                                                                     Personal Details
                                                                 </h3>
-                                                                {/* <div className="info-line flex no-wrap gap-2">
-                                                                    <Image src={infoIcon} alt="" width={25} height={25} />
-                                                                    <span>Lorem Ipsum is simply dummy text of the</span>
-                                                                </div> */}
+                                                                
                                                                 <div className="grid mt-8 mb-8 grid-cols-1 md:grid-cols-2 gap-5">
                                                                     <div className="form-group">
                                                                         <div className="inp-grp">
@@ -293,12 +291,7 @@ const Cart = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                {/* <div className="info-line flex no-wrap items-start gap-2">
-                                                                    <Image src={infoIcon} alt="" width={25} height={25} />
-                                                                    <span>
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys
-                                                                    </span>
-                                                                </div> */}
+                                                                
                                                                 <h3 className="it-head mb-5 mt-10">
                                                                     Shipping Details
                                                                 </h3>
@@ -309,16 +302,9 @@ const Cart = () => {
                                                                             <ErrorMessage name="address" component="div" className="error-message" />
                                                                         </div>
                                                                     </div>
-                                                                    {/* <div className="form-group col-span-2">
-                                                        <div className="inp-grp">
-                                                            <Field type="text" name="address2" placeholder="Address Line 2" />
-                                                            <ErrorMessage name="address2" component="div" className="error-message" />
-                                                        </div>
-                                                    </div> */}
                                                                     <div className="form-group ">
                                                                         <div className="inp-grp">
-                                                                            <Field disabled={false} as="select" name="state" onChange={(e) => getCities(e.target.value)}>
-                                                                                
+                                                                            <Field as="select" name="state" onChange={(e) => getCities(e.target.value)} >
                                                                                 {   
                                                                                     states.map((state, index) => (
                                                                                         <option value={state.id} key={index}>
@@ -333,7 +319,7 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group">
                                                                         <div className="inp-grp">
-                                                                            <Field disabled={false} as="select" name="city" placeholder="city">
+                                                                            <Field  as="select" name="city" placeholder="city">
                                                                                 {
                                                                                     cities.map((city, index) => (
                                                                                         <option value={city.city} key={index}>
@@ -352,44 +338,7 @@ const Cart = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                {/* <h3 className="it-head mb-5 mt-10">
-                                                    Delivery Address
-                                                </h3>
-                                                <div className="cus-checkbox-wrapper" >
-                                                    <input type="checkbox" name='deliveryAddress' defaultChecked id={`price-1`} />
-                                                    <label htmlFor={`price-1`}>
-                                                        <span>Delivery Address same as billing address</span>
-                                                    </label>
-                                                </div>
-                                                {
-                                                    isAddressSame ? <div className="grid mt-8 mb-8 grid-cols-1 md:grid-cols-2 gap-5">
-                                                        <div className="form-group col-span-2">
-                                                            <div className="inp-grp">
-                                                                <input type="text" placeholder='Address Line 1' />
-                                                            </div>
-                                                        </div>
-                                                        <div className="form-group col-span-2">
-                                                            <div className="inp-grp">
-                                                                <input type="text" placeholder='Address Line 2' />
-                                                            </div>
-                                                        </div>
-                                                        <div className="form-group ">
-                                                            <div className="inp-grp">
-                                                                <input type="text" placeholder='State' />
-                                                            </div>
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <div className="inp-grp">
-                                                                <input type="text" placeholder='City' />
-                                                            </div>
-                                                        </div>
-                                                        <div className="form-group col-span-2">
-                                                            <div className="inp-grp">
-                                                                <input type="text" placeholder='Zip Code' />
-                                                            </div>
-                                                        </div>
-                                                    </div> : ''
-                                                } */}
+                                                             
 
                                                             </div>
                                                             <div className="relative md:col-span-5 sticky top-20 self-start">
@@ -402,10 +351,18 @@ const Cart = () => {
                                                                     <AccordionBody className="">
                                                                         <p className='cart-tot-det'>
                                                                             {
+                                                                                cart.subtotal != 0&&
+                                                                                <div>
+                                                                                <span>Subtotal : </span>
+                                                                                <span>₹ {cart.subtotal}</span>
+                                                                                
+                                                                                </div>
+                                                                            }
+                                                                            {
                                                                                 cart.discount != 0&&
                                                                                 <div>
                                                                                 <span>Discount : </span>
-                                                                                <span>{cart.discount}</span>
+                                                                                <span>- ₹ {cart.discount}</span>
                                                                                 
                                                                                 </div>
                                                                             }
@@ -413,7 +370,7 @@ const Cart = () => {
                                                                                 cart.shipping != 0&&
                                                                                 <div>
                                                                                 <span>Shipping : </span>
-                                                                                <span>{cart.shipping}</span>
+                                                                                <span>₹ {cart.shipping}</span>
                                                                                 </div>
                                                                             }
                                                                         </p>

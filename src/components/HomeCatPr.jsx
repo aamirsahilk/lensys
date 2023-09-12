@@ -3,6 +3,7 @@ import SecHeading from './SecHeading'
 import CustomButton from './CustomButton'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import Link from 'next/link';
 
 import api from '@/api/api';
 
@@ -63,9 +64,12 @@ const HomeCatPr = () => {
                                 <SecHeading>
                                     <span>Latest</span> picks
                                 </SecHeading>
-                                <CustomButton arrow={true}>
+                                <Link href={`products/${id}`} className='main-btn'>
                                     <span>View All</span>
-                                </CustomButton>
+                                </Link>
+                                {/* <CustomButton arrow={true}>
+                                    <span>View All</span>
+                                </CustomButton> */}
                             </div>
                             <div className="home-cat-pr-slider">
                                 <Swiper 

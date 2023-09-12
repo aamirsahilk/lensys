@@ -36,9 +36,9 @@ const MyAccount = () => {
   
   const userData = user;
 
-  useEffect(() =>{
-    console.log('userdata', userData)
-  }, [userData])
+  // useEffect(() =>{
+  //   console.log('userdata', userData)
+  // }, [userData])
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('First Name is required'),

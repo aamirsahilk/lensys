@@ -25,10 +25,11 @@ import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import {usePathname, useSearchParams} from 'next/navigation'
 
 import face from '../../../public/images/face-2.jpg'
+import { useSelector } from "react-redux";
 
 export default function Sidebar({link, setLink}) {
     // const [open, setOpen] = useState(0);
-
+    const userData = useSelector(state=>state.userData.value);
     var path = usePathname()
     const isActive = (pathname) => {
         return path === pathname ? 'bg-blue-gray-50 bg-opacity-80 text-blue-gray-900' : '';
@@ -43,10 +44,10 @@ export default function Sidebar({link, setLink}) {
             <div className="mb-2 p-4">
                 <div className="flex flex-col gap-6">
                     <div className="flex items-center gap-4">
-                        <Avatar src={face.src} alt="avatar" />
+                        {/* <Avatar src={face.src} alt="avatar" /> */}
                         <div>
-                            <Typography variant="h6">Taha Ratlam Wala</Typography>
-                            <Typography variant="small" color="gray" className="font-normal">info@email.com</Typography>
+                            <Typography variant="h6">{userData.name}</Typography>
+                            <Typography variant="small" color="gray" className="font-normal">{userData.email}</Typography>
                         </div>
                     </div>
                 </div>

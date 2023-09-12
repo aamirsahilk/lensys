@@ -20,6 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import customToast from '@/utils/CusToast'
 
 import api from '@/api/api'
+import { ToastContainer } from 'react-toastify'
 
 
 const Header = () => {
@@ -90,6 +91,7 @@ const Header = () => {
 
     return (
         <>
+            <ToastContainer />
             <div className={`overlay ${menuOpen?'active':''}`} onClick={()=>setMenuOpen(false)}></div>
             <nav className="main-nav">
                 <div className="l-part">
