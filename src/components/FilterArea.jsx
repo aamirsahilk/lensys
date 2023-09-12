@@ -269,7 +269,19 @@ const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawer
                       filters.brands.map((mp, index) => {
                           return (
                               <div className={`cus-checkbox-wrapper ${index+1 > maxLength?"hidden":''}`} key={index}>
-                                <input type="radio" value={mp.id} onClick={(e)=>handleFilter(e)} name='brand' id={`brand-${index}`} />
+                                <input 
+                                    type="radio"
+                                    value={mp.id}
+                                    // onClick={(e)=>handleFilter(e)}
+                                    name='brand'
+                                    checked={formik.values.brand === mp.id}
+                                    id={`brand-${index}`}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    onClick={(e)=>{
+                                      formik.handleChange(e);
+                                      handleFilter(e)
+                                    }}/>
                                 <label htmlFor={`brand-${index}`}>
                                   <span>{mp.name}</span>
                                 </label>
@@ -452,7 +464,19 @@ const FilterArea = ({ handleFilter, categoryParam, filterSearchParam, openDrawer
                           filters.brands.map((mp, index) => {
                               return (
                                   <div className={`cus-checkbox-wrapper ${index+1 > maxLength?"hidden":''}`} key={index}>
-                                    <input type="radio" value={mp.id} onClick={(e)=>handleFilter(e)} name='brands' id={`brand-${index}`} />
+                                    <input 
+                                    type="radio"
+                                    value={mp.id}
+                                    // onClick={(e)=>handleFilter(e)}
+                                    name='brand'
+                                    id={`brand-${index}`}
+                                    checked={formik.values.brand === mp.id}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    onClick={(e)=>{
+                                      formik.handleChange(e);
+                                      handleFilter(e)
+                                    }}/>
                                     <label htmlFor={`brand-${index}`}>
                                       <span>{mp.name}</span>
                                     </label>
