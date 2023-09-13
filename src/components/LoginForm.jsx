@@ -16,10 +16,11 @@ const LoginForm = (props) => {
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required('Email is required'),
-        password: Yup.string().required('Password is required').matches(
-            /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
-            'Password must contain at least 1 letter, 1 number, 1 symbol, and be 8 characters long'
-        )
+        password: Yup.string().required('Password is required')
+        // .matches(
+        //     /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
+        //     'Password must contain at least 1 letter, 1 number, 1 symbol, and be 8 characters long'
+        // )
     });
     const userdata = useSelector((state)=> state.userData.value );
     const validationSchema2 = Yup.object().shape({
@@ -27,7 +28,7 @@ const LoginForm = (props) => {
     });
 
     const handleForgotPass = async (values)=>{
-        console.log('hkkh', values);
+        // console.log('hkkh', values);
         const data = new FormData();
         data.append('email', values.email);
         const res = await api.post(`forgot-password`, data);
