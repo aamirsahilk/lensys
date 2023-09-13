@@ -38,7 +38,7 @@ const ProductCard = ({ data, ImageProductCard}) => {
                     isLoggedIn &&
                     <Productlikebtn liked={liked} handleLike={handleLike} />
                 }
-                <Link href={`product/${slug}`}>
+                <Link href={`/product/${slug}`}>
                     <div className="le_pr-image-carousel">
                         {
                             image &&

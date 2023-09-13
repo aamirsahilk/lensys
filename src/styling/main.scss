@@ -1769,6 +1769,14 @@
         font-weight: 700;
         line-height: 100%;
     }
+    p{
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+                line-clamp: 2; 
+        -webkit-box-orient: vertical;
+        line-height: 130%;
+    }
 }
 .mb-0{
     margin-bottom: 0 !important;
@@ -2319,5 +2327,11 @@ input.error{
         a{
             display: inline-block;
         }
+    }
+  }
+  .re-f-table{
+    
+    th,td{
+        font-size: 14px;
     }
   }

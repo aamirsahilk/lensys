@@ -492,7 +492,7 @@ const Cart = () => {
                                     <div className="coupons-list">
                                         {
                                              coupons?.map((item, index) =>(   
-                                                <div className={`coupon-wrap ${item?.applicable?'':'disabled'}`} key={index} onClick={()=>handleCoupon(item?.code)}>
+                                                <div className={`coupon-wrap ${item?.applicable?'':'disabled'}`} key={index} onClick={()=>item?.applicable?handleCoupon(item?.code):''}>
                                                     <h3 className='uppercase'>{item?.code}</h3>
                                                     <p>{item?.description}</p>
                                                     <span className="apply">

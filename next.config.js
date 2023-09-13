@@ -18,8 +18,9 @@ images: {
       },
       {
         protocol: 'https',
-        hostname: 'techmatrick.com',
-        // hostname: 'lensys.in',
+        hostname: 'trignoimportexport.com',
+        // hostname: 'techmatrick.com',
+        hostname: 'lensys.in',
         // port: '',
         // pathname: '/account123/**',
       },

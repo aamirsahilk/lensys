@@ -22,6 +22,9 @@ import customToast from '@/utils/CusToast'
 import api from '@/api/api'
 import { ToastContainer } from 'react-toastify'
 
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+
 
 const Header = () => {
 
@@ -48,7 +51,7 @@ const Header = () => {
     const [megamenuOpen, setMegamenuOpen] = useState({});
 
     const isSticky = (e) => {
-        const header = document.querySelector('.main-nav');
+        const header = document.querySelector('.main-nav-main');
         const scrollTop = window.scrollY;
         scrollTop >= 250 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
     };
@@ -73,7 +76,8 @@ const Header = () => {
                 }else{
                     dispatch(updateUserData({loggedin:false}))
                     // eslint-disable-next-line react-hooks/exhaustive-deps
-                    customToast('Session expired please try to login again', 'error')
+                    customToast('Session expired please try to login again', 'error');
+                    localStorage.removeItem('access_token');
                 }
             }catch (err) {
                 customToast('Something went wrong', 'error')
@@ -93,16 +97,33 @@ const Header = () => {
         <>
             <ToastContainer />
             <div className={`overlay ${menuOpen?'active':''}`} onClick={()=>setMenuOpen(false)}></div>
-            <nav className="main-nav">
-                <div className="l-part">
-                    <button className='menu-btn md:hidden' onClick={()=>setMenuOpen(true)}>
-                        <DragHandleIcon style={{ 'color': 'white', 'width': '40px', 'height': '40px' }} />
-                    </button>
-                    <Link href='/'>
-                        <Image src={logo} alt="" />
-                    </Link>
-                </div>
-                <div className="r-part">
+            <div className="main-nav-main">
+                <nav className="main-nav">
+                    <div className="l-part">
+                        <button className='menu-btn md:hidden' onClick={()=>setMenuOpen(true)}>
+                            <DragHandleIcon style={{ 'color': 'white', 'width': '40px', 'height': '40px' }} />
+                        </button>
+                        <Link href='/' className='logo'>
+                            <Image src={logo} alt="" />
+                        </Link>
+                    </div>
+                    <div className="m-part">
+                    <HeaderSearchBar />
+                    </div>
+                    <div className="r-part">
+                       
+                        <ul className="ot-list">
+                            
+                            <li>
+                                <HeaderCartBtn count="2" />
+                            </li>
+                            <li>
+                                <HeaderLoginArea />
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div className="bottom-nav">
                     <ul className="nav-list">
                         {   
                             categories.length > 0 &&
@@ -116,41 +137,23 @@ const Header = () => {
                                 </li>
                             ))
                         }
-                        {/* <li className='has-mega-menu'>
-                            <Link href="">
-                                <span>Eyeglasses</span>
-                                <Image src={SelectDrop} alt="" width={20} height={20} />
-                            </Link>
-                            <Megamenu />
-                        </li> */}
-                        {/* <li>
-                            <Link href="">
-                                About
-                            </Link>
-                        </li>
-                         */}
-                        {/* <li>
-                            <Link href="">
-                                Eyeglasses
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="">
-                                Eyeglasses
-                            </Link>
-                        </li> */}
                     </ul>
-                    <HeaderSearchBar />
-                    <ul className="ot-list">
-                        <li>
-                            <HeaderCartBtn count="2" />
-                        </li>
-                        <li>
-                            <HeaderLoginArea />
-                        </li>
+                    <ul className="head-con-list">
+                            <li className='con-ac'>
+                                <span><PhoneIcon /></span>
+                                <a href="tel:7470560626">
+                                    +91 7470560626
+                                </a>
+                            </li>
+                            <li className='con-ac'>
+                                <span><EmailIcon /></span>
+                                <a href="mailto:support@lensys.in">
+                                    support@lensys.in
+                                </a>
+                            </li>
                     </ul>
                 </div>
-            </nav>
+            </div>
 
             {/* mobile navigation */}
             <div className={`mobile-nav ${menuOpen?'active':''}`}>

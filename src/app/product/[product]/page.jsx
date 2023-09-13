@@ -99,11 +99,28 @@ const ProductInner = ({params}) => {
           }, 2500);
           return
         }
+        if (lensObj.qty && !lensObj.powerRight) {
+          setLensError(true);
+          setTimeout(() => {
+            setLensError(false);
+          }, 2500);
+          return
+        }
+        if (lensObj.qty2 && !lensObj.powerLeft) {
+          setLensError(true);
+          setTimeout(() => {
+            setLensError(false);
+          }, 2500);
+          return
+        }
         var formData = new FormData();
         Object.keys(lensObj).forEach((key) => {
             formData.append(key, lensObj[key]);
         });
         formData.append('productid', id);
+        if(colorId){
+          formData.append('colorid', colorId);
+        }
         const res = await api.post(`addtocart?auth=${userdata.access_token}`, formData);
         const data = res.data;
         if(data.status){
@@ -239,7 +256,7 @@ const ProductInner = ({params}) => {
                     {
                       isLens || categoryid == 2 ?
                       <button onClick={addToCart} className='main-btn big'>
-                        <span>Addd To Cart</span>
+                        <span>Add To Cart</span>
                       </button>:
                       <>
                         <button onClick={addToCart} className='main-btn big dark'>

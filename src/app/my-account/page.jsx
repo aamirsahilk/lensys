@@ -85,7 +85,7 @@ const MyAccount = () => {
     const res = await api.post(`update-profile?auth=${userData.access_token}`, formData);
     const data = res.data;
     if(data.status){
-      dispatch(updateUserData({...user, ...{profile: obj}}))
+      dispatch(updateUserData({...user, ...obj}))
       customToast('Details updated successfully');
       setTimeout(()=>{
         setSubmitting(false);
@@ -94,7 +94,7 @@ const MyAccount = () => {
   };
 
 
-  const handleSubmitForPassword = async (values, {resetForm }) => {
+  const handleSubmitForPassword = async (values, {resetForm, setSubmitting}) => {
     var formData = new FormData();
     formData.append('password', values.newPassword);
     const res = await api.post(`update-password?auth=${userData.access_token}`, formData);
@@ -102,9 +102,9 @@ const MyAccount = () => {
     if(data.status){
       resetForm();
       customToast('Password has been changes successfully');
-      // setTimeout(()=>{
-      //   setSubmitting(false);
-      // }, 1500)
+      setTimeout(()=>{
+        setSubmitting(false);
+      }, 1500)
     }
   };
 
@@ -189,7 +189,7 @@ const MyAccount = () => {
                     validationSchema={validationSchemaForPasswords}
                     onSubmit={handleSubmitForPassword}
                   >
-                    {({resetForm})=>(
+                    {({resetForm,isSubmitting })=>(
                       <Form className="mt-8 mb-2 w-full max-w-[600px]">
                         <div className="grid md:grid-cols-12 gap-6">
                           <div className="md:col-span-12">
@@ -221,8 +221,8 @@ const MyAccount = () => {
                             </div>
                           </div>
                           <div className="md:col-span-12">
-                            <button type="submit" className="main-btn dark full mt-5">
-                              <span>Change Password</span>
+                            <button type="submit" className="main-btn dark full mt-5" disabled={isSubmitting}>
+                              <span>{isSubmitting?'Please wait...':'Change Password'}</span>
                             </button>
                           </div>
                         </div>

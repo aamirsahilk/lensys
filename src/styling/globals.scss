@@ -95,6 +95,14 @@ p.para{
   background: $gr;
   // transition: 0.2s cubic-bezier(0.47, 0, 0.745, 0.715);
 
+  &:disabled{
+    background: #808080 !important;
+
+    span{
+      color: white !important;
+    }
+  }
+
   &.block-btn{
     display: flex;
     max-width: 100% !important;
@@ -494,5 +502,25 @@ $trans: 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
   &.sm-grey{
     font-size: 24px;
     color: #575757;
+  }
+}
+.g-btn{
+  display: flex;
+  align-items: center;
+  max-width: max-content;
+  border-radius: 100px;
+  background: #f1f1f1;
+  gap: 5px;
+  padding: 12px 20px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+
+  img{
+    width: 25px;
+  }
+
+  span{
+    font-weight: 500;
   }
 }

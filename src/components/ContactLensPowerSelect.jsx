@@ -3,28 +3,27 @@ import Select from 'react-select'
 
 const ContactLensPowerSelect = ({setLensObj}) => {
     
-    const rightEyeQty = [
-        { value: 'none', label: 'Select Qnty', name: 'qty' },
-        { value: '0', label: '0', name: 'qty' },
-        { value: '1', label: '1', name: 'qty' },
-        { value: '2', label: '2', name: 'qty' }
-    ]
-    const leftEyeQty = [
-        { value: 'none', label: 'Select Qnty', name: 'qty2' },
-        { value: '1', label: '1', name: 'qty2' },
-        { value: '2', label: '2', name: 'qty2' }
-    ]
-    const leftPower = [
-        { value: 'none', label: 'Select Power', name: 'powerLeft' },
-        { value: '0.2', label: '0.2', name: 'powerLeft' },
-        { value: '0.3', label: '0.3', name: 'powerLeft' }
-    ]
-    const rightPower = [
-        { value: 'none', label: 'Select Power', name: 'powerRight' },
-        { value: '0.1', label: '0.1', name: 'powerRight' },
-        { value: '0.2', label: '0.2', name: 'powerRight' },
-        { value: '0.3', label: '0.3', name: 'powerRight' }
-    ]
+    const lensPower = (min,max,gap,name) =>{
+        const arr = [];
+        arr.push({ value: 'none', label: 'None', name: name })
+        for (let i = min; i <= max; i += gap) {
+            arr.push({value: '-'+i.toFixed(2), label:'-'+i.toFixed(2),name:name})
+        }
+        return arr;
+    }
+    const qntySelect = (min,max,gap,name) =>{
+        const arr = [];
+        arr.push({ value: 'none', label: 'None', name: name })
+        for (let i = min; i <= max; i += gap) {
+            arr.push({value: i.toFixed(0), label:i.toFixed(0)+' Box',name:name})
+        }
+        return arr;
+    }
+   
+    const rightEyeQty = qntySelect(1,30,1,'qty')
+    const leftEyeQty = qntySelect(1,30,1,'qty2')
+    const leftPower = lensPower(0.50,12.00,0.25,'powerLeft')
+    const rightPower = lensPower(0.50,12.00,0.25,'powerRight')
     const colourStyles = {
         control: styles => ({ ...styles, backgroundColor: 'white' }),
         option: (styles, { data, isDisabled, isFocused, isSelected }) => {
@@ -57,10 +56,10 @@ const ContactLensPowerSelect = ({setLensObj}) => {
                            
                         </th>
                         <th>
-                            OS (LEFT EYE)
+                            OS (RIGHT EYE)
                         </th>
                         <th>
-                            OS (RIGHT EYE)
+                            OS (LEFT EYE)
                         </th>
                     </tr>
                 </thead>
@@ -69,22 +68,22 @@ const ContactLensPowerSelect = ({setLensObj}) => {
                         <td data-value="">
                             Boxes
                         </td>
-                        <td data-value="OS (LEFT EYE)">
-                            <Select options={leftEyeQty} styles={colourStyles} onChange={handleChange} />
-                        </td>
                         <td data-value="OS (RIGHT EYE)">
                             <Select options={rightEyeQty} styles={colourStyles} onChange={handleChange} />
+                        </td>
+                        <td data-value="OS (LEFT EYE)">
+                            <Select options={leftEyeQty} styles={colourStyles} onChange={handleChange} />
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Sph
                         </td>
-                        <td data-value="OS (LEFT EYE)">
-                            <Select options={leftPower} styles={colourStyles} onChange={handleChange} />
-                        </td>
                         <td data-value="OS (RIGHT EYE)"> 
                             <Select options={rightPower} styles={colourStyles} onChange={handleChange} />
+                        </td>
+                        <td data-value="OS (LEFT EYE)">
+                            <Select options={leftPower} styles={colourStyles} onChange={handleChange} />
                         </td>
                     </tr>
                 </tbody>

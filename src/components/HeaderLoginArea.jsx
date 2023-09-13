@@ -8,6 +8,7 @@ import Link from 'next/link'
 import LogoutIcon from '@mui/icons-material/Logout';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 // import { Logout } from '@/utils/Logout'
 
@@ -113,7 +114,7 @@ const HeaderLoginArea = () => {
            
           >
             
-            <DialogBody className='p-8 rounded-xl'>
+            <DialogBody className='p-8 rounded-xl h-[85vh] overflow-scroll'>
               <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
                 
                 <div className="relative">
@@ -139,7 +140,7 @@ const HeaderLoginArea = () => {
                 </div>
                 <List className="p-0">
                   <Link href="#" className="text-initial">
-                    <Link href="my-account">
+                    <Link href="/my-account">
                       <ListItem>
                         <ListItemPrefix>
                           <InsertEmoticonIcon />
@@ -148,12 +149,20 @@ const HeaderLoginArea = () => {
                       </ListItem>
                     </Link>
                   </Link>
-                  <Link href="my-account/orders" className="text-initial">
+                  <Link href="/my-account/orders" className="text-initial">
                     <ListItem>
                       <ListItemPrefix>
                         <RedeemIcon />
                       </ListItemPrefix>
                       My Orders
+                    </ListItem>
+                  </Link>
+                  <Link href="/my-account/wishlist" className="text-initial">
+                    <ListItem>
+                      <ListItemPrefix>
+                        <FavoriteBorderIcon />
+                      </ListItemPrefix>
+                      Wishlist
                     </ListItem>
                   </Link>
                   <ListItem onClick={LogoutClick}  className="text-initial">

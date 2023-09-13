@@ -22,6 +22,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {usePathname, useSearchParams} from 'next/navigation'
 
 import face from '../../../public/images/face-2.jpg'
@@ -110,6 +111,14 @@ export default function Sidebar({link, setLink}) {
                                 <ShoppingBagIcon className="h-5 w-5" />
                             </ListItemPrefix>
                             My Orders
+                    </ListItem>
+                </Link>
+                <Link href="/my-account/wishlist">
+                    <ListItem className={`${isActive('/my-account/wishlist')}`}>
+                            <ListItemPrefix>
+                                <FavoriteBorderIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Wishlist
                     </ListItem>
                 </Link>
                 {/* <ListItem>

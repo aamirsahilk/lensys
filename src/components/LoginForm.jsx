@@ -7,10 +7,15 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import api from '@/api/api';
 import { useSelector } from 'react-redux';
+import Image from 'next/image';
+
+import googleIcon from '../../public/images/google-icon.png';
+
+import SocialSignIn from './SocialSignIn';
 
 const LoginForm = (props) => {
     const [passType, setPassType] = useState(true);
-    const {loginSubmit} = props;
+    const {loginSubmit,loginGoogle} = props;
     const [forgot, setForgot] = useState(false);
     const [forgotStatus, setForgotStatus] = useState({});
 
@@ -39,54 +44,66 @@ const LoginForm = (props) => {
         // }, 2500);
     }
 
+    
     return (
         <>
         {
             !forgot?
-            <Formik
-                initialValues={{
-                    email: 'behlah13@gmail.com',
-                    password: 'behlah@123',
-                }}
-                validationSchema={validationSchema}
-                onSubmit={(values) => {
-                    loginSubmit(values)
-                }}
-            >
-                {({ isSubmitting }) => (
-                    <Form>
-                        <div className="grid grid-cols-4 gap-4">
-                            <div className="col-span-4">
-                                <div className="form-group">
-                                    <label htmlFor="" className="label-text">Email Address</label>
-                                    <div className="inp-grp">
-                                        <Field type="text" name="email" placeholder="eg:1234568790" />
-                                        <ErrorMessage name="email" component="div" className="error-message" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-span-4">
-                                <div className="form-group">
-                                    <label htmlFor="" className="label-text">Password</label>
-                                    <div className="inp-grp">
-                                        <div className="pass-input">
-                                            <Field type={passType ? 'password' : 'text'} name="password" />
-                                            <button type="button" className="pass-ico" onClick={() => setPassType((prevState) => !prevState)}>
-                                                {!passType ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                            </button>
+            <>
+                {/* <div className='social-sign-in-wrap mb-2'>
+                    <button type="button" onClick={loginGoogle} className='g-btn'>
+                        <Image src={googleIcon} alt="" width={'50px'} height={'50px'} />
+                        <span>Google Login</span>
+                    </button>
+                </div> */}
+                <Formik
+                    initialValues={{
+                        email: '',
+                        password: '',
+                    }}
+                    validationSchema={validationSchema}
+                    onSubmit={(values, {setSubmitting}) => {
+                        loginSubmit(values).then(res=>{
+                            setSubmitting(false)
+                        })
+                    }}
+                >
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <div className="grid grid-cols-4 gap-4">
+                                <div className="col-span-4">
+                                    <div className="form-group">
+                                        <label htmlFor="" className="label-text">Email Address</label>
+                                        <div className="inp-grp">
+                                            <Field type="text" name="email" placeholder="eg:1234568790" />
+                                            <ErrorMessage name="email" component="div" className="error-message" />
                                         </div>
-                                        <ErrorMessage name="password" component="div" className="error-message" />
                                     </div>
                                 </div>
-                                <button type="button" className='forgot-pass-btn' onClick={()=>setForgot(true)}>Forgot Password?</button>
+                                <div className="col-span-4">
+                                    <div className="form-group">
+                                        <label htmlFor="" className="label-text">Password</label>
+                                        <div className="inp-grp">
+                                            <div className="pass-input">
+                                                <Field type={passType ? 'password' : 'text'} name="password" />
+                                                <button type="button" className="pass-ico" onClick={() => setPassType((prevState) => !prevState)}>
+                                                    {!passType ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                </button>
+                                            </div>
+                                            <ErrorMessage name="password" component="div" className="error-message" />
+                                        </div>
+                                    </div>
+                                    <button type="button" className='forgot-pass-btn' onClick={()=>setForgot(true)}>Forgot Password?</button>
+                                </div>
                             </div>
-                        </div>
-                        <button className="main-btn full dark mt-8" type="submit">
-                            <span>Login</span>
-                        </button>
-                    </Form>
-                )}
-            </Formik>:
+                            <button className="main-btn full dark mt-8" type="submit" disabled={isSubmitting}>
+                                <span>{isSubmitting?'Please wait...':'Login'}</span>
+                            </button>
+                        </Form>
+                    )}
+                </Formik>
+            </>
+            :
             <Formik
             initialValues={{
                 email: '',

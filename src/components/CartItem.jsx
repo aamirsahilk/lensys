@@ -54,7 +54,7 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
                 <Image src={data?.productdetails.image} width={150} height={150} alt="" />
             </div>
             <div className="cart-det flex flex-col justify-between items-end w-full">
-                <div className='flex items-start justify-between w-full'>
+                <div className='flex items-start gap-2 justify-between w-full'>
                     <div>
                         <h3>{data?.productdetails.product_name}</h3>
                         <p>
@@ -74,22 +74,52 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
                             </>
                         }
                         <div className="flex items-center gap-2 flex-wrap"> 
-                        {
-                          data?.qty > 0 &&
-                          <div>
-                            {isLens && <label className='mt-2'>Right Eye <b>{data?.powerRight}</b></label>}
-                            {
-                              data?.qty > 0 &&
-                              <QtyCounter counter={data?.qty} handleCounter={handleCounter} cartId={data?.cartid} />
-                            }
-                          </div>
-                        }
+                          
                           {
-                            isLens && data?.qty2 > 0 &&
-                            <div>
-                              <label htmlFor="" className='mt-2'>Left Eye <b>{data?.powerLeft}</b></label>
-                              <QtyCounter isLens={isLens} counter={data?.qty2} handleCounter={handleCounter} cartId={data?.cartid} />
-                            </div>
+                            data?.qty > 0 && !isLens &&
+                            <QtyCounter counter={data?.qty} handleCounter={handleCounter} cartId={data?.cartid} />
+                          }
+                          {
+                            isLens &&
+                            <table className='c-table mt-5 re-f-table'>
+                              {/* <thead>
+                                <tr>
+                                  <th className='text-left'>Eye</th>
+                                  <th className='text-left'>Power</th>
+                                  <th className='text-left'>Boxes</th>
+                                </tr>
+                              </thead> */}
+                              <tbody>
+                                  {
+                                    data?.qty > 0 && isLens &&
+                                      <tr >
+                                        <td>
+                                        <label><b>R</b></label>
+                                        </td>
+                                        <td>
+                                        <span>{data?.powerRight}</span>
+                                        </td>
+                                        <td>
+                                        <span>{data?.qty}</span> 
+                                        </td>
+                                      </tr>
+                                  }
+                                  {
+                                    isLens && data?.qty2 > 0 &&
+                                      <tr >
+                                        <td>
+                                        <label htmlFor=""><b>L</b></label>
+                                        </td>
+                                        <td>
+                                        <span>{data?.powerLeft}</span>
+                                        </td>
+                                        <td>
+                                        <span>{data?.qty2}</span>
+                                        </td>
+                                      </tr>
+                                  }
+                              </tbody>
+                            </table>
                           }
                         </div>
                     </div>

@@ -32,6 +32,7 @@ const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad']
 export default function AddProductSteps({params, searchParams}) {
   const {pid,color} = searchParams;
   const [activeStep, setActiveStep] = useState(0);
+  const [addtocartbtn, setAddtocartbtn] = useState(false);
   const [domLoaded, setDomLoaded] = useState(false)
 
   const [isMobile, setIsMobile] = useState(false);
@@ -64,6 +65,7 @@ export default function AddProductSteps({params, searchParams}) {
       }
     }else{
       if(userdata.loggedin){
+        setAddtocartbtn(true)
         addToCart();
       }else{
         // addToCart();
@@ -113,7 +115,6 @@ export default function AddProductSteps({params, searchParams}) {
   const { push } = useRouter();
 
   const addToCart = async () => {
-    console.log('add');
     // return
     var formData = new FormData();
     Object.keys(productData).forEach((key) => {
@@ -123,9 +124,9 @@ export default function AddProductSteps({params, searchParams}) {
     formData.append('productid', pid);
     const res = await api.post(`addtocart?auth=${userdata.access_token}`, formData);
     const data = res.data;
+    setAddtocartbtn(false)
     if(data.status){
       push('/cart');
-      console.log("cart", data);
     }
   }
   
@@ -172,7 +173,7 @@ export default function AddProductSteps({params, searchParams}) {
                 <button className="main-btn big secondary" disabled={activeStep === 0} onClick={handleBack}>
                   <span>Back</span>
                 </button>
-                <button className="main-btn big dark" onClick={handleNext}>
+                <button className="main-btn big dark" onClick={handleNext} disabled={addtocartbtn}>
                   <span>{activeStep === steps.length - 1 ? 'Add To Cart' : 'Continue'}</span>
                 </button>
               </div>

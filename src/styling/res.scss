@@ -1,9 +1,10 @@
 @media(max-width: 991px){
-    .main-nav .r-part .nav-list{
+    .main-nav-main .bottom-nav{
         display: none;
     }
     .main-nav{
-        padding: 1.15em 1em;
+        gap: 5px !important;
+        padding: 1.15em 1em !important;
     }
     .header-action-btn{
         width: 60px;

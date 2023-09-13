@@ -35,8 +35,15 @@ import LoginForm from './LoginForm';
 import SecHeading from './SecHeading';
 import Image from 'next/image';
 
+import { GoogleAuthProvider,FacebookAuthProvider, signInWithPopup } from "firebase/auth";
+const provider = new GoogleAuthProvider();
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "../firebase/config";
+
+
 const LoginSigup = ({handleOpen}) => {
     const [passType, setPassType] = useState(true);
+    const [passType2, setPassType2] = useState(true);
     const [register, setRegister] = useState({status:false});
     const [tab, setTab] = useState('login');
     const [loginEr, setLoginEr] = useState('');
@@ -63,7 +70,13 @@ const LoginSigup = ({handleOpen}) => {
         ),
         fname: Yup.string().required('First Name is required'),
         lname: Yup.string().required('Last Name is required'),
-        phone: Yup.string().required('Phone Number is required'),
+        phone: Yup.string().required('Phone Number is required').matches(
+            /^[0-9]{10}$/,
+            'Phone number must be 10 digits'
+        ),
+        confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm Password is required')
     });
 
     // register form
@@ -76,17 +89,18 @@ const LoginSigup = ({handleOpen}) => {
             const res = await api.post('register', formData);
             // const res = await axios.post('https://techmatrick.com/lensys/register', formData )
             if(res.data.status){
-                setRegister(res.data);
-                customToast('Hurray! you have been registered', 'success')
+                // setRegister(res.data);
+                loginSubmit({email: values.email, password: values.password})
+                // customToast('Hurray! you have been registered', 'success')
                 
             }else{
-                customToast('Something went wrong', 'error')
+                customToast(res.data.msg, 'error')
             }
         }catch(error){
             customToast('Something went wrong', 'error')
             console.log("error", error);
         }
-        recaptchaRef.current.execute();
+        // recaptchaRef.current.execute();
     }   
 
     const loginSubmit = async (values)=>{
@@ -100,7 +114,7 @@ const LoginSigup = ({handleOpen}) => {
                 customToast('Logged In Successfully') 
                 handleOpen('close');
             }else{
-                setLoginEr('Bad credentials please try again')
+                setLoginEr('Bad credentials Please Try Again')
             }
             if(res.data.status){
                 dispatch(updateUserData({...res.data, loggedin:true}));
@@ -111,6 +125,37 @@ const LoginSigup = ({handleOpen}) => {
             handleOpen('close');
         }
     }
+
+    const loginGoogle = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential ?.accessToken;
+                const user = result.user;
+                console.log('userData google', user);
+                const socialLogin = async()=>{
+                    // const formData = new FormData();
+                    // formData.append('email', user.email);
+                    // formData.append('name', user.displayName);
+                    // formData.append('accessToken', user.accessToken);
+                    // formData.append('uid', user.uid);
+                    // const res = await api.post('socialsignin', formData);
+                    // console.log('res social signin', res);
+                }
+                socialLogin();
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const email = error.email;
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                console.log('googlr error', errorCode);
+            });
+    }
+
+    const logoutGoogle = () => {
+        auth.signOut();
+    };
 
     const onReCAPTCHAChange = (captchaCode) => {
         if(!captchaCode) {
@@ -153,7 +198,7 @@ const LoginSigup = ({handleOpen}) => {
                                         <span>{loginEr}</span>
                                     </div>
                                 }
-                                <LoginForm loginSubmit={loginSubmit} />
+                                <LoginForm loginSubmit={loginSubmit} loginGoogle={loginGoogle} />
                         </div>
                     </TabPanel>
                     <TabPanel value="signup">
@@ -181,8 +226,10 @@ const LoginSigup = ({handleOpen}) => {
                                         password: '',
                                     }}
                                     validationSchema={validationSchema}
-                                    onSubmit={(values) => {
-                                        registerSubmit(values);
+                                    onSubmit={(values,{setSubmitting}) => {
+                                        registerSubmit(values).finally(() => {
+                                            setSubmitting(false)
+                                        });
                                     }}
                                 >
                                     {({ isSubmitting }) => (
@@ -206,7 +253,7 @@ const LoginSigup = ({handleOpen}) => {
                                                         <ErrorMessage name="lname" component="div" className="error-message" />
                                                     </div>
                                                 </div>
-                                                <div className="col-span-4">
+                                                <div className="col-span-2">
                                                     <div className="form-group">
                                                         <label htmlFor="phoneNumber">Phone Number</label>
                                                         <div className="inp-grp">
@@ -215,7 +262,7 @@ const LoginSigup = ({handleOpen}) => {
                                                         <ErrorMessage name="phone" component="div" className="error-message" />
                                                     </div>
                                                 </div>
-                                                <div className="col-span-4">
+                                                <div className="col-span-2">
                                                     <div className="form-group">
                                                         <label htmlFor="email">Email Address</label>
                                                         <div className="inp-grp">
@@ -238,10 +285,24 @@ const LoginSigup = ({handleOpen}) => {
                                                         <ErrorMessage name="password" component="div" className="error-message" />
                                                     </div>
                                                 </div>
+                                                <div className="col-span-4">
+                                                    <div className="form-group">
+                                                        <label htmlFor="password">Confirm Password</label>
+                                                        <div className="inp-grp">
+                                                            <div className="pass-input">
+                                                                <Field type={passType2 ? 'password' : 'text'} name="confirmPassword" />
+                                                                <button className="pass-ico" onClick={() => setPassType2((preState) => !preState)}>
+                                                                    {!passType2 ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <ErrorMessage name="confirmPassword" component="div" className="error-message" />
+                                                    </div>
+                                                </div>
                                             </div>
                                             {/* <ReCAPTCHA ref={recaptchaRef}  sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY} onChange={onReCAPTCHAChange} /> */}
-                                            <button className="main-btn full dark mt-8" type="submit" >
-                                                <span>Register</span>
+                                            <button className="main-btn full dark mt-8" type="submit" disabled={isSubmitting} >
+                                                <span>{isSubmitting?'Please wait...':'Register'}</span>
                                             </button>
                                         </Form>
                                     )}

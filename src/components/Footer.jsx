@@ -32,7 +32,7 @@ const Footer = () => {
                     <div className="ft-content">
                         <h3 className='ft-head'>Buy The Best Eyewear From Lensys</h3>
                         <p className="para">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            Introducing Lensys, your premier destination for all things optics in the world of e-commerce. At Lensys, we're dedicated to enhancing your vision and style through a wide range of high-quality eyewear and optical products. Whether you're in search of fashionable frames, precision lenses, or cutting-edge optical accessories, we've got you covered. Our commitment to exceptional craftsmanship and customer satisfaction sets us apart. 
                         </p>
                     </div>
                     {/* <h3 className="ft-head">
