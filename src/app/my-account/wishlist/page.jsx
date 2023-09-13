@@ -22,7 +22,7 @@ import {
     ListItem,
   } from "@material-tailwind/react";
 
-const whishlist = () => {
+const Whishlist = () => {
     const [products,setProduct] = useState([]);
     const [loading,setLoading] = useState(true);
 
@@ -87,4 +87,4 @@ const whishlist = () => {
   )
 }
 
-export default whishlist
+export default Whishlist
