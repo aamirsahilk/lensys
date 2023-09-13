@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import { Navigation } from "swiper";
@@ -15,14 +15,14 @@ const ProductImageSlider = ({lenstype}) => {
 
     const [products, setProducts] = useState(null)
  
-    const fetchCategories = async() =>{
+    const fetchCategories = useCallback(async() =>{
         const res = await api.get(`products/${lenstype}`);
         setProducts(res.data)
-    }
+    },[])
 
     useEffect(() =>{
         fetchCategories();
-    },[])
+    },[fetchCategories])
 
     return (
         <>

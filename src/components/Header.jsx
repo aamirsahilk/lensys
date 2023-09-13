@@ -85,6 +85,7 @@ const Header = () => {
         }
         
         regen();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const handleToggleMegamenu = (index) => {

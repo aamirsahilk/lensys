@@ -194,6 +194,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                 setInitValues(data.prescription.jsondta)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [data])
 
    

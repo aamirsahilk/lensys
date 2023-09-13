@@ -3,6 +3,7 @@ import React,{useState, useEffect, useCallback} from 'react'
 import ProductCardSkeleton from '@/components/skeleton/ProductCardSkeleton'
 import ProductCard from '@/components/ProductCard'
 import api from '@/api/api'
+import NoResult from '@/components/NoResult'
 import {
     Card,
     Dialog,
