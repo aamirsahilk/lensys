@@ -32,7 +32,7 @@ const Footer = () => {
                     <div className="ft-content">
                         <h3 className='ft-head'>Buy The Best Eyewear From Lensys</h3>
                         <p className="para">
-                            Introducing Lensys, your premier destination for all things optics in the world of e-commerce. At Lensys, we're dedicated to enhancing your vision and style through a wide range of high-quality eyewear and optical products. Whether you're in search of fashionable frames, precision lenses, or cutting-edge optical accessories, we've got you covered. Our commitment to exceptional craftsmanship and customer satisfaction sets us apart. 
+                            Introducing Lensys, your premier destination for all things optics in the world of e-commerce. At Lensys, we&apos;re dedicated to enhancing your vision and style through a wide range of high-quality eyewear and optical products. Whether you&apos;re in search of fashionable frames, precision lenses, or cutting-edge optical accessories, we&apos;ve got you covered. Our commitment to exceptional craftsmanship and customer satisfaction sets us apart. 
                         </p>
                     </div>
                     {/* <h3 className="ft-head">

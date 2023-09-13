@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 import Sidebar from '@/components/my-account/Sidebar'
 import CartItem from '@/components/CartItem';
@@ -83,11 +83,11 @@ const Orders = () => {
     setItemOffset(newOffset);
   };
 
-  const fetchOrders = async()=>{
+  const fetchOrders = useCallback(async()=>{
     const res = await api.get(`orders?auth=${userData.access_token}`);
     const data = res.data;
     setOrders(data || [])
-  }
+  },[userData])
 
   useEffect(() => {
     console.log("pages", itemOffset);
@@ -95,7 +95,7 @@ const Orders = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, [])
+  }, [fetchOrders])
 
   const paymentProceed = async (id) => {
       const res = await api.get(`paymentprocess/${id}?auth=${userData.access_token}`);

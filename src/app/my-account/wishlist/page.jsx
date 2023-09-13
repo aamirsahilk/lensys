@@ -36,7 +36,7 @@ const Whishlist = () => {
     },[])
     useEffect(() => {
         fetchProduct();
-    }, [])
+    }, [fetchProduct])
   return (
     <main className='myacc-container'>
             <div className="acc-content-wrap my-acc-page-content p-5">

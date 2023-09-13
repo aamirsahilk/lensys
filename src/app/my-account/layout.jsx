@@ -11,11 +11,12 @@ export default function MyaccountLayout({ children }) {
     const userData = useSelector(user=>user.userData.value)
     const isLoggedIn = userData.loggedin;
     const { push } = useRouter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() =>{
         if(!isLoggedIn){
             push('/');
-            // eslint-disable-next-line react-hooks/exhaustive-deps
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isLoggedIn])
     if(!isLoggedIn){
         return(
