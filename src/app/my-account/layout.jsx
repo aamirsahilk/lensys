@@ -14,6 +14,7 @@ export default function MyaccountLayout({ children }) {
     useEffect(() =>{
         if(!isLoggedIn){
             push('/');
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }
     },[isLoggedIn])
     if(!isLoggedIn){

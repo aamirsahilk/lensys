@@ -39,6 +39,7 @@ const SingleOrder = ({params}) => {
         const data = res.data;
         setOrders(data.order_items || []);
         setOrder(data || {});
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orderId])
 
     useEffect(() => {

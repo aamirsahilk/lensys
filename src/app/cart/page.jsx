@@ -180,10 +180,10 @@ const Cart = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[userData])
 
-    const fetchCoupons = async () => {
+    const fetchCoupons = useCallback(async () => {
         const res = await api.get(`coupons?auth=${userData.access_token}`)
         setCoupons(res.data || []);
-    }
+    },[userData])
 
 
     const handleRemoveCart = async (id) => {
@@ -208,7 +208,7 @@ const Cart = () => {
     useEffect(() => {
         // setDomLoaded(true)
         fetchCoupons();
-    },[userData])
+    },[userData,fetchCoupons])
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required('Email is required'),
