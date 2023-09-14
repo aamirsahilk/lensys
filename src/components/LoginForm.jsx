@@ -50,12 +50,7 @@ const LoginForm = (props) => {
         {
             !forgot?
             <>
-                {/* <div className='social-sign-in-wrap mb-2'>
-                    <button type="button" onClick={loginGoogle} className='g-btn'>
-                        <Image src={googleIcon} alt="" width={'50px'} height={'50px'} />
-                        <span>Google Login</span>
-                    </button>
-                </div> */}
+                
                 <Formik
                     initialValues={{
                         email: '',
@@ -102,6 +97,15 @@ const LoginForm = (props) => {
                         </Form>
                     )}
                 </Formik>
+                <div className="or-wrap">
+                    <span>Or</span>
+                </div>
+                <div className='social-sign-in-wrap mb-2'>
+                    <button type="button" onClick={loginGoogle} className='g-btn'>
+                        <Image src={googleIcon} alt="" width={'50px'} height={'50px'} />
+                        <span>Google Login</span>
+                    </button>
+                </div>
             </>
             :
             <Formik

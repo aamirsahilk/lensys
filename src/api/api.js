@@ -3,7 +3,7 @@ import axios from 'axios';
 // const accessToken = localStorage.getItem('access_token');
 const api = axios.create({
     // baseURL: '/server/',
-    baseURL: 'https://trignoimportexport.com/lensys/',
+    baseURL: 'https://trignoimportexport.com/lensys-new/',
     // baseURL: 'https://techmatrick.com/lensys/',
     // headers: {
     //     common: {

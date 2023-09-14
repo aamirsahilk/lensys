@@ -31,7 +31,7 @@ const OfferGridArea = () => {
                 {
                     banners&&
                     banners?.map((banner,index) =>(
-                        <Link href={banner.link} key={index}>
+                        <Link href={banner.link} key={index} passHref={true}>
                             <Image className='' src={banner.image} alt={banner.alttext} width={500} height={500} />
                         </Link>
                     ))

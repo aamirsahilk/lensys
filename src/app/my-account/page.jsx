@@ -158,7 +158,7 @@ const MyAccount = () => {
                             <div className="form-group">
                               <label htmlFor="phone">Phone</label>
                               <div className="inp-grp">
-                                <Field type="text" id="phone" name="phone" readOnly />
+                                <Field type="text" id="phone" name="phone" />
                               </div>
                               <ErrorMessage name="phone" component="div" className="error-message" />
                             </div>
@@ -167,7 +167,7 @@ const MyAccount = () => {
                             <div className="form-group">
                               <label htmlFor="email">Email</label>
                               <div className="inp-grp">
-                                <Field type="email" id="email" name="email" readOnly />
+                                <Field type="email" id="email" name="email" />
                               </div>
                               <ErrorMessage name="email" component="div" className="error-message" />
                             </div>

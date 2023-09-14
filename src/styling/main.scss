@@ -2335,3 +2335,32 @@ input.error{
         font-size: 14px;
     }
   }
+.or-wrap{
+    margin: 1em 0px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+    position: relative;
+
+    &:after{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 1px;
+        background: #e3e3e3;
+    }
+
+    span{
+        font-size: 16px;
+        font-weight: 600;
+        color: #c4c4c4;
+        background: white;
+        padding: 0px 5px;
+        position: relative;
+        z-index: 5;
+    }
+}

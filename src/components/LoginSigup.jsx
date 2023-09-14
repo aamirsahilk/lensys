@@ -134,13 +134,21 @@ const LoginSigup = ({handleOpen}) => {
                 const user = result.user;
                 console.log('userData google', user);
                 const socialLogin = async()=>{
-                    // const formData = new FormData();
-                    // formData.append('email', user.email);
-                    // formData.append('name', user.displayName);
-                    // formData.append('accessToken', user.accessToken);
-                    // formData.append('uid', user.uid);
-                    // const res = await api.post('socialsignin', formData);
-                    // console.log('res social signin', res);
+                    const formData = new FormData();
+                    formData.append('email', user.email);
+                    formData.append('name', user.displayName);
+                    formData.append('accessToken', user.accessToken);
+                    formData.append('uid', user.uid);
+                    const res = await api.post('social-signin', formData);
+                    if(res.data.status){
+                        customToast('Logged In Successfully') 
+                        handleOpen('close');
+                        dispatch(updateUserData({...res.data, loggedin:true}));
+                        localStorage.setItem('access_token', res.data.access_token);
+                    }else{
+                        setLoginEr('Bad credentials Please Try Again')
+                    }
+                    
                 }
                 socialLogin();
             })
@@ -149,7 +157,8 @@ const LoginSigup = ({handleOpen}) => {
                 const errorMessage = error.message;
                 const email = error.email;
                 const credential = GoogleAuthProvider.credentialFromError(error);
-                console.log('googlr error', errorCode);
+                customToast('Something went wrong', 'error')
+                handleOpen('close');
             });
     }
 
@@ -186,8 +195,8 @@ const LoginSigup = ({handleOpen}) => {
                 >
                     <TabPanel value="login">
                         <div className="lg-form-wrapper login-form">
-                            <div className="relative text-left mb-8 ">
-                                <h3 className="heading">Login</h3>
+                            <div className="relative text-left mb-2 ">
+                                {/* <h3 className="heading">Login</h3> */}
                                 {/* <p className="para">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 </p> */}
@@ -211,8 +220,8 @@ const LoginSigup = ({handleOpen}) => {
                                 </div>
                             </>: 
                             <div className="lg-form-wrapper signup-form">
-                                <div className="relative text-left mb-8">
-                                    <h3 className="heading">Signup</h3>
+                                <div className="relative text-left mb-2">
+                                    {/* <h3 className="heading">Signup</h3> */}
                                     {/* <p className="para">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                     </p> */}
@@ -235,36 +244,36 @@ const LoginSigup = ({handleOpen}) => {
                                     {({ isSubmitting }) => (
                                         <Form>
                                             <div className="grid grid-cols-4 gap-4">
-                                                <div className="col-span-2">
+                                                <div className="md:col-span-2 col-span-4">
                                                     <div className="form-group">
-                                                        <label htmlFor="firstName">First Name</label>
+                                                        <label className="label-text" htmlFor="firstName">First Name</label>
                                                         <div className="inp-grp">
                                                             <Field type="text" name="fname" placeholder="eg: John" />
                                                         </div>
                                                         <ErrorMessage name="fname" component="div" className="error-message" />
                                                     </div>
                                                 </div>
-                                                <div className="col-span-2">
+                                                <div className="md:col-span-2 col-span-4">
                                                     <div className="form-group">
-                                                        <label htmlFor="lastName">Last Name</label>
+                                                        <label className="label-text" htmlFor="lastName">Last Name</label>
                                                         <div className="inp-grp">
                                                             <Field type="text" name="lname" placeholder="eg: Michael" />
                                                         </div>
                                                         <ErrorMessage name="lname" component="div" className="error-message" />
                                                     </div>
                                                 </div>
-                                                <div className="col-span-2">
+                                                <div className="md:col-span-2 col-span-4">
                                                     <div className="form-group">
-                                                        <label htmlFor="phoneNumber">Phone Number</label>
+                                                        <label className="label-text" htmlFor="phoneNumber">Phone Number</label>
                                                         <div className="inp-grp">
                                                             <Field type="text" name="phone" placeholder="eg: 1234568790" />
                                                         </div>
                                                         <ErrorMessage name="phone" component="div" className="error-message" />
                                                     </div>
                                                 </div>
-                                                <div className="col-span-2">
+                                                <div className="md:col-span-2 col-span-4">
                                                     <div className="form-group">
-                                                        <label htmlFor="email">Email Address</label>
+                                                        <label className="label-text" htmlFor="email">Email Address</label>
                                                         <div className="inp-grp">
                                                             <Field type="text" name="email" placeholder="eg: john@gmail.com" />
                                                         </div>
@@ -273,7 +282,7 @@ const LoginSigup = ({handleOpen}) => {
                                                 </div>
                                                 <div className="col-span-4">
                                                     <div className="form-group">
-                                                        <label htmlFor="password">Create Password</label>
+                                                        <label className="label-text" htmlFor="password">Create Password</label>
                                                         <div className="inp-grp">
                                                             <div className="pass-input">
                                                                 <Field type={passType ? 'password' : 'text'} name="password" />
@@ -287,7 +296,7 @@ const LoginSigup = ({handleOpen}) => {
                                                 </div>
                                                 <div className="col-span-4">
                                                     <div className="form-group">
-                                                        <label htmlFor="password">Confirm Password</label>
+                                                        <label className="label-text" htmlFor="password">Confirm Password</label>
                                                         <div className="inp-grp">
                                                             <div className="pass-input">
                                                                 <Field type={passType2 ? 'password' : 'text'} name="confirmPassword" />

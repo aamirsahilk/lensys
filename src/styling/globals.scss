@@ -507,10 +507,12 @@ $trans: 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 .g-btn{
   display: flex;
   align-items: center;
-  max-width: max-content;
+  max-width: 100%;
   border-radius: 100px;
   background: #f1f1f1;
-  gap: 5px;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
   padding: 12px 20px;
   outline: none;
   border: none;

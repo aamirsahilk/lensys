@@ -41,7 +41,7 @@ export default function Sidebar({link, setLink}) {
     // };
 
     return (
-        <Card className=" h-[calc(100vh-2rem)] sticky top-16 w-full p-4 shadow-xl shadow-blue-gray-900/5">
+        <Card className=" h-[calc(100vh-2rem)] sticky top-16 w-full p-4 shadow-xl shadow-blue-gray-900/5 myacc-sidebar">
             <div className="mb-2 p-4">
                 <div className="flex flex-col gap-6">
                     <div className="flex items-center gap-4">
@@ -53,7 +53,7 @@ export default function Sidebar({link, setLink}) {
                     </div>
                 </div>
             </div>
-            <List>
+            <List className="myacc-list">
                 {/* <Accordion
                     open={open === 1}
                     icon={
