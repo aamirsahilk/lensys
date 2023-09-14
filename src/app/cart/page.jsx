@@ -55,6 +55,7 @@ const Cart = () => {
     const dispatch = useDispatch()
     const [open, setOpen] = useState(true);
     const [isAddressSame, setIsAddressSame] = useState(false)
+    const [paymentLoading, setPaymentLoading] = useState(false)
     const [cartItems, setCartItems] = useState([]);
     const [domLoaded, setDomLoaded] = useState(false);
     const [counter, setCounter] = useState(1);
@@ -95,6 +96,7 @@ const Cart = () => {
     }
 
     const handlePayment = async (values) => {
+        setPaymentLoading(true)
         const dt = new FormData();
         Object.keys(values).forEach((key) => {
             dt.append(key, values[key]);
@@ -112,6 +114,7 @@ const Cart = () => {
                 console.log('razorpay', ress);
                 if (ress) {
                     paymentProceed(ress.razorpay_payment_id)
+                    setPaymentLoading(false)
                 }
             },
             modal: {
@@ -405,8 +408,8 @@ const Cart = () => {
                                                                     </div>
                                                                 }
 
-                                                                <button type="submit" className='main-btn full mt-5 big dark'>
-                                                                    <span>Proceed For Payment</span>
+                                                                <button disabled={paymentLoading} type="submit" className='main-btn full mt-5 big dark'>
+                                                                    <span>{paymentLoading?'Please wait...':'Proceed For Payment'}</span>
                                                                 </button>
                                                             </div>
                                                         </div>

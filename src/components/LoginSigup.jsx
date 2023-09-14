@@ -158,7 +158,7 @@ const LoginSigup = ({handleOpen}) => {
                 const email = error.email;
                 const credential = GoogleAuthProvider.credentialFromError(error);
                 customToast('Something went wrong', 'error')
-                handleOpen('close');
+                // handleOpen('close');
             });
     }
 
