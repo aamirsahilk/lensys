@@ -45,6 +45,7 @@ const LoginSigup = ({handleOpen}) => {
     const [passType, setPassType] = useState(true);
     const [passType2, setPassType2] = useState(true);
     const [register, setRegister] = useState({status:false});
+    const [isLoading, setIsLoading] = useState(false);
     const [tab, setTab] = useState('login');
     const [loginEr, setLoginEr] = useState('');
     const dispatch = useDispatch();
@@ -127,12 +128,13 @@ const LoginSigup = ({handleOpen}) => {
     }
 
     const loginGoogle = () => {
+        setIsLoading(true)
         signInWithPopup(auth, provider)
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential ?.accessToken;
                 const user = result.user;
-                console.log('userData google', user);
+             
                 const socialLogin = async()=>{
                     const formData = new FormData();
                     formData.append('email', user.email);
@@ -148,7 +150,7 @@ const LoginSigup = ({handleOpen}) => {
                     }else{
                         setLoginEr('Bad credentials Please Try Again')
                     }
-                    
+                    setIsLoading(false)
                 }
                 socialLogin();
             })
@@ -158,6 +160,7 @@ const LoginSigup = ({handleOpen}) => {
                 const email = error.email;
                 const credential = GoogleAuthProvider.credentialFromError(error);
                 customToast('Something went wrong', 'error')
+                setIsLoading(false);
                 // handleOpen('close');
             });
     }
@@ -177,6 +180,10 @@ const LoginSigup = ({handleOpen}) => {
     return (
         <>
             <ToastContainer />
+            {
+                isLoading&&
+                <div className='loading-space'></div>
+            }
             <Tabs id="custom-animation" value={tab} className="lg-tabs">
                 <TabsHeader>
                     <Tab value="login">

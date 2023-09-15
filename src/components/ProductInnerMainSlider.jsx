@@ -64,7 +64,7 @@ const ProductInnerMainSlider = ({thumbs, mainImage}) => {
                     thumbs?.map((item, index)=>{
                         return (
                             <SwiperSlide key={index}>
-                                <div className="le_pr-inner-image-block" onClick={(e)=>handleThumbnailClick(item.image)}>
+                                <div className={`le_pr-inner-image-block ${image == item.image && 'active'}`} onClick={(e)=>handleThumbnailClick(item.image)}>
                                     <Image src={item.image} alt={item.alt_text} width={100} height={100} />
                                 </div>
                             </SwiperSlide>

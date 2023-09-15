@@ -50,7 +50,6 @@ const LoginForm = (props) => {
         {
             !forgot?
             <>
-                
                 <Formik
                     initialValues={{
                         email: '',

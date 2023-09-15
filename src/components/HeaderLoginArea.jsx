@@ -116,7 +116,6 @@ const HeaderLoginArea = () => {
             
             <DialogBody className='p-8 rounded-xl h-[85vh] overflow-scroll'>
               <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
-                
                 <div className="relative">
                   <LoginSigup handleOpen={handleOpen} />
                 </div>
