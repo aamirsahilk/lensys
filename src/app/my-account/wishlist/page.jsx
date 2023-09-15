@@ -4,6 +4,7 @@ import ProductCardSkeleton from '@/components/skeleton/ProductCardSkeleton'
 import ProductCard from '@/components/ProductCard'
 import api from '@/api/api'
 import NoResult from '@/components/NoResult'
+import { useSelector } from 'react-redux'
 import {
     Card,
     Dialog,
@@ -27,9 +28,10 @@ const Whishlist = () => {
     const [products,setProduct] = useState([]);
     const [loading,setLoading] = useState(true);
 
+    const userData = useSelector(state=>state.userData.value);
     const fetchProduct = useCallback(async()=>{
-        const response = await api.get(`products/eyeglasses`);
-        const data = response.data;
+        const response = await api.get(`wishlist?auth=${userData.access_token}`);
+        const data = response.data.data;
         setProduct(p=>data);
         setTimeout(() => {
             setLoading(false)
@@ -76,7 +78,7 @@ const Whishlist = () => {
                       )
                     })
                   }
-                </div>:<div className='pt-5'><NoResult message={searchParam.search ? `No result found for keyword "${searchParam.search}"`:'No results found try diffrent filters'} /></div>
+                </div>:<div className='pt-5'><NoResult message={'No results found'} /></div>
                 
               }
         </div>

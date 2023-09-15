@@ -48,9 +48,15 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
     const handleOpen = (value) => setSize(value);
     const handleOpen2 = (value) => setSize2(value);
     const [isMobile, setIsMobile] = useState(false);
+    const [isLens, setIsLens] = useState(false);
     const [initValues, setInitValues] = useState({});
     const userdata = useSelector((state)=> state.userData.value );
 
+    useEffect(()=>{
+        if(data?.productdetails?.categoryid == 4 || data?.productdetails?.categoryid == 3){
+            setIsLens(true)
+        }
+    },[data])
 
     useEffect(() => {
         const handleResize = () => {
@@ -211,14 +217,53 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                         <div>
                             <h3>{data?.productdetails.product_name}</h3>
                             <p className="price mb-2">₹ {data?.subtotal}</p>
-                            <p>
+                            
+                            {
+                                isLens?
+                                <>
+                                 <table className='c-table mt-5 re-f-table'>
+                                    <tbody>
+                                        {
+                                            data?.qty > 0 && isLens &&
+                                            <tr >
+                                                <td>
+                                                <label><b>R</b></label>
+                                                </td>
+                                                <td>
+                                                <span>{data?.powerRight}</span>
+                                                </td>
+                                                <td>
+                                                <span>{data?.qty}</span> 
+                                                </td>
+                                            </tr>
+                                        }
+                                        {
+                                            isLens && data?.qty2 > 0 &&
+                                            <tr >
+                                                <td>
+                                                <label htmlFor=""><b>L</b></label>
+                                                </td>
+                                                <td>
+                                                <span>{data?.powerLeft}</span>
+                                                </td>
+                                                <td>
+                                                <span>{data?.qty2}</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                </>:
+                                <p className="">Qty <b>{data?.qty}</b> | Lens type <b>{data?.lenstype || 'none'}</b> | Lens Package <b>{data?.lenspackage || 'none'} X ₹ {data?.lensprice || 0}</b></p>
+                            }
+                            {/* <p className='mt-2'>
                                 {
                                     data?.productdetails.attributes &&
                                     data?.productdetails.attributes?.map((item, index) => (
                                         <span key={index}>{item.key}: {item.value} • </span>
                                     ))
                                 }
-                            </p>
+                            </p> */}
                             {
                                 data?.productdetails.categoryid == 1 &&
                                 <>

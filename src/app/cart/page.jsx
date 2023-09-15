@@ -65,7 +65,8 @@ const Cart = () => {
     const [couponInvalid , setCouponInvalid ] = useState(false);
 
     const [states, setStates] = useState([]);
-    const [state, setState] = useState([]);
+    const [stateKey, setStateKey] = useState('');
+    const [city, setCity] = useState('');
     const [cities, setCities] = useState([]);
 
     const openDrawerRight = () => setOpenRight(true);
@@ -248,6 +249,8 @@ const Cart = () => {
                                                     fname: userData.name,
                                                     lname: userData.lastname,
                                                     phone: userData.phone,
+                                                    city: '',
+                                                    state: '',
                                                     city: cities.length > 0 && cities[0].city,
                                                     state: states.length > 0 && states[0].id,
                                                     address: '',
@@ -283,7 +286,7 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group col-span-2">
                                                                         <div className="inp-grp">
-                                                                            <Field type="text" name="phone" placeholder="Phone Number" readOnly />
+                                                                            <Field type="text" name="phone" placeholder="Phone Number" />
                                                                             <ErrorMessage name="phone" component="div" className="error-message" />
                                                                         </div>
                                                                     </div>
@@ -307,22 +310,25 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group ">
                                                                         <div className="inp-grp">
-                                                                            <Field as="select" name="state" onChange={(e) => getCities(e.target.value)} >
+                                                                            <select name="state" value={stateKey} onChange={(e) =>{getCities(e.target.value); setStateKey(e.target.value)}}  id="">
+
                                                                                 {   
                                                                                     states.map((state, index) => (
-                                                                                        <option value={state.id} key={index}>
+                                                                                        <option  value={state.id} key={index}>
                                                                                             {state.name}
                                                                                         </option>
                                                                                     ))
                                                                                 }
+                                                                            </select>
+                                                                            {/* <Field as="select" name="state" onChange={(e) => getCities(e.target.value)} >
 
-                                                                            </Field>
+                                                                            </Field> */}
                                                                             <ErrorMessage name="state" component="div" className="error-message" />
                                                                         </div>
                                                                     </div>
                                                                     <div className="form-group">
                                                                         <div className="inp-grp">
-                                                                            <Field  as="select" name="city" placeholder="city">
+                                                                            <select name="city" value={city} id="" onChange={(e)=>setCity(e.target.value)}>
                                                                                 {
                                                                                     cities.map((city, index) => (
                                                                                         <option value={city.city} key={index}>
@@ -330,7 +336,9 @@ const Cart = () => {
                                                                                         </option>
                                                                                     ))
                                                                                 }
-                                                                            </Field>
+                                                                            </select>
+                                                                            {/* <Field  as="select" name="city" placeholder="city">
+                                                                            </Field> */}
                                                                             <ErrorMessage name="city" component="div" className="error-message" />
                                                                         </div>
                                                                     </div>

@@ -5,6 +5,8 @@ import StepProduct from './StepProduct'
 
 import Image from 'next/image';
 import eye from '@/images/eye.svg'
+import st1 from '../../../public/images/step1.jpg'
+import st2 from '../../../public/images/step2.jpg'
 import upload from '@/images/upload-icon.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProductAdd } from '@/store/features/productAdd/productAddSlice';
@@ -185,20 +187,23 @@ const ThirdStep = ({id, colorId}) => {
                                   <h3>Step 1</h3>
                                   
                                   <div className="hw-step-img">
-                                    
+                                    <Image src={st1} alt="" />
                                   </div>
                                   <p className="para">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, veniam nam ipsam pariatur dolor amet id non qui libero accusantium 
+                                    <b>Access Your Order History</b> <br />
+                                    Go to your dashboard and click on My Orders to access all your orders <br />
+                                    On Orders list page click on specific order<br />
                                   </p>
                                 </div>
                                 <div className="hw-step">
-                                  <h3>Step 1</h3>
-                                  
+                                  <h3>Step 2</h3>
                                   <div className="hw-step-img">
-
+                                    <Image src={st2} alt="" />
                                   </div>
                                   <p className="para">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, veniam nam ipsam pariatur dolor amet id non qui libero accusantium 
+                                    <b>Upload prescription details</b> <br />
+                                    Click on upload prescription button (modal will be open)<br />
+                                    select method manual or upload pdf <br />
                                   </p>
                                 </div>
                               </div>

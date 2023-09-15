@@ -46,6 +46,7 @@ const ProductInner = ({params}) => {
   const [colorId, setColorId] = useState(null);
   const [lensObj, setLensObj] = useState({});
   const [lensError, setLensError] = useState(false);
+  const [adding, setAdding] = useState(false);
   const fetchProduct = useCallback(async()=>{
     const response = await api.get(`product/${productSlug}`);
     const data = response.data;
@@ -89,6 +90,7 @@ const ProductInner = ({params}) => {
   const { push } = useRouter();
 
   const addToCart = async () => {
+    setAdding(true);
     // return
     if(userdata.loggedin){
       if(categoryid == 4 || categoryid == 3){
@@ -124,6 +126,7 @@ const ProductInner = ({params}) => {
         const res = await api.post(`addtocart?auth=${userdata.access_token}`, formData);
         const data = res.data;
         if(data.status){
+          setAdding(false);
           push('/cart');
         }
       }else{
@@ -135,12 +138,14 @@ const ProductInner = ({params}) => {
         const res = await api.post(`addtocart?auth=${userdata.access_token}`, formData);
         const data = res.data;
         if(data.status){
+          setAdding(false);
           push('/cart');
         }
       }
     }else{
       setSize(isMobile? 'xl': size || "md");
     }
+    
   }
 
   useEffect(()=>{
@@ -255,11 +260,11 @@ const ProductInner = ({params}) => {
                   <div className="flex flex-wrap gap-2 mt-8">
                     {
                       isLens || categoryid == 2 ?
-                      <button onClick={addToCart} className='main-btn big'>
+                      <button onClick={addToCart} disabled={adding} className='main-btn big'>
                         <span>Add To Cart</span>
                       </button>:
                       <>
-                        <button onClick={addToCart} className='main-btn big dark'>
+                        <button onClick={addToCart} disabled={adding} className='main-btn big dark'>
                           <span>ONLY FRAME</span>
                         </button>
                         <Link href={`add-product/${slug}?pid=${id}&color=${colorId}`} className='main-btn big'>
