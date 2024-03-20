@@ -131,7 +131,7 @@ const Header = () => {
                             categories?.map((cat,index)=>(
                                 <li className='has-mega-menu' key={index}>
                                     <Link href={'products/'+cat.id}>
-                                        <span>{cat.name}</span>
+                                        <span>{cat.name} 2</span>
                                         <Image src={SelectDrop} alt="" width={20} height={20} />
                                     </Link>
                                     <Megamenu subCat={cat.id} />
