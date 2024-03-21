@@ -28,9 +28,6 @@ jobs:
 
     - name: Print PATH
       run: echo $PATH
-    
-    - name: PM2 Delete 
-      run: npx pm2 delete all
 
     - name: Start application with PM2
       run: npx pm2 start npm --name=lensys -- start
