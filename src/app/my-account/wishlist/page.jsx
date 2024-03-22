@@ -36,7 +36,7 @@ const Whishlist = () => {
         setTimeout(() => {
             setLoading(false)
         }, 1500);
-    },[])
+    },[userData.access_token])
     useEffect(() => {
         fetchProduct();
     }, [fetchProduct])

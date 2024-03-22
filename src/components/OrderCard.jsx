@@ -486,9 +486,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                                     >
                                                                                         <option value=""></option>
                                                                                         {
-                                                                                            Powers.map(e => {
+                                                                                            Powers.map((e,index) => {
                                                                                                 return (
-                                                                                                    <option value={e}>{e}</option>
+                                                                                                    <option key={index} value={e}>{e}</option>
                                                                                                 )
                                                                                             })
                                                                                         }
@@ -497,9 +497,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                                         className={formik.errors.rightEye ? formik.errors?.rightEye[`${'r' + field + item.name}`] && 'error' : ''}>
                                                                                         <option selected value=""></option>
                                                                                         {
-                                                                                            Powers.map(e => {
+                                                                                            Powers.map((e,index) => {
                                                                                                 return (
-                                                                                                    <option value={e}>{e}</option>
+                                                                                                    <option key={index} value={e}>{e}</option>
                                                                                                 )
                                                                                             })
                                                                                         }
@@ -560,9 +560,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                                         className={formik.errors.leftEye ? formik.errors.leftEye[`${'l' + field + item.name}`] && 'error' : ''}>
                                                                                         <option selected value=""></option>
                                                                                         {
-                                                                                            Powers.map(e => {
+                                                                                            Powers.map((e,index) => {
                                                                                                 return (
-                                                                                                    <option value={e}>{e}</option>
+                                                                                                    <option key={index} value={e}>{e}</option>
                                                                                                 )
                                                                                             })
                                                                                         }
@@ -573,9 +573,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                                     >
                                                                                         <option value=""></option>
                                                                                         {
-                                                                                            Powers.map(e => {
+                                                                                            Powers.map((e,index) => {
                                                                                                 return (
-                                                                                                    <option value={e}>{e}</option>
+                                                                                                    <option key={index} value={e}>{e}</option>
                                                                                                 )
                                                                                             })
                                                                                         }
@@ -613,9 +613,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                     >
                                                                         <option value=""></option>
                                                                         {
-                                                                            Powers.map(e => {
+                                                                            Powers.map((e,index) => {
                                                                                 return (
-                                                                                    <option value={e}>{e}</option>
+                                                                                    <option key={index} value={e}>{e}</option>
                                                                                 )
                                                                             })
                                                                         }
@@ -624,9 +624,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                         className={formik.errors.pd ? formik.errors?.pd[`pd${index}`] && 'error' : ''}>
                                                                         <option selected value=""></option>
                                                                         {
-                                                                            Powers.map(e => {
+                                                                            Powers.map((e, index) => {
                                                                                 return (
-                                                                                    <option value={e}>{e}</option>
+                                                                                    <option key={index} value={e}>{e}</option>
                                                                                 )
                                                                             })
                                                                         }
