@@ -24,6 +24,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { updateUserData } from '@/store/features/userdata/UserDataSlice';
 
 import mailIcon from '../../public/images/go-mail-icon.svg'
+import googleIcon from '../../public/images/google-icon.png';
 
 import CustomButton from './CustomButton';
 
@@ -323,6 +324,15 @@ const LoginSigup = ({handleOpen}) => {
                                         </Form>
                                     )}
                                 </Formik>
+                                <div className="or-wrap">
+                                    <span>Or</span>
+                                </div>
+                                <div className='social-sign-in-wrap mb-2'>
+                                    <button type="button" onClick={loginGoogle} className='g-btn'>
+                                        <Image src={googleIcon} alt="" width={'50px'} height={'50px'} />
+                                        <span>Google Login</span>
+                                    </button>
+                                </div>
                                 
                             </div>
                         }

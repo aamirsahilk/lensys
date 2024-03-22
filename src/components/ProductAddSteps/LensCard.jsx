@@ -114,9 +114,9 @@ const LensCard = ({lensDetails}) => {
                                 }
                             })
                         }
-                        <span className="view-more" onClick={() => handleOpen("sm")}>+{features.length} More</span>
+                        <span className="view-more" onClick={() => handleOpen("sm")}>+{features.length - 3} More</span>
                     </p>
-                    <p className="price">+ ₹{lensDetails.price}&nbsp; <span>(including tax)</span></p>
+                    <p className="price">+ ₹{lensDetails.price}&nbsp; <span>(excluding tax)</span></p>
                 </div>
             </label>
         </div>

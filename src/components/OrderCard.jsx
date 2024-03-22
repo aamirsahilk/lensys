@@ -50,13 +50,13 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
     const [isMobile, setIsMobile] = useState(false);
     const [isLens, setIsLens] = useState(false);
     const [initValues, setInitValues] = useState({});
-    const userdata = useSelector((state)=> state.userData.value );
+    const userdata = useSelector((state) => state.userData.value);
 
-    useEffect(()=>{
-        if(data?.productdetails?.categoryid == 4 || data?.productdetails?.categoryid == 3){
+    useEffect(() => {
+        if (data?.productdetails?.categoryid == 4 || data?.productdetails?.categoryid == 3) {
             setIsLens(true)
         }
-    },[data])
+    }, [data])
 
     useEffect(() => {
         const handleResize = () => {
@@ -95,13 +95,13 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
 
         const uploadFile = async () => {
             if (selectedFile) {
-                const formData  = new FormData();
-                formData .append('file', selectedFile);
+                const formData = new FormData();
+                formData.append('file', selectedFile);
                 formData.append('cartid', cartId);
                 formData.append('orderid', orderId);
                 const res = await api.post(`upload-prescription?auth=${userdata.access_token}`, formData);
                 const dt = res.data;
-                if(dt.status){
+                if (dt.status) {
                     customToast('Your prescription has been successfully uploaded');
                     fetchOrder();
                     setSize2('');
@@ -144,32 +144,56 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
     };
 
 
+    // const validationSchema = Yup.object({
+    //     rightEye: Yup.object({
+    //       rsd: Yup.number(),
+    //       rcd: Yup.number(),
+    //       rad: Yup.number(),
+    //       rsn: Yup.number(),
+    //       rcn: Yup.number(),
+    //       ran: Yup.number(),
+    //     }),
+    //     leftEye: Yup.object({
+    //     lsd: Yup.number(),
+    //     lcd: Yup.number(),
+    //     lad: Yup.number(),
+    //     lsn: Yup.number(),
+    //     lcn: Yup.number(),
+    //     lan: Yup.number(),
+    //     }),
+    //   });
+
     const validationSchema = Yup.object({
         rightEye: Yup.object({
-          rsd: Yup.number(),
-          rcd: Yup.number(),
-          rad: Yup.number(),
-          rsn: Yup.number(),
-          rcn: Yup.number(),
-          ran: Yup.number(),
+            rsd: Yup.string().required(),
+            rcd: Yup.string().required(),
+            rad: Yup.string().required(),
+            rsn: Yup.string().required(),
+            rcn: Yup.string().required(),
+            ran: Yup.string().required(),
         }),
         leftEye: Yup.object({
-        lsd: Yup.number(),
-        lcd: Yup.number(),
-        lad: Yup.number(),
-        lsn: Yup.number(),
-        lcn: Yup.number(),
-        lan: Yup.number(),
+            lsd: Yup.string().required(),
+            lcd: Yup.string().required(),
+            lad: Yup.string().required(),
+            lsn: Yup.string().required(),
+            lcn: Yup.string().required(),
+            lan: Yup.string().required(),
         }),
-      });
-      
-      const formik = useFormik({
+        pd: Yup.object({
+            pd1: Yup.string().required(),
+            pd2: Yup.string().required(),
+            pd3: Yup.string().required(),
+        }),
+    });
+
+    const formik = useFormik({
         enableReinitialize: true,
         initialValues: initValues,
         validationSchema,
         onSubmit: async (values) => {
             const formData = new FormData();
-            const obj = {...values.rightEye, ...values.leftEye};
+            const obj = { ...values.rightEye, ...values.leftEye, ...values.pd };
             Object.keys(obj).forEach((key) => {
                 formData.append(key, obj[key]);
             });
@@ -177,37 +201,45 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
             formData.append('orderid', orderId);
             const res = await api.post(`upload-prescription?auth=${userdata.access_token}`, formData);
             const data = res.data;
-            if(data.status){
+            if (data.status) {
                 customToast('Your prescription has been successfully uploaded');
                 fetchOrder();
                 setSize2('');
             }
-            
+
         },
     });
 
-      useEffect(()=>{
-        if(data.prescription.status){
+    useEffect(() => {
+        if (data.prescription.status) {
             const isReadOnly = !formik.values.isReadOnly;
             formik.setValues({ ...formik.values, isReadOnly });
             console.log('file', data.prescription.file);
             console.log('file');
-            if(data.prescription.file){
+            if (data.prescription.file) {
                 setTab(2);
                 setSelectedFile(data.prescription.file)
-            }else{
+            } else {
                 setTab(1);
                 setInitValues(data.prescription.jsondta)
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [data])
+    }, [data])
 
-   
+    const Powers = [
+        '-0.2',
+        '-0.1',
+        '0',
+        '0.1',
+        '0.2'
+    ]
+
+
 
     return (
         <>
-        <ToastContainer />
+            <ToastContainer />
             <div className='cart-item flex gap-5'>
                 <div className="cart-img">
                     <Image src={data?.productdetails.image} width={160} height={160} alt="" />
@@ -217,44 +249,44 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                         <div>
                             <h3>{data?.productdetails.product_name}</h3>
                             <p className="price mb-2">₹ {data?.subtotal}</p>
-                            
+
                             {
-                                isLens?
-                                <>
-                                 <table className='c-table mt-5 re-f-table'>
-                                    <tbody>
-                                        {
-                                            data?.qty > 0 && isLens &&
-                                            <tr >
-                                                <td>
-                                                <label><b>R</b></label>
-                                                </td>
-                                                <td>
-                                                <span>{data?.powerRight}</span>
-                                                </td>
-                                                <td>
-                                                <span>{data?.qty}</span> 
-                                                </td>
-                                            </tr>
-                                        }
-                                        {
-                                            isLens && data?.qty2 > 0 &&
-                                            <tr >
-                                                <td>
-                                                <label htmlFor=""><b>L</b></label>
-                                                </td>
-                                                <td>
-                                                <span>{data?.powerLeft}</span>
-                                                </td>
-                                                <td>
-                                                <span>{data?.qty2}</span>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                                </>:
-                                <p className="">Qty <b>{data?.qty}</b> | Lens type <b>{data?.lenstype || 'none'}</b> | Lens Package <b>{data?.lenspackage || 'none'} X ₹ {data?.lensprice || 0}</b></p>
+                                isLens ?
+                                    <>
+                                        <table className='c-table mt-5 re-f-table'>
+                                            <tbody>
+                                                {
+                                                    data?.qty > 0 && isLens &&
+                                                    <tr >
+                                                        <td>
+                                                            <label><b>R</b></label>
+                                                        </td>
+                                                        <td>
+                                                            <span>{data?.powerRight}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{data?.qty}</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                                {
+                                                    isLens && data?.qty2 > 0 &&
+                                                    <tr >
+                                                        <td>
+                                                            <label htmlFor=""><b>L</b></label>
+                                                        </td>
+                                                        <td>
+                                                            <span>{data?.powerLeft}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{data?.qty2}</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </> :
+                                    <p className="">Qty <b>{data?.qty}</b> | Lens type <b>{data?.lenstype || 'none'}</b> | Lens Package <b>{data?.lenspackage || 'none'} X ₹ {data?.lensprice || 0}</b></p>
                             }
                             {/* <p className='mt-2'>
                                 {
@@ -267,17 +299,17 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                             {
                                 data?.productdetails.categoryid == 1 &&
                                 <>
-                               { data?.prescription?.status ?
-                                <div className="flex items-center gap-2 error-code-bar success mt-2">
-                                    {/* <ErrorOutlineIcon /> */}
-                                    <span>Your order will be delivered soon</span>
-                                </div>
-                                :<div className="flex items-center gap-2 error-code-bar mt-2">
-                                    <ErrorOutlineIcon />
-                                    <span>Please upload your lens details</span>
-                                </div>}
+                                    {data?.prescription?.status ?
+                                        <div className="flex items-center gap-2 error-code-bar success mt-2">
+                                            {/* <ErrorOutlineIcon /> */}
+                                            <span>Your order will be delivered soon</span>
+                                        </div>
+                                        : <div className="flex items-center gap-2 error-code-bar mt-2">
+                                            <ErrorOutlineIcon />
+                                            <span>Please upload your lens details</span>
+                                        </div>}
                                 </>
-                                
+
                             }
 
                         </div>
@@ -305,14 +337,14 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                     </List>
                                 </PopoverContent>
                             </Popover> */}
-                           {
-                            data?.productdetails.categoryid == 1 &&
-                            <div className="flex items-center gap-2">
-                                <button className="main-btn mt-2 min-w-[max-content]" onClick={() => handleOpen2("lg")} >
-                                    <span className='text-sm/[14px]'>{data?.prescription?.status?'View Prescription':'Select Lens Power'}</span>
-                                </button>
-                            </div>
-                           }
+                            {
+                                data?.productdetails.categoryid == 1 &&
+                                <div className="flex items-center gap-2">
+                                    <button className="main-btn mt-2 min-w-[max-content]" onClick={() => handleOpen2("lg")} >
+                                        <span className='text-sm/[14px]'>{data?.prescription?.status ? 'View Prescription' : 'Select Lens Power'}</span>
+                                    </button>
+                                </div>
+                            }
                             {/* <button className='delete-btn' type="button" onClick={(e) => handleRemoveCart(data?.cartid)}>
                                 <span>Remove</span>
                                 <Image src={deleteIcon} alt="" />
@@ -386,56 +418,56 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                             What About My Eye Power?
                         </h3>
                         {
-                            data?.prescription?.status ? '':
-                            <ul className="radio-tabs mb-8 pb-5">
-                                <li>
-                                    <button data-value="2" className={`${tab == 2 ? 'active' : ''}`} onClick={(e) => { tabChange(2); handleCLick(e) }}>
-                                        <span>upload prescription</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button data-value="3" className={`${tab == 1 ? 'active' : ''}`} onClick={(e) => { tabChange(1); handleCLick(e) }}>
-                                        <span>Enter Manually</span>
-                                    </button>
-                                </li>
-                            </ul>
+                            data?.prescription?.status ? '' :
+                                <ul className="radio-tabs mb-8 pb-5">
+                                    <li>
+                                        <button data-value="2" className={`${tab == 2 ? 'active' : ''}`} onClick={(e) => { tabChange(2); handleCLick(e) }}>
+                                            <span>upload prescription</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button data-value="3" className={`${tab == 1 ? 'active' : ''}`} onClick={(e) => { tabChange(1); handleCLick(e) }}>
+                                            <span>Enter Manually</span>
+                                        </button>
+                                    </li>
+                                </ul>
                         }
-                        <div className={`tab-content ${data?.prescription?.status?'mt-8':''}`}>
+                        <div className={`tab-content ${data?.prescription?.status ? 'mt-8' : ''}`}>
                             {
                                 tab == 1 ?
                                     <div className="tab-content-inner">
                                         {/* <form > */}
-                                            <div className="re-le-wrapper">
-                                                <div className="re-part">
-                                                    {/* Right Eye */}
-                                                    <div className="flex items-center gap-2 e-wr">
-                                                        <Image src={eye} alt="" width={30} height={30} />
-                                                        <span>Right Eye</span>
-                                                    </div>
-                                                 
-                                                    <div className="opt-table mt-3">
-                                                        <div className="op-row">
-                                                            <div className="op-cell"></div>
-                                                            <div className="op-cell">
-                                                                <p>Sph</p>
-                                                            </div>
-                                                            <div className="op-cell">
-                                                                <p>Cyl</p>
-                                                            </div>
-                                                            <div className="op-cell">
-                                                                <p>Axis</p>
-                                                            </div>
+                                        <div className="re-le-wrapper">
+                                            <div className="re-part">
+                                                {/* Right Eye */}
+                                                <div className="flex items-center gap-2 e-wr">
+                                                    <Image src={eye} alt="" width={30} height={30} />
+                                                    <span>Right Eye</span>
+                                                </div>
+
+                                                <div className="opt-table mt-3">
+                                                    <div className="op-row">
+                                                        <div className="op-cell"></div>
+                                                        <div className="op-cell">
+                                                            <p>Sph</p>
                                                         </div>
-                                                        {
-                                                            [{name:'d',label:'D.V'},{name:'n',label:'N.V'}].map((item, i)=>(
-                                                                <div className="op-row" key={i}>
-                                                                    <div className="op-cell">
-                                                                        <p>{item.label}</p>
-                                                                    </div>
-                                                                    {
-                                                                        ['s','c','a'].map((field, index)=>(
-                                                                            <div className="op-cell" key={index}>
-                                                                                <input
+                                                        <div className="op-cell">
+                                                            <p>Cyl</p>
+                                                        </div>
+                                                        <div className="op-cell">
+                                                            <p>Axis</p>
+                                                        </div>
+                                                    </div>
+                                                    {
+                                                        [{ name: 'd', label: 'D.V' }, { name: 'n', label: 'N.V' }].map((item, i) => (
+                                                            <div className="op-row" key={i}>
+                                                                <div className="op-cell">
+                                                                    <p>{item.label}</p>
+                                                                </div>
+                                                                {
+                                                                    ['s', 'c', 'a'].map((field, index) => (
+                                                                        <div className="op-cell" key={index}>
+                                                                            {/* <input
                                                                                     type="text"
                                                                                     name={`rightEye.${'r'+field+item.name}`}
                                                                                     onChange={formik.handleChange}
@@ -443,64 +475,172 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                                     value={formik.values.rightEye && formik.values.rightEye[`${'r'+field+item.name}`]}
                                                                                     className={formik.errors.rightEye ?formik.touched?.rightEye && formik.errors?.rightEye[`${'r'+field+item.name}`]&&'error':''}
                                                                                 />
-                                                                            </div>
-                                                                        ))
-                                                                    }
-                                                                </div>
-                                                            ))
-                                                        }
-                                                    </div>
+                                                                                */}
+                                                                            {/* {
+                                                                                    formik.errors.rightEye && formik.errors?.rightEye[`${'r'+field+item.name}`]
+                                                                                } */}
+                                                                            {
+                                                                                data?.prescription?.status ?
+
+                                                                                    <select readOnly name={`rightEye.${'r' + field + item.name}`} id="" value={formik.values.rightEye && formik.values.rightEye[`${'r' + field + item.name}`]}
+                                                                                    >
+                                                                                        <option value=""></option>
+                                                                                        {
+                                                                                            Powers.map(e => {
+                                                                                                return (
+                                                                                                    <option value={e}>{e}</option>
+                                                                                                )
+                                                                                            })
+                                                                                        }
+                                                                                    </select> :
+                                                                                    <select name={`rightEye.${'r' + field + item.name}`} id="" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.rightEye && formik.values.rightEye[`${'r' + field + item.name}`]}
+                                                                                        className={formik.errors.rightEye ? formik.errors?.rightEye[`${'r' + field + item.name}`] && 'error' : ''}>
+                                                                                        <option selected value=""></option>
+                                                                                        {
+                                                                                            Powers.map(e => {
+                                                                                                return (
+                                                                                                    <option value={e}>{e}</option>
+                                                                                                )
+                                                                                            })
+                                                                                        }
+                                                                                    </select>
+
+                                                                            }
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                            </div>
+                                                        ))
+                                                    }
                                                 </div>
-                                                <div className="le-part">
-                                                    {/* Left Eye */}
-                                                    <div className="flex items-center gap-2 e-wr">
-                                                        <Image src={eye} alt="" width={30} height={30} />
-                                                        <span>Left Eye</span>
-                                                    </div>
-                                                    <div className="opt-table mt-3">
-                                                        <div className="op-row">
-                                                            <div className="op-cell"></div>
-                                                            <div className="op-cell">
-                                                                <p>Sph</p>
-                                                            </div>
-                                                            <div className="op-cell">
-                                                                <p>Cyl</p>
-                                                            </div>
-                                                            <div className="op-cell">
-                                                                <p>Axis</p>
-                                                            </div>
+                                            </div>
+                                            <div className="le-part">
+                                                {/* Left Eye */}
+                                                <div className="flex items-center gap-2 e-wr">
+                                                    <Image src={eye} alt="" width={30} height={30} />
+                                                    <span>Left Eye</span>
+                                                </div>
+                                                <div className="opt-table mt-3">
+                                                    <div className="op-row">
+                                                        <div className="op-cell"></div>
+                                                        <div className="op-cell">
+                                                            <p>Sph</p>
                                                         </div>
-                                                        {
-                                                            [{name:'d',label:'D.V'},{name:'n',label:'N.V'}].map((item, i)=>(
-                                                                <div className="op-row" key={i}>
-                                                                    <div className="op-cell">
-                                                                        <p>{item.label}</p>
-                                                                    </div>
-                                                                    {
-                                                                        ['s','c','a'].map((field, index)=>(
-                                                                            <div className="op-cell" key={index}>
-                                                                                <input
+                                                        <div className="op-cell">
+                                                            <p>Cyl</p>
+                                                        </div>
+                                                        <div className="op-cell">
+                                                            <p>Axis</p>
+                                                        </div>
+                                                    </div>
+                                                    {
+                                                        [{ name: 'd', label: 'D.V' }, { name: 'n', label: 'N.V' }].map((item, i) => (
+                                                            <div className="op-row" key={i}>
+                                                                <div className="op-cell">
+                                                                    <p>{item.label}</p>
+                                                                </div>
+                                                                {
+                                                                    ['s', 'c', 'a'].map((field, index) => (
+                                                                        <div className="op-cell" key={index}>
+                                                                            {/* <input
                                                                                     type="text"
                                                                                     name={`leftEye.${'l'+field+item.name}`}
                                                                                     onChange={formik.handleChange}
                                                                                     onBlur={formik.handleBlur}
                                                                                     value={formik.values.leftEye && formik.values.leftEye[`${'l'+field+item.name}`]}
                                                                                     className={formik.errors.leftEye ? formik.touched.leftEye && formik.errors.leftEye[`${'l'+field+item.name}`]&&'error':''}
-                                                                                />
-                                                                            </div>
-                                                                        ))
-                                                                    }
-                                                                </div>
-                                                            ))
-                                                        }
-                                                    </div>
+                                                                                /> */}
+                                                                            {
+                                                                                !data?.prescription?.status ?
+
+                                                                                    <select name={`leftEye.${'l' + field + item.name}`}
+                                                                                        onChange={formik.handleChange}
+                                                                                        onBlur={formik.handleBlur}
+                                                                                        value={formik.values.leftEye && formik.values.leftEye[`${'l' + field + item.name}`]}
+                                                                                        className={formik.errors.leftEye ? formik.errors.leftEye[`${'l' + field + item.name}`] && 'error' : ''}>
+                                                                                        <option selected value=""></option>
+                                                                                        {
+                                                                                            Powers.map(e => {
+                                                                                                return (
+                                                                                                    <option value={e}>{e}</option>
+                                                                                                )
+                                                                                            })
+                                                                                        }
+                                                                                    </select> :
+                                                                                    <select readOnly name={`leftEye.${'l' + field + item.name}`}
+
+                                                                                        value={formik.values.leftEye && formik.values.leftEye[`${'l' + field + item.name}`]}
+                                                                                    >
+                                                                                        <option value=""></option>
+                                                                                        {
+                                                                                            Powers.map(e => {
+                                                                                                return (
+                                                                                                    <option value={e}>{e}</option>
+                                                                                                )
+                                                                                            })
+                                                                                        }
+                                                                                    </select>
+
+                                                                            }
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                            </div>
+                                                        ))
+                                                    }
                                                 </div>
                                             </div>
-                                            {/* {formik.touched.rightEye && formik.errors.rightEye && (
+                                        </div>
+                                        {/* {formik.touched.rightEye && formik.errors.rightEye && (
                                                 <div className="act-msg error"></div>
                                             )} */}
-                                            {/* <button type="submit">Submit</button> */}
+                                        {/* <button type="submit">Submit</button> */}
                                         {/* </form> */}
+                                        <div className="pd-inp-container mt-5">
+                                            <label htmlFor="" className="label-text">PD</label>
+                                            <div className="opt-table">
+                                                <div className="op-row">
+                                                       
+                                                        {
+                                                            [...Array(3)].map((e,index)=>{
+                                                                index = index+1
+                                                                return(
+                                                                    <div className="op-cell">
+                                                                      
+                                                                    {
+                                                                    data?.prescription?.status ?
+                                                                    <select readOnly name={`pd.pd${index}`} id="" value={formik.values.pd && formik.values?.pd[`pd${index}`]}
+                                                                    >
+                                                                        <option value=""></option>
+                                                                        {
+                                                                            Powers.map(e => {
+                                                                                return (
+                                                                                    <option value={e}>{e}</option>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </select> :
+                                                                    <select name={`pd.pd${index}`} id="" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.pd && formik.values.pd[`pd${index}`]}
+                                                                        className={formik.errors.pd ? formik.errors?.pd[`pd${index}`] && 'error' : ''}>
+                                                                        <option selected value=""></option>
+                                                                        {
+                                                                            Powers.map(e => {
+                                                                                return (
+                                                                                    <option value={e}>{e}</option>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </select>
+                                                                    }
+                                                                </div>
+                                                                )  
+                                                            })
+                                                        }
+                                                    
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
                                         <p className="sm-text mt-8">
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut similique sunt ipsum vero vel mollitia deserunt, maiores nobis hic voluptatem numquam dolore soluta, in iure, perspiciatis unde. Quis, amet optio!
                                         </p>
@@ -508,47 +648,47 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                         <div className="tab-content-inner">
                                             {
                                                 data?.prescription?.status ?
-                                                <>
-                                                <Link href={selectedFile && selectedFile.url} target="_blank" download className='selected-file center'>
-                                                    <div>
-                                                        <p>{selectedFile && selectedFile.name}</p>
-                                                    </div>
-                                                    
-                                                </Link>
-                                                </>:
-                                                <>
-                                                <label for="file1" className="big-upload-btn" >
-                                                    <input
-                                                        type="file"
-                                                        accept=".jpg, .jpeg, .png, .pdf"
-                                                        onChange={handleFileChange}
-                                                        style={{ display: 'none' }}
-                                                        id="file1"
-                                                    />
-                                                    <Image src={upload} alt="" />
-                                                    <span>Upload Your Prescription</span>
-                                                </label>
-                                                <p className="sm-text text-center mt-2 mb-3">Note : Document should be in PDF* format under 5MiB</p>
-                                                {
-                                                    fileError != '' &&
-                                                    <div className='act-msg error center'>
-                                                        <p>
-                                                            {fileError}
-                                                        </p>
-                                                    </div>
-                                                }
-                                                {
-                                                    selectedFile &&
-                                                    <div className='selected-file center'>
-                                                        <div>
-                                                            <p>{selectedFile.name}</p>
-                                                        </div>
-                                                        <button className='remove-file' onClick={() => setSelectedFile(null)}>
-                                                            <CancelIcon />
-                                                        </button>
-                                                    </div>
-                                                }
-                                                </>
+                                                    <>
+                                                        <Link href={selectedFile && selectedFile.url} target="_blank" download className='selected-file center'>
+                                                            <div>
+                                                                <p>{selectedFile && selectedFile.name}</p>
+                                                            </div>
+
+                                                        </Link>
+                                                    </> :
+                                                    <>
+                                                        <label for="file1" className="big-upload-btn" >
+                                                            <input
+                                                                type="file"
+                                                                accept=".jpg, .jpeg, .png, .pdf"
+                                                                onChange={handleFileChange}
+                                                                style={{ display: 'none' }}
+                                                                id="file1"
+                                                            />
+                                                            <Image src={upload} alt="" />
+                                                            <span>Upload Your Prescription</span>
+                                                        </label>
+                                                        <p className="sm-text text-center mt-2 mb-3">Note : Document should be in PDF* format under 5MiB</p>
+                                                        {
+                                                            fileError != '' &&
+                                                            <div className='act-msg error center'>
+                                                                <p>
+                                                                    {fileError}
+                                                                </p>
+                                                            </div>
+                                                        }
+                                                        {
+                                                            selectedFile &&
+                                                            <div className='selected-file center'>
+                                                                <div>
+                                                                    <p>{selectedFile.name}</p>
+                                                                </div>
+                                                                <button className='remove-file' onClick={() => setSelectedFile(null)}>
+                                                                    <CancelIcon />
+                                                                </button>
+                                                            </div>
+                                                        }
+                                                    </>
                                             }
                                         </div> :
                                         <div className="tab-content-inner">
@@ -585,14 +725,14 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                     </div>
                 </DialogBody>
                 {
-                    data?.prescription?.status ? '':
-                    <DialogFooter>
-                        <div className="btn-flex flex gap-3 ">
-                            <button className="main-btn" onClick={handleUploadLater}>
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                    </DialogFooter>
+                    data?.prescription?.status ? '' :
+                        <DialogFooter>
+                            <div className="btn-flex flex gap-3 ">
+                                <button type="submit" className="main-btn" onClick={handleUploadLater}>
+                                    <span>Submit</span>
+                                </button>
+                            </div>
+                        </DialogFooter>
                 }
             </Dialog>
 

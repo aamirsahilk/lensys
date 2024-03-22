@@ -25,9 +25,3 @@ jobs:
 
     - name: Build
       run: npm run build
-
-    - name: Print PATH
-      run: echo $PATH
-
-    - name: Start application with PM2
-      run: npx pm2 start npm --name=lensys -- start

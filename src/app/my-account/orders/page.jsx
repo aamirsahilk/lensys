@@ -30,6 +30,7 @@ import {
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CloseIcon from '@mui/icons-material/Close';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 import Script from 'next/script';
 
@@ -171,7 +172,15 @@ const Orders = () => {
                         orders?.map((item,index)=>(
                           <tr key={index}>
                             <td>
-                              <Link href={`my-account/orders/${item.order_id}`}>{item.order_id}</Link>
+                              <Link href={`my-account/orders/${item.order_id}`}>{item.order_id}
+                              {
+                                !item.prescription &&
+                                <div className="flex items-center gap-2 error-code-bar mt-2">
+                                  <ErrorOutlineIcon />
+                                  <span>Please upload your lens details</span>
+                                </div>
+                              }
+                              </Link>
                             </td>
                             <td>
                               <span className={`status ${item.order_status}`}>

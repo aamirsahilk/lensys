@@ -84,6 +84,7 @@ const Cart = () => {
     const getCities = async (id) => {
         const res = await api.get('cities/' + id);
         setCities(res.data)
+      
     }
 
     const paymentProceed = async (id) => {
@@ -243,6 +244,7 @@ const Cart = () => {
                                 {
                                     cartItems.length > 0 ?
                                         <>
+                                        {cities.length > 0 && cities[0].city}
                                             <Formik
                                                 initialValues={{
                                                     email: userData.email,
@@ -260,8 +262,13 @@ const Cart = () => {
                                                 validationSchema={validationSchema}
                                                 onSubmit={(values) => {
                                                     console.log('submit..');
+                                                    //  var selectedState = ;
+                                                    values.city = city == '' ? cities[0].city : city
+                                                     values.state = states.find(state => state.id === values.state) ? states.find(state => state.id === values.state).name : states[0].name;
+                                               
                                                     handlePayment(values)
                                                 }}
+
                                             >
                                                 {({ isSubmitting }) => (
                                                     <Form>
@@ -381,9 +388,16 @@ const Cart = () => {
                                                                                 cart.shipping != 0&&
                                                                                 <div>
                                                                                 <span>Shipping : </span>
-                                                                                <span>₹ {cart.shipping}</span>
+                                                                                <span class="green-text">FREE</span>
                                                                                 </div>
                                                                             }
+                                                                            {/* {
+                                                                                cart.shipping != 0&&
+                                                                                <div>
+                                                                                <span>Shipping : </span>
+                                                                                <span>₹ {cart.shipping}</span>
+                                                                                </div>
+                                                                            } */}
                                                                         </p>
                                                                     </AccordionBody>
                                                                 </Accordion>

@@ -25,6 +25,8 @@ import { ToastContainer } from 'react-toastify'
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 
+import gReview from '../images/g-review.svg'
+
 
 const Header = () => {
 
@@ -112,9 +114,10 @@ const Header = () => {
                     <HeaderSearchBar />
                     </div>
                     <div className="r-part">
-                       
                         <ul className="ot-list">
-                            
+                            <li>
+                                <Image src={gReview} width={150} alt="" />
+                            </li>
                             <li>
                                 <HeaderCartBtn count="2" />
                             </li>
@@ -131,7 +134,7 @@ const Header = () => {
                             categories?.map((cat,index)=>(
                                 <li className='has-mega-menu' key={index}>
                                     <Link href={'products/'+cat.id}>
-                                        <span>{cat.name} 15</span>
+                                        <span>{cat.name}</span>
                                         <Image src={SelectDrop} alt="" width={20} height={20} />
                                     </Link>
                                     <Megamenu subCat={cat.id} />

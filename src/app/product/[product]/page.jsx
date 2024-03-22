@@ -210,7 +210,7 @@ const ProductInner = ({params}) => {
                     </p>
                   }
                   <div className="price-wrapper mt-5">
-                    <p>{currency || '₹'} {product_price || '1600.00'} <span>( inc VAT )</span></p>
+                    <p>{currency || '₹'} {product_price || '1600.00'} <span>( Ex GST )</span></p>
                   </div>
                   {/* <div className="act-msg suc">
                     <p>Delivered in 6-7 operational days</p>
@@ -219,7 +219,7 @@ const ProductInner = ({params}) => {
                     colors.length > 0 &&
                     <div className="color-selector-wrapper mt-5">
                         <p className="para dark">
-                          Color <span>{color}</span>
+                          Color : <span>{color}</span>
                         </p>
                         <div className="flex flex-wrap gap-5 mt-5">
                           {
