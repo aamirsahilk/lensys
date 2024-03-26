@@ -601,7 +601,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                         {/* </form> */}
                                         <div className="pd-inp-container mt-5">
                                             <label htmlFor="" className="label-text">PD</label>
-                                            <div className="opt-table">
+                                            <div className="opt-table pd-table">
                                                 <div className="op-row">
                                                     <div className="op-cell">
                                                         Left

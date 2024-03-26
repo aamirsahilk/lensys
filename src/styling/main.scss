@@ -2405,3 +2405,12 @@ input.error, select.error{
     z-index: 5;
     pointer-events: none;
 }
+.pd-table{
+
+    .op-row{
+
+        >div{
+            flex: 1 1 auto !important;
+        }
+    }
+}
