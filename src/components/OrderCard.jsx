@@ -51,6 +51,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
     const [isLens, setIsLens] = useState(false);
     const [initValues, setInitValues] = useState({});
     const userdata = useSelector((state) => state.userData.value);
+    const [pdTotal, setPdTotal] = useState(0);
 
     useEffect(() => {
         if (data?.productdetails?.categoryid == 4 || data?.productdetails?.categoryid == 3) {
@@ -87,6 +88,8 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
         // const vl = e.target.dataset.value;
         // dispatch(updateProductAdd({...productData, prescription: vl}))
     }
+
+    
 
     const handleUploadLater = () => {
         const uploadManually = () => {
@@ -181,9 +184,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
             lan: Yup.string().required(),
         }),
         pd: Yup.object({
-            pd1: Yup.string().required(),
-            pd2: Yup.string().required(),
-            pd3: Yup.string().required(),
+            pdLeft: Yup.number().required().max(60),
+            pdRight: Yup.number().required().max(60),
+            pdTotal: Yup.number().required().max(61),
         }),
     });
 
@@ -600,12 +603,80 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                             <label htmlFor="" className="label-text">PD</label>
                                             <div className="opt-table">
                                                 <div className="op-row">
-                                                       
+                                                    <div className="op-cell">
+                                                        Left
+                                                    </div>
+                                                    <div className="op-cell">
+                                                        Right
+                                                    </div>
+                                                    <div className="op-cell">
+                                                        Total
+                                                    </div>
+                                                </div>
+                                                <div className="op-row">
+                                          
+                                                    <div className="op-cell">
                                                         {
+                                                            data?.prescription?.status ?
+                                                            <input type="text" name={`pd.pdLeft`} readOnly value={formik.values.pd && formik.values?.pd[`pdLeft`]} />:
+                                                            <input name={`pd.pdLeft`} 
+                                                            onChange={(e) => {
+                                                                const newValue = parseInt(e.target.value) || 0;
+                                                                if (!isNaN(newValue)) {
+                                                                    const adjustedValue = newValue > 60 ? 60 : newValue;
+                                                                    const otherValue = newValue > 60 ? 0 : 60 - adjustedValue;
+                                                                    const total = parseInt(otherValue) + parseInt(adjustedValue);
+                                                                    formik.setValues({
+                                                                        ...formik.values,
+                                                                        pd: {
+                                                                            pdLeft: adjustedValue.toString(),
+                                                                            pdRight: otherValue.toString(),
+                                                                            pdTotal: total.toString()
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }}
+                                                            onBlur={formik.handleBlur} value={formik.values.pd && formik.values.pd[`pdLeft`]}
+                                                            className={formik.errors.pd ? formik.errors?.pd[`pdLeft`] && 'error' : ''} />
+                                                        }
+                                                    </div>
+                                                    <div className="op-cell">
+                                                        {
+                                                            data?.prescription?.status ?
+                                                            <input name={`pd.pdRight`} type="text" readOnly value={formik.values.pd && formik.values?.pd[`pdRight`]} />:
+                                                            <input name={`pd.pdRight`} 
+                                                            onChange={(e) => {
+                                                                const newValue = parseInt(e.target.value) || 0;
+                                                                if (!isNaN(newValue)) {
+                                                                    const adjustedValue = newValue > 60 ? 60 : newValue;
+                                                                    const otherValue = newValue > 60 ? 0 : 60 - adjustedValue;
+                                                                    const total = parseInt(otherValue) + parseInt(adjustedValue);
+                                                                    
+                                                                    formik.setValues({
+                                                                        ...formik.values,
+                                                                        pd: {
+                                                                            pdLeft: otherValue.toString(),
+                                                                            pdRight: adjustedValue.toString(),
+                                                                            pdTotal: total.toString()
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }}
+                                                            onBlur={formik.handleBlur} value={formik.values.pd && formik.values.pd[`pdRight`]}
+                                                            className={formik.errors.pd ? formik.errors?.pd[`pdRight`] && 'error' : ''} />
+                                                        }
+                                                    </div>
+                                                    <div className="op-cell">
+                                                 
+                                                            <input type="text" name={`pd.pdTotal`} readOnly value={formik.values.pd && formik.values.pd[`pdTotal`]} className={formik.errors.pd ? formik.errors?.pd[`pdTotal`] && 'error' : ''} />:
+                                                           
+                                                    </div>
+                                                       
+                                                        {/* {
                                                             [...Array(3)].map((e,index)=>{
                                                                 index = index+1
                                                                 return(
-                                                                    <div className="op-cell">
+                                                                    <div className="op-cell" key={index}>
                                                                       
                                                                     {
                                                                     data?.prescription?.status ?
@@ -635,7 +706,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                 </div>
                                                                 )  
                                                             })
-                                                        }
+                                                        } */}
                                                     
                                                     
                                                 </div>
