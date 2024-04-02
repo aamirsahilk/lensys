@@ -8,9 +8,12 @@ import ProductCardSkeleton from '@/components/skeleton/ProductCardSkeleton';
 const page = () => {
     const [data, setData] = useState(null)
 
-    useEffect(async() => {
-        const response = await api.get(`blogs`);
-        setData(response.data);
+    useEffect(() => {
+        const fetchProduct = async()=>{
+            const response = await api.get(`blogs`);
+            setData(response.data);
+        }
+        fetchProduct()
     }, [])
   return (
     <>

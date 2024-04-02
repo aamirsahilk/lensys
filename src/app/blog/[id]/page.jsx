@@ -3,9 +3,10 @@ import React, {useState, useEffect, useCallback} from 'react'
 import Image from 'next/image';
 import api from '@/api/api';
 
-const page = ({params}) => {
+const BlogPage = ({params}) => {
     const [data, setData] = useState(null)
     const slug = params.id;
+   
     const fetchProduct = useCallback(async()=>{
         const response = await api.get(`blog/${slug}`);
         setData(response.data);
@@ -40,4 +41,4 @@ const page = ({params}) => {
   )
 }
 
-export default page
+export default BlogPage
