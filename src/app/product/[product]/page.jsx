@@ -210,7 +210,25 @@ const ProductInner = ({params}) => {
                     </p>
                   }
                   <div className="price-wrapper mt-5">
-                    <p>{currency || '₹'} {product_price || '1600.00'} <span>( Ex GST )</span></p>
+                    {
+                      regular_price > product_price &&
+                      <span className="off">
+                        {
+                        `-${(product_price / regular_price) * 100}%`
+                        }
+                      </span>
+                    }
+                    <p>{currency || '₹'} {product_price || '1600.00'} </p>
+                    {
+                      <span className='mrp'>
+                        <span>
+                        {
+                          `MRP ${regular_price}`
+                        }
+                        </span>
+                        ( Ex GST )
+                      </span>
+                    }
                   </div>
                   {/* <div className="act-msg suc">
                     <p>Delivered in 6-7 operational days</p>
