@@ -54,6 +54,7 @@ const Cart = () => {
     const { push } = useRouter();
     const dispatch = useDispatch()
     const [open, setOpen] = useState(true);
+    const [open1, setOpen1] = useState(false);
     const [isAddressSame, setIsAddressSame] = useState(false)
     const [paymentLoading, setPaymentLoading] = useState(false)
     const [cartItems, setCartItems] = useState([]);
@@ -231,6 +232,7 @@ const Cart = () => {
 
 
     const handleOpen = () => setOpen((prevState) => !prevState);
+    const handleOpen1 = () => setOpen1((prevState) => !prevState);
 
     return (
         <>
@@ -244,7 +246,6 @@ const Cart = () => {
                                 {
                                     cartItems.length > 0 ?
                                         <>
-                                        {cities.length > 0 && cities[0].city}
                                             <Formik
                                                 initialValues={{
                                                     email: userData.email,
@@ -360,6 +361,7 @@ const Cart = () => {
 
                                                             </div>
                                                             <div className="relative md:col-span-5 sticky top-20 self-start">
+                                                                
                                                                 <Accordion open={open} icon={<Icon id={1} open={open ? 1 : 0} />} className=''>
                                                                     <AccordionHeader className='cart-total-btn' onClick={handleOpen}>
                                                                         <h3 className="it-head">
@@ -370,7 +372,7 @@ const Cart = () => {
                                                                         <p className='cart-tot-det'>
                                                                             {
                                                                                 cart.subtotal != 0&&
-                                                                                <div>
+                                                                                <div className="cart-det-bx">
                                                                                 <span>Subtotal : </span>
                                                                                 <span>₹ {cart.subtotal}</span>
                                                                                 
@@ -378,19 +380,38 @@ const Cart = () => {
                                                                             }
                                                                             {
                                                                                 cart.discount != 0&&
-                                                                                <div>
+                                                                                <div className="cart-det-bx">
                                                                                 <span>Discount : </span>
                                                                                 <span>- ₹ {cart.discount}</span>
                                                                                 
                                                                                 </div>
                                                                             }
-                                                                            {
-                                                                                cart.shipping != 0&&
-                                                                                <div>
-                                                                                <span>Shipping : </span>
-                                                                                <span class="green-text">FREE</span>
+                                                                            <Accordion open={open1} icon={<Icon id={1} open={open1 ? 1 : 0} />} className=''>
+                                                                            <AccordionHeader className='cart-total-btn' onClick={handleOpen1}>
+                                                                                <h3 className="it-head sm">
+                                                                                    Total GST: <span>₹ {cart?.totalgst}</span>
+                                                                                </h3>
+                                                                            </AccordionHeader>
+                                                                            <AccordionBody className="p-0 top-p">
+                                                                               {
+                                                                                cart?.cartitems.map((item,i)=>{
+                                                                                    return(
+                                                                                        <div key={i} className="cart-det-bx pr">
+                                                                                            <span>{item.productdetails.product_name} : </span>
+                                                                                            <span>₹ {item.productdetails.taxamount} | {item.productdetails.gst}</span>
+                                                                                        </div>
+                                                                                    )
+                                                                                })
+                                                                               }
+                                                                            </AccordionBody>
+                                                                            </Accordion>
+                                                                            
+                                                                                
+                                                                                <div className="cart-det-bx">
+                                                                                    <span>Shipping : </span>
+                                                                                    <span class="green-text">{cart.shipping != 0 ? cart.shipping : 'FREE'}</span>
                                                                                 </div>
-                                                                            }
+                                                                            
                                                                             {/* {
                                                                                 cart.shipping != 0&&
                                                                                 <div>

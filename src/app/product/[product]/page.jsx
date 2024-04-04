@@ -143,6 +143,7 @@ const ProductInner = ({params}) => {
         }
       }
     }else{
+      setAdding(false);
       setSize(isMobile? 'xl': size || "md");
     }
     

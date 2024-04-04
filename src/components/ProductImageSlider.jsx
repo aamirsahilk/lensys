@@ -53,11 +53,13 @@ const ProductImageSlider = ({lenstype}) => {
                         //     </SwiperSlide>
                         // ))
                         products && products.length? products.map((product, index) => {
-                            return (
-                                <SwiperSlide key={index}>
-                                    <ProductCard data={product} />
-                                </SwiperSlide>
-                            )
+                            if(index < 10){
+                                return (
+                                    <SwiperSlide key={index}>
+                                        <ProductCard data={product} />
+                                    </SwiperSlide>
+                                )
+                            }
                         }):<p className='no-res'>No Results</p>
                     }
                 </Swiper>

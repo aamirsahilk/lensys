@@ -184,9 +184,9 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
             lan: Yup.string().required(),
         }),
         pd: Yup.object({
-            pdLeft: Yup.number().required().max(60),
-            pdRight: Yup.number().required().max(60),
-            pdTotal: Yup.number().required().max(61),
+            pdLeft: Yup.number().required().max(180),
+            pdRight: Yup.number().required().max(180),
+            pdTotal: Yup.number().required().max(360),
         }),
     });
 
@@ -236,6 +236,21 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
         '0',
         '0.1',
         '0.2'
+    ]
+    const Spherical = [
+        '-10.00', '-9.75', '-9.50', '-9.25', '-9.00', '-8.75', '-8.50', '-8.25', '-8.00', '-7.75',
+        '-7.50', '-7.25', '-7.00', '-6.75', '-6.50', '-6.25', '-6.00', '-5.75', '-5.50', '-5.25',
+        '-5.00', '-4.75', '-4.50', '-4.25', '-4.00', '-3.75', '-3.50', '-3.25', '-3.00', '-2.75',
+        '-2.50', '-2.25', '-2.00', '-1.75', '-1.50', '-1.25', '-1.00', '-0.75', '-0.50', '-0.25',
+        '0.00', '+0.25', '+0.50', '+0.75', '+1.00', '+1.25', '+1.50', '+1.75', '+2.00', '+2.25',
+        '+2.50', '+2.75', '+3.00', '+3.25', '+3.50', '+3.75', '+4.00'
+    ]
+    const cylinderical = [
+        '-6.00', '-5.75', '-5.50', '-5.25', '-5.00', '-4.75', '-4.50', '-4.25', '-4.00', '-3.75',
+        '-3.50', '-3.25', '-3.00', '-2.75', '-2.50', '-2.25', '-2.00', '-1.75', '-1.50', '-1.25',
+        '-1.00', '-0.75', '-0.50', '-0.25', '0.00', '+0.25', '+0.50', '+0.75', '+1.00', '+1.25',
+        '+1.50', '+1.75', '+2.00', '+2.25', '+2.50', '+2.75', '+3.00', '+3.25', '+3.50', '+3.75',
+        '+4.00', '+4.25', '+4.50', '+4.75', '+5.00', '+5.25', '+5.50', '+5.75', '+6.00'
     ]
 
 
@@ -489,7 +504,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                                     >
                                                                                         <option value=""></option>
                                                                                         {
-                                                                                            Powers.map((e,index) => {
+                                                                                            Spherical.map((e,index) => {
                                                                                                 return (
                                                                                                     <option key={index} value={e}>{e}</option>
                                                                                                 )
@@ -500,7 +515,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                                                         className={formik.errors.rightEye ? formik.errors?.rightEye[`${'r' + field + item.name}`] && 'error' : ''}>
                                                                                         <option selected value=""></option>
                                                                                         {
-                                                                                            Powers.map((e,index) => {
+                                                                                            Spherical.map((e,index) => {
                                                                                                 return (
                                                                                                     <option key={index} value={e}>{e}</option>
                                                                                                 )
@@ -623,15 +638,24 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                             onChange={(e) => {
                                                                 const newValue = parseInt(e.target.value) || 0;
                                                                 if (!isNaN(newValue)) {
-                                                                    const adjustedValue = newValue > 60 ? 60 : newValue;
-                                                                    const otherValue = newValue > 60 ? 0 : 60 - adjustedValue;
-                                                                    const total = parseInt(otherValue) + parseInt(adjustedValue);
+                                                                    // const adjustedValue = newValue > 60 ? 60 : newValue;
+                                                                    // const otherValue = newValue > 60 ? 0 : 60 - adjustedValue;
+                                                                    // const total = parseInt(otherValue) + parseInt(adjustedValue);
+                                                                    // formik.setValues({
+                                                                    //     ...formik.values,
+                                                                    //     pd: {
+                                                                    //         pdLeft: adjustedValue.toString(),
+                                                                    //         pdRight: otherValue.toString(),
+                                                                    //         pdTotal: total.toString()
+                                                                    //     }
+                                                                    // });
+                                                                    
                                                                     formik.setValues({
                                                                         ...formik.values,
                                                                         pd: {
-                                                                            pdLeft: adjustedValue.toString(),
-                                                                            pdRight: otherValue.toString(),
-                                                                            pdTotal: total.toString()
+                                                                            ...formik.values.pd,
+                                                                            pdLeft: newValue,
+                                                                            pdTotal: formik.values?.pd && parseInt(formik.values?.pd['pdRight']) + newValue
                                                                         }
                                                                     });
                                                                 }
@@ -648,16 +672,25 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                             onChange={(e) => {
                                                                 const newValue = parseInt(e.target.value) || 0;
                                                                 if (!isNaN(newValue)) {
-                                                                    const adjustedValue = newValue > 60 ? 60 : newValue;
-                                                                    const otherValue = newValue > 60 ? 0 : 60 - adjustedValue;
-                                                                    const total = parseInt(otherValue) + parseInt(adjustedValue);
+                                                                    // const adjustedValue = newValue > 60 ? 60 : newValue;
+                                                                    // const otherValue = newValue > 60 ? 0 : 60 - adjustedValue;
+                                                                    // const total = parseInt(otherValue) + parseInt(adjustedValue);
                                                                     
+                                                                    // formik.setValues({
+                                                                    //     ...formik.values,
+                                                                    //     pd: {
+                                                                    //         pdLeft: otherValue.toString(),
+                                                                    //         pdRight: adjustedValue.toString(),
+                                                                    //         pdTotal: total.toString()
+                                                                    //     }
+                                                                    // });
+                                                                 
                                                                     formik.setValues({
                                                                         ...formik.values,
                                                                         pd: {
-                                                                            pdLeft: otherValue.toString(),
-                                                                            pdRight: adjustedValue.toString(),
-                                                                            pdTotal: total.toString()
+                                                                            ...formik.values.pd,
+                                                                            pdRight: newValue,
+                                                                            pdTotal: formik.values?.pd && parseInt(formik.values?.pd['pdLeft']) + newValue
                                                                         }
                                                                     });
                                                                 }

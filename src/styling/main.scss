@@ -1539,7 +1539,7 @@
     h3{
         font-size: 18px;
         font-weight: 600;
-        margin-bottom: 5px;
+    margin-bottom: 5px;
     }
 
     .para{
@@ -1570,6 +1570,14 @@
     >.swiper{
         padding-bottom: 20px !important;
         padding-top: 20px !important;
+
+        .swiper-slide{
+            height: auto;
+
+            .le_pr-main-wrapper{
+                height: 100%;
+            }
+        }
     }
 }
 .apply-offer-strip{
@@ -1648,6 +1656,29 @@
     font-style: italic;
     font-weight: 600;
     line-height: 140%;
+
+    &.sm{
+        font-size: 16px;
+        padding-bottom: 2px;
+        font-style: normal;
+        margin-bottom: 0     !important;
+        color: rgb(97, 97, 97) !important;
+        
+        span{
+            color: #434242 !important;
+        }
+
+        ~ span{
+            transform: translateY(-10%);
+            width: 18px !important;
+            margin-left: 5px;
+            color: #434242 !important;
+
+            svg{
+                width: 100%;
+            }
+        }
+    }
 }
 .info-line{
 
@@ -2296,6 +2327,9 @@ input.error, select.error{
     
     // cursor: not-allowed !important;
 }
+.top-p{
+    margin-top: 3px;
+}
 .cart-tot-det {
     font-size: 16px;
     font-weight: 500;
@@ -2303,7 +2337,34 @@ input.error, select.error{
     flex-direction: column;
     gap: 5px;
 
-    >div{
+    .cart-det-bx{
+
+        &.pr{
+            display: flex;
+
+            span:nth-child(1){
+                max-width: 200px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                        line-clamp: 1; 
+                -webkit-box-orient: vertical;
+            }
+
+            span{
+                font-size: 12px !important;
+                font-style: italic !important;
+                color: rgb(97,97,97) !important;
+            }
+        }
+
+        span{
+            font-size: 14px;
+
+            &:nth-child(1){
+                font-weight: 600;
+            }
+        }
 
         span:nth-child(2){
             font-weight: 600;

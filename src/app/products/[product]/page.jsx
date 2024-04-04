@@ -99,10 +99,13 @@ const Category = ({params, searchParams}) => {
   return (
     <main className='le_archive-page py-5'>
       <div className="relative grid grid-cols-1 lg:grid-cols-5 ">
-        <div className="relative pl-5">
-          <FilterArea handleFilter={handleFilter} categoryParam={categoryParam} handleClearAll={handleClearAll} filterSearchParam={searchParam} openDrawerRight={openDrawerRight} closeDrawerRight={closeDrawerRight} openRight={openRight} />
-        </div>
-        <div className="relative lg:col-span-4 px-5">
+          {
+            categoryParam != 'all'&&
+            <div className="relative pl-5">
+              <FilterArea handleFilter={handleFilter} categoryParam={categoryParam} handleClearAll={handleClearAll} filterSearchParam={searchParam} openDrawerRight={openDrawerRight} closeDrawerRight={closeDrawerRight} openRight={openRight} />
+            </div>
+          }
+        <div className={`relative ${categoryParam != 'all' ? 'lg:col-span-4':'lg:col-span-5'} px-5`}>
           <div className="archive-pr-wrapper">
             <div className="flex items-center w-full justify-between">
               <h3 className='searched-text mb-0' >{categoryParam}</h3>

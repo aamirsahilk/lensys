@@ -36,7 +36,7 @@ const HeaderSearchBar = () => {
   const fetchCategories = async() =>{
     const response = await api.get('categories');
     setCatagories(response.data)
-    setSelected(response.data[0].id || 0);
+    setSelected('all');
   }
 
   const router = useRouter();
@@ -60,6 +60,7 @@ const HeaderSearchBar = () => {
       <form onSubmit={handleSubmit}>
         <div className="select-wrap">
           <select name="" id="" defaultValue={categories ? categories[0].id : ""} onChange={(e)=>setSelected(e.target.value)}>
+            <option value={'all'}>{'All'}</option>
             {
               categories &&
               categories.map((item,index)=>(

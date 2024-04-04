@@ -115,9 +115,9 @@ const Header = () => {
                     </div>
                     <div className="r-part">
                         <ul className="ot-list">
-                            <li>
+                            {/* <li>
                                 <Image src={gReview} width={150} alt="" />
-                            </li>
+                            </li> */}
                             <li>
                                 <HeaderCartBtn count="2" />
                             </li>
