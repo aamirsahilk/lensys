@@ -30,7 +30,7 @@ export default function Home() {
             <SecHeading centerLine={true}>
                 Corrective Contact lenses
             </SecHeading>
-            <ProductImageSlider lenstype={'corrective-contact-lens'} />
+            <ProductImageSlider lenstype={'contact-lens'} />
           </div>
         </div>
       </section>
@@ -40,7 +40,7 @@ export default function Home() {
             <SecHeading centerLine={true}>
                 Color Contact lenses
             </SecHeading>
-            <ProductImageSlider lenstype={'color-contact-lens'} />
+            <ProductImageSlider lenstype={'coloured-contact-lens'} />
           </div>
         </div>
       </section>
