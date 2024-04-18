@@ -36,6 +36,7 @@ import OfferSlider from '@/components/OfferSlider'
 
 const ProductInner = ({params}) => {
   const [isLens, setIsLens] = useState(false);
+  
   // 1 = eye
   // 2 = sunglass
   // 3 = colorcontact
