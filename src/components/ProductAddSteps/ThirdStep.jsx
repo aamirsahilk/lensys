@@ -10,23 +10,136 @@ import st2 from '../../../public/images/step2.jpg'
 import upload from '@/images/upload-icon.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateProductAdd } from '@/store/features/productAdd/productAddSlice';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 // import LensCard from './LensCard';
 import ColorRadios from '../ColorRadios';
+import ManualPowerInputs from '../ManualPowerInputs';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const ThirdStep = ({id, colorId}) => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileError, setFileError] = useState('');
+  const [subEr, setSubEr] = useState(false)
   const dispatch = useDispatch();
   const productData = useSelector((state)=> state.productData.value)
+  const isEmpty = (obj) => {
+    return Object.keys(obj).length !== 0;
+  };
+  const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      setSelectedFile(null);
+      if (!file) {
+          setFileError('Please select a file.');
+          return;
+      }
+      if (
+          file.type !== 'application/pdf' &&
+          !file.name.endsWith('.doc') &&
+          !file.name.endsWith('.docx')
+      ) {
+          setFileError('Please select a PDF or Word document file.');
+          return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+          setFileError('File size exceeds 5 MB limit.');
+          return;
+      }
+      setFileError('')
+      setSelectedFile(file);
+      dispatch(updateProductAdd({...productData, file:file}))
+  };
+  const handleRemoveFile = ()=>{
+    setSelectedFile(null)
+    dispatch(updateProductAdd({...productData, file:null}))
+  }
+  useEffect(()=>{
+    console.log('sel', selectedFile);
+    if(selectedFile){
+      dispatch(updateProductAdd({...productData, hasError:false}))
+    }else{
+      dispatch(updateProductAdd({...productData, hasError:true}))
+    }
+  }, [selectedFile])
   const handleCLick = (e)=>{
       const vl = e.target.dataset.value;
+      // console.log('vl',vl, e.target);
+      // console.log('vl', vl);
+      if(vl == 3){
+        console.log('in ', vl);
+        formik.handleSubmit()
+        dispatch(updateProductAdd({...productData, hasError:isEmpty(formik.errors)}))
+      }else{
+        console.log('out ', vl);
+        dispatch(updateProductAdd({...productData, hasError:'vjh'}))
+      }
       dispatch(updateProductAdd({...productData, prescription: vl}))
   }
+  const validationSchema = Yup.object({
+      rightEye: Yup.object({
+          rsd: Yup.string().required(),
+          rcd: Yup.string().required(),
+          rad: Yup.string().required(),
+          rsn: Yup.string().required(),
+          rcn: Yup.string().required(),
+          ran: Yup.string().required(),
+      }),
+      leftEye: Yup.object({
+          lsd: Yup.string().required(),
+          lcd: Yup.string().required(),
+          lad: Yup.string().required(),
+          lsn: Yup.string().required(),
+          lcn: Yup.string().required(),
+          lan: Yup.string().required(),
+      }),
+      pd: Yup.object({
+          pd1: Yup.number().required().max(180),
+          pd2: Yup.number().required().max(180),
+          pd3: Yup.number().required().max(360),
+      }),
+  });
+
+  const formik = useFormik({
+      enableReinitialize: true,
+      initialValues: {},
+      validationSchema,
+      onSubmit: (values) => {
+          const obj = { ...values.rightEye, ...values.leftEye, ...values.pd };
+          dispatch(updateProductAdd({...productData, ...obj}))
+      },
+      
+  });
+
   useEffect(()=>{
     dispatch(updateProductAdd({...productData, prescription: 1}))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
+  useEffect(()=>{
+    console.log('product Data', productData);
+  }, [productData])
+
+  // useEffect(()=>{
+    
+  // },[formik])
+  const handleSubmit = ()=>{
+    
+    formik.handleSubmit()
+    setSubEr(isEmpty(formik.errors));
+    console.log('er', formik.errors);
+    dispatch(updateProductAdd({...productData, hasError:isEmpty(formik.errors)}))
+    // console.log('er', isEmpty(formik.errors));
+  }
+
   const [tab, setTab] = useState(3);
+
+  const data = {
+    prescription:{
+      status: false
+    }
+  }
 
   const tabChange = (tb)=>{
     setTab(tb)
@@ -51,22 +164,25 @@ const ThirdStep = ({id, colorId}) => {
                             </button>
                           </li>
                           
-                          {/* <li>
-                            <button data-value="2" className={`${tab==2?'active':''}`} onClick={()=>{tabChange(2);handleCLick(e)}}>
+                          <li>
+                            <button data-value="2" className={`${tab==2?'active':''}`} onClick={(e)=>{tabChange(2);handleCLick(e)}}>
                               <span>upload prescription</span>
                             </button>
                           </li>
                           <li>
-                            <button data-value="3" className={`${tab==1?'active':''}`} onClick={()=>{tabChange(1);handleCLick(e)}}>
+                            <button data-value="3" className={`${tab==1?'active':''}`} onClick={(e)=>{tabChange(1);handleCLick(e)}}>
                               <span>Enter Manually</span>
                             </button>
-                          </li> */}
+                          </li> 
                         </ul>
                         <div className="tab-content">
                           {
                             tab == 1?
                             <div className="tab-content-inner">
-                              <div className="re-le-wrapper">
+                              
+                              <ManualPowerInputs data={data} formik={formik} />
+                              <button className='main-btn mt-4' onClick={()=>{handleSubmit()}}><span>Update</span></button>
+                              {/* <div className="re-le-wrapper">
                                 <div className="re-part">
                                   <div className="flex items-center gap-2 e-wr">
                                     <Image src={eye} alt="" width={30} height={30} />
@@ -167,14 +283,40 @@ const ThirdStep = ({id, colorId}) => {
                               </div>
                               <p className="sm-text mt-8">
                                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut similique sunt ipsum vero vel mollitia deserunt, maiores nobis hic voluptatem numquam dolore soluta, in iure, perspiciatis unde. Quis, amet optio!
-                              </p>
+                              </p> */}
                             </div>: tab == 2?
                             <div className="tab-content-inner">
-                              <button className="big-upload-btn">
-                                <Image src={upload} alt="" />
-                                <span>Upload Your Prescription</span>
-                              </button>
+                              <label for="file1" className="big-upload-btn" >
+                                  <input
+                                      type="file"
+                                      accept=".pdf, .doc, .docx"
+                                      onChange={handleFileChange}
+                                      style={{ display: 'none' }}
+                                      id="file1"
+                                  />
+                                  <Image src={upload} alt="" />
+                                  <span>Upload Your Prescription</span>
+                              </label>
                               <p className="sm-text text-center mt-2">Note : Document should be in PDF* format under 5MiB</p>
+                              {
+                                  fileError != '' &&
+                                  <div className='act-msg error center'>
+                                      <p>
+                                          {fileError}
+                                      </p>
+                                  </div>
+                              }
+                              {
+                                  selectedFile &&
+                                  <div className='selected-file center'>
+                                      <div>
+                                          <p>{selectedFile.name}</p>
+                                      </div>
+                                      <button className='remove-file' onClick={() => handleRemoveFile()}>
+                                          <CancelIcon />
+                                      </button>
+                                  </div>
+                              }
                             </div>:
                             <div className="tab-content-inner">
                               <ul className="le-points">

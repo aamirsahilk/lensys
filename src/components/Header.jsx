@@ -141,11 +141,7 @@ const Header = () => {
                                 </li>
                             ))
                         }
-                        <li>
-                            <Link href={'/blogs'}>
-                                <span>Blogs</span>
-                            </Link>
-                        </li>
+                       
                        
                     </ul>
                     <ul className="head-con-list">

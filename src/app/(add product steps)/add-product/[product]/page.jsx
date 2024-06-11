@@ -69,6 +69,7 @@ export default function AddProductSteps({params, searchParams}) {
         addToCart();
       }else{
         // addToCart();
+        // setAddtocartbtn(true)
         setSize(isMobile? 'xl': size || "md");
       }
     }
@@ -106,10 +107,17 @@ export default function AddProductSteps({params, searchParams}) {
         break;
     }
   }
-
   useEffect(() => {
     setDomLoaded(true)
   },[])
+  useEffect(() => {
+    console.log('con', activeStep, productData?.hasError, productData?.prescription);
+    if(productData?.hasError && activeStep == 2 && productData?.prescription != 1 ){
+        setAddtocartbtn(true)
+      }else{
+        setAddtocartbtn(false)
+    }
+  },[productData,activeStep])
 
   // const accessToken = localStorage.getItem('access_token');
   const { push } = useRouter();

@@ -73,7 +73,7 @@ const Footer = () => {
                     </ul>
                 </div> */}
                 <div className="relative">
-                <h3 className="ft-head">
+                    <h3 className="ft-head">
                         Categories
                     </h3>
                     <ul className="ft-list">
@@ -89,6 +89,33 @@ const Footer = () => {
                             ))
                         }
                       
+                    </ul>
+                </div>
+                <div className="relative">
+                    <h3 className="ft-head">
+                        Other Links
+                    </h3>
+                    <ul className="ft-list">
+                        <li>
+                            <Link href={'/blogs'}>
+                                <span>Blogs</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={'/privacy-policy'}>
+                                <span>Privacy Policy</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={'/terms-and-conditions'}>
+                                <span>Terms & Conditions</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={'/refund-policy'}>
+                                <span>Refund Policy</span>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
                 <div className="relative lg:col-span-2">
