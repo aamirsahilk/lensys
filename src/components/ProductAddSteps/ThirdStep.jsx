@@ -67,15 +67,24 @@ const ThirdStep = ({id, colorId}) => {
       const vl = e.target.dataset.value;
       // console.log('vl',vl, e.target);
       // console.log('vl', vl);
-      if(vl == 3){
+      let er = false;
+      if(vl == 3 ){
         console.log('in ', vl);
         formik.handleSubmit()
-        dispatch(updateProductAdd({...productData, hasError:isEmpty(formik.errors)}))
+        er = isEmpty(formik.errors);
+        // dispatch(updateProductAdd({...productData, hasError:isEmpty(formik.errors)}))
       }else{
         console.log('out ', vl);
-        dispatch(updateProductAdd({...productData, hasError:'vjh'}))
+        console.log('dd', !selectedFile, vl == 2);
+        if(vl == 2 && !selectedFile){
+          // dispatch(updateProductAdd({...productData, hasError:true}))
+          er = true;
+        }else{
+          // dispatch(updateProductAdd({...productData, hasError:'vjh'}))
+          er = false;
+        }
       }
-      dispatch(updateProductAdd({...productData, prescription: vl}))
+      dispatch(updateProductAdd({...productData, prescription: vl, hasError:er}))
   }
   const validationSchema = Yup.object({
       rightEye: Yup.object({
@@ -169,11 +178,11 @@ const ThirdStep = ({id, colorId}) => {
                               <span>upload prescription</span>
                             </button>
                           </li>
-                          <li>
+                          {/*}li>
                             <button data-value="3" className={`${tab==1?'active':''}`} onClick={(e)=>{tabChange(1);handleCLick(e)}}>
                               <span>Enter Manually</span>
                             </button>
-                          </li> 
+                          </li> */}
                         </ul>
                         <div className="tab-content">
                           {

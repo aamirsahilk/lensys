@@ -85,6 +85,9 @@
 }
 
 @media(max-width:600px){
+    .re-le-wrapper{
+        grid-template-columns: 1fr;
+    }
     .myacc-sidebar{
         height: auto !important;
         padding: 0 !important;
@@ -92,6 +95,23 @@
     .bread-crumbs li h1 {
         font-size: 16px;
       }
+    .bread-crumbs{
+        flex-wrap: wrap;
+    }
+    .c-table tbody tr{
+        margin-bottom: 20px;
+        display: block;
+    }
+    .max-w-\[60\%\]{
+        width: 95%;
+        max-width: 100% !important;
+    }
+    .selected-file p {
+        word-wrap: anywhere;
+    }
+    .my-orders-list .cart-item{
+        flex-direction: column;
+    }
     .inner-steps > .container > .grid .l-part{
         display: none;
     }

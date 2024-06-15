@@ -56,7 +56,23 @@ const ManualPowerInputs = ({data,formik}) => {
                                         <p>{item.label}</p>
                                     </div>
                                     {
-                                        ['s', 'c', 'a'].map((field, index) => (
+                                        ['s', 'c', 'a'].map((field, index) => {
+                                            let pws = [];
+                                            switch (field) {
+                                                case 's':
+                                                    pws = Spherical;
+                                                    break;
+                                                case 'c':
+                                                    pws = cylinderical;
+                                                    break;
+                                                case 'a':
+                                                    pws = Spherical;
+                                                    break;
+                                                
+                                                default:
+                                                    break;
+                                            }
+                                            return(
                                             <div className="op-cell" key={index}>
 
                                                 {
@@ -66,7 +82,8 @@ const ManualPowerInputs = ({data,formik}) => {
                                                         >
                                                             <option value=""></option>
                                                             {
-                                                                Spherical.map((e, index) => {
+                                                               
+                                                                pws.map((e, index) => {
                                                                     return (
                                                                         <option key={index} value={e}>{e}</option>
                                                                     )
@@ -77,7 +94,7 @@ const ManualPowerInputs = ({data,formik}) => {
                                                             className={formik.errors.rightEye ? formik.errors?.rightEye[`${'r' + field + item.name}`] && 'error' : ''}>
                                                             <option selected value=""></option>
                                                             {
-                                                                Spherical.map((e, index) => {
+                                                                pws.map((e, index) => {
                                                                     return (
                                                                         <option key={index} value={e}>{e}</option>
                                                                     )
@@ -87,7 +104,8 @@ const ManualPowerInputs = ({data,formik}) => {
 
                                                 }
                                             </div>
-                                        ))
+                                            )
+                                        })
                                     }
                                 </div>
                             ))
@@ -120,7 +138,23 @@ const ManualPowerInputs = ({data,formik}) => {
                                         <p>{item.label}</p>
                                     </div>
                                     {
-                                        ['s', 'c', 'a'].map((field, index) => (
+                                        ['s', 'c', 'a'].map((field, index) => {
+                                            let pws = [];
+                                            switch (field) {
+                                                case 's':
+                                                    pws = Spherical;
+                                                    break;
+                                                case 'c':
+                                                    pws = cylinderical;
+                                                    break;
+                                                case 'a':
+                                                    pws = Spherical;
+                                                    break;
+                                                
+                                                default:
+                                                    break;
+                                            }
+                                            return(
                                             <div className="op-cell" key={index}>
 
                                                 {
@@ -133,7 +167,7 @@ const ManualPowerInputs = ({data,formik}) => {
                                                             className={formik.errors.leftEye ? formik.errors.leftEye[`${'l' + field + item.name}`] && 'error' : ''}>
                                                             <option selected value=""></option>
                                                             {
-                                                                Powers.map((e, index) => {
+                                                                pws.map((e, index) => {
                                                                     return (
                                                                         <option key={index} value={e}>{e}</option>
                                                                     )
@@ -146,7 +180,7 @@ const ManualPowerInputs = ({data,formik}) => {
                                                         >
                                                             <option value=""></option>
                                                             {
-                                                                Powers.map((e, index) => {
+                                                                pws.map((e, index) => {
                                                                     return (
                                                                         <option key={index} value={e}>{e}</option>
                                                                     )
@@ -156,7 +190,8 @@ const ManualPowerInputs = ({data,formik}) => {
 
                                                 }
                                             </div>
-                                        ))
+                                            )
+                                        })
                                     }
                                 </div>
                             ))

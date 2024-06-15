@@ -171,7 +171,7 @@ const Orders = () => {
                         orders.length > 0 ? 
                         orders?.map((item,index)=>(
                           <tr key={index}>
-                            <td>
+                            <td data-value="Order ID">
                               <Link href={`my-account/orders/${item.order_id}`}>{item.order_id}
                               {
                                 !item.prescription &&
@@ -182,20 +182,20 @@ const Orders = () => {
                               }
                               </Link>
                             </td>
-                            <td>
+                            <td data-value="Order Status">
                               <span className={`status ${item.order_status}`}>
                                 {item.order_status}
                               </span>
                             </td>
-                            <td>
+                            <td data-value="Order Date">
                               {item.order_created}
                             </td>
-                            <td>
+                            <td data-value="Payment Status">
                               <span className={`status ${item.payment_status}`}>
                                 {item.payment_status}
                               </span>
                             </td>
-                            <td>
+                            <td data-value="Action">
                               {
                                   item.payment_status == 'failed'?
                                   <>
@@ -205,7 +205,7 @@ const Orders = () => {
                                   </>:''
                                 }
                             </td>
-                            <td >
+                            <td data-value="">
                               <div className="flex items-center gap-3">
                                 
                                 <Popover placement="bottom-end">

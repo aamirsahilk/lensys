@@ -25,14 +25,15 @@ const Footer = () => {
     <footer className="main-footer">
         <div className="container mx-auto">
             <div className="grid lg:grid-cols-6 grid-cols-1 gap-8">
-                <div className="relative lg:col-span-3">
+                <div className="relative lg:col-span-2">
                     <Link href="" className='ft-logo'>
                         <Image src={logo} alt="" />
                     </Link>
                     <div className="ft-content">
                         <h3 className='ft-head'>Buy The Best Eyewear From Lensys</h3>
                         <p className="para">
-                            Introducing Lensys, your premier destination for all things optics in the world of e-commerce. At Lensys, we&apos;re dedicated to enhancing your vision and style through a wide range of high-quality eyewear and optical products. Whether you&apos;re in search of fashionable frames, precision lenses, or cutting-edge optical accessories, we&apos;ve got you covered. Our commitment to exceptional craftsmanship and customer satisfaction sets us apart. 
+                            Introducing Lensys, your premier destination for all things optics in the world of e-commerce. At Lensys, we&apos;re dedicated to enhancing your vision and style through a wide range of high-quality eyewear and optical products.
+                            {/* Whether you&apos;re in search of fashionable frames, precision lenses, or cutting-edge optical accessories, we&apos;ve got you covered. Our commitment to exceptional craftsmanship and customer satisfaction sets us apart.  */}
                         </p>
                     </div>
                     {/* <h3 className="ft-head">
@@ -123,12 +124,12 @@ const Footer = () => {
                         Contact Details
                     </h3>
                     <ul className="con-list ft-list">
-                        <li>
+                        {/* <li>
                             <span>Phone</span>
                             <a href="tel:917470560626">
                                 +91 7470560626
                             </a>
-                        </li>
+                        </li> */}
                         <li>
                             <span>Mail</span>
                             <a href="mailto:support@lensys.in">

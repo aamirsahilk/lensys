@@ -145,12 +145,12 @@ const Header = () => {
                        
                     </ul>
                     <ul className="head-con-list">
-                            <li className='con-ac'>
+                            {/* <li className='con-ac'>
                                 <span><PhoneIcon /></span>
                                 <a href="tel:7470560626">
                                     +91 7470560626
                                 </a>
-                            </li>
+                            </li> */}
                             <li className='con-ac'>
                                 <span><EmailIcon /></span>
                                 <a href="mailto:support@lensys.in">
