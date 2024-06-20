@@ -17,7 +17,9 @@ const ProductCard = ({ data, ImageProductCard}) => {
     const [liked , setLiked] = useState(false);
     const hasOffer = true;
     data = data || {}
-    const {name,price,regular_price,image,alt_text,slug,id,offertag} = data;
+    const {name,price,regular_price,image,alt_text,slug,id,offertag, attributes} = data;
+
+    // const parsedAttributes = JSON.parse(attributes);
 
     const handleLike = async ()=>{
         const res = await api.get(`like-product/${id}?auth=${userData.access_token}`);
@@ -63,7 +65,31 @@ const ProductCard = ({ data, ImageProductCard}) => {
                     <div className="le_pr-con-wrap">
                         <div className="le_pr-content">
                             <h3 className='le_pr-title'>{name?name:'Vincent Chase Online'}</h3>
-                            <p className='le_pr-para'>Size: Medium • Classic Acetate</p>
+                            {/* <p className='le_pr-para'>Size: Medium • Classic Acetate</p> */}
+                            <p className='le_pr-para'>
+                                {/* {JSON.stringify(attributes)} */}
+                                {
+                                    attributes?.map((item, index)=>{
+                                        if(index < 3){
+                                            return(
+                                                <span key={index}>
+                                                    {/* <span >{item.key}</span> &nbsp; */}
+                                                    <span >{item.value}</span>&nbsp;
+                                                    {index < 2 && '•'} &nbsp;
+                                                </span>
+                                            )
+                                        }
+                                    })
+                                }
+                                {/* {JSON.stringify(parsedAttributes)}
+                                {
+                                    parsedAttributes&&parsedAttributes.map((item, index)=>{
+                                        return(
+                                            <>{item}</>
+                                        )
+                                    })
+                                } */}
+                            </p>
                             <div className="le_pr-price">
                                 <h3>₹ {price?price:'₹999'} <span>+ tax</span></h3>
                             </div>

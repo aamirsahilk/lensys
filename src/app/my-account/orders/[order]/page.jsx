@@ -78,7 +78,7 @@ const SingleOrder = ({params}) => {
                                 }
                             </div>  
                             <div className="relative md:col-span-4">
-                                <table className="c-table">
+                                <table className="c-table or-tb">
                                     <tbody>
                                         <tr>
                                             <td>
@@ -116,7 +116,7 @@ const SingleOrder = ({params}) => {
                                 </table>
 
                                 <h3 className="heading sm mt-5 mb-3">Payment Details</h3>
-                                <table className="c-table mb-5">
+                                <table className="c-table mb-5 or-tb">
                                     <tbody>
                                         <tr>
                                             <td>

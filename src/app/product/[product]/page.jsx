@@ -216,9 +216,7 @@ const ProductInner = ({params}) => {
                     {
                       regular_price > product_price &&
                       <span className="off">
-                        {
-                        `-${(product_price / regular_price) * 100}%`
-                        }
+                        {`-${((product_price / regular_price) * 100).toFixed(0)}%`}
                       </span>
                     }
                     <p>{currency || '₹'} {product_price || '1600.00'} </p>

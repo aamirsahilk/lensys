@@ -85,6 +85,10 @@
 }
 
 @media(max-width:600px){
+    
+    .c-table a, .c-table td, .c-table th {
+    word-wrap: anywhere;
+    }
     .re-le-wrapper{
         grid-template-columns: 1fr;
     }
@@ -98,7 +102,7 @@
     .bread-crumbs{
         flex-wrap: wrap;
     }
-    .c-table tbody tr{
+    .c-table:not(.or-tb) tbody tr{
         margin-bottom: 20px;
         display: block;
     }

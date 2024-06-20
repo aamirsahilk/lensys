@@ -2046,7 +2046,7 @@
             display: none !important;
         }
 
-        td{
+        &:not(.or-tb) td{
             display: flex;
             text-align: left;
             align-items: center;
