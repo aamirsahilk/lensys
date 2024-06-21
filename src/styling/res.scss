@@ -89,6 +89,9 @@
     .c-table a, .c-table td, .c-table th {
     word-wrap: anywhere;
     }
+    .blog-grid{
+        grid-template-columns: 1fr;
+    }
     .re-le-wrapper{
         grid-template-columns: 1fr;
     }

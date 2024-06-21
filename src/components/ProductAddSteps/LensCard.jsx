@@ -20,7 +20,10 @@ import {
   } from "@material-tailwind/react";
 
 const LensCard = ({lensDetails}) => {
-    const features = lensDetails.attributes.split('|');
+    let features = lensDetails.attributes.split('|');
+    console.log("dcd 1", features);
+    features = features.filter((item)=> item != '');
+    console.log("dcd", features, features.length);
     const dispatch = useDispatch();
     const productData = useSelector((state)=> state.productData.value)
     const productAddedInCart = useSelector((state)=> state.productAddedInCart.value)
@@ -31,7 +34,9 @@ const LensCard = ({lensDetails}) => {
         dispatch(updateProductData({...productAddedInCart, lensPackage: price}))
     }
     const [size, setSize] = useState(null);
-    const handleOpen = (value) => setSize(value)
+    const handleOpen = (value) => {
+        setSize(value)
+    }
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -74,7 +79,7 @@ const LensCard = ({lensDetails}) => {
                 <div className="relative">
                     {
                         features?
-                        <table className='c-table'>
+                        <table className='c-table pop-table'>
                             <thead>
                                 {
                                     features.map((item,index)=>(
@@ -86,7 +91,8 @@ const LensCard = ({lensDetails}) => {
                             </thead>
                         </table>:''
                     }
-                    <p className="text-center mt-2" onCLick={()=>handleOpen('njn')}>Close</p>
+                    {/* <br /> */}
+                    {/* <button className="text-center mt-2 center mx-auto d-block mt-4 main-btn" onCLick={()=>handleOpen(false)}><span>Close</span></button> */}
                 </div>
               </div>
             </DialogBody>
@@ -102,19 +108,22 @@ const LensCard = ({lensDetails}) => {
                         {
                             features.length &&
                             features.map((item,index)=>{
-                                if(index < 3){
+                                if(index < 2){
                                     return (
                                         <div key={index}> 
                                             <span>{item}</span>
                                             {
-                                                index < 2?<span>|</span>:''
+                                                index < 1?<span>|</span>:''
                                             }
                                         </div>
                                     )
                                 }
                             })
                         }
-                        <span className="view-more" onClick={() => handleOpen("sm")}>+{features.length - 3} More</span>
+                        {
+                            features.length > 2 &&
+                            <span className="view-more" onClick={() => handleOpen("sm")}>+{ features.length - 2} More</span>
+                        }
                     </p>
                     <p className="price">+ ₹{lensDetails.price}&nbsp; <span>(excluding tax)</span></p>
                 </div>

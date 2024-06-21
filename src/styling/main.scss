@@ -2042,11 +2042,11 @@
 
     @media(max-width:600px){
 
-        thead{
+        &:not(.pop-table) thead{
             display: none !important;
         }
 
-        &:not(.or-tb) td{
+        &:not(.or-tb, .pop-table) td{
             display: flex;
             text-align: left;
             align-items: center;
@@ -2630,4 +2630,11 @@ input.error, select.error{
   }
   .blog-content-area{
     margin-top: 2em;
+  }
+  
+.home-cat-pr-slider .swiper-slide {
+    height: auto;
+  }
+  .home-cat-pr-slider .swiper-slide article {
+    height: 100%;
   }

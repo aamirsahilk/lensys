@@ -68,14 +68,16 @@ const ProductCard = ({ data, ImageProductCard}) => {
                             {/* <p className='le_pr-para'>Size: Medium • Classic Acetate</p> */}
                             <p className='le_pr-para'>
                                 {/* {JSON.stringify(attributes)} */}
+                       
                                 {
                                     attributes?.map((item, index)=>{
                                         if(index < 3){
                                             return(
                                                 <span key={index}>
+                                               
                                                     {/* <span >{item.key}</span> &nbsp; */}
                                                     <span >{item.value}</span>&nbsp;
-                                                    {index < 2 && '•'} &nbsp;
+                                                    {(attributes.length != index + 1 && index < 3) && '•'} &nbsp;
                                                 </span>
                                             )
                                         }
