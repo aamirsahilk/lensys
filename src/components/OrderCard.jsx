@@ -53,6 +53,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
     const [initValues, setInitValues] = useState({});
     const userdata = useSelector((state) => state.userData.value);
     const [pdTotal, setPdTotal] = useState(0);
+    const [fError, setFerror] = useState(false);
 
     useEffect(() => {
         if (data?.productdetails?.categoryid == 4 || data?.productdetails?.categoryid == 3) {
@@ -167,28 +168,43 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
     //     }),
     //   });
 
+    // const validationSchema = Yup.object({
+    //     rightEye: Yup.object({
+    //         rsd: Yup.string().required(),
+    //         rcd: Yup.string().required(),
+    //         rad: Yup.string().required(),
+    //         rsn: Yup.string().required(),
+    //         rcn: Yup.string().required(),
+    //         ran: Yup.string().required(),
+    //     }),
+    //     leftEye: Yup.object({
+    //         lsd: Yup.string().required(),
+    //         lcd: Yup.string().required(),
+    //         lad: Yup.string().required(),
+    //         lsn: Yup.string().required(),
+    //         lcn: Yup.string().required(),
+    //         lan: Yup.string().required(),
+    //     }),
+    //     pd: Yup.object({
+    //         pd1: Yup.number().required().max(180),
+    //         pd2: Yup.number().required().max(180),
+    //         pd3: Yup.number().required().max(360),
+    //     }),
+    // });
+
+
+    const atLeastOneFieldRequired = (fields) => {
+        return Yup.object().test('at-least-one-field', 'At least one field must be filled', function(value) {
+            console.log('fields', fields,fields.some(field => value?.[field] !== undefined && value?.[field] !== ''));
+            setFerror(fields.some(field => value?.[field] !== undefined && value?.[field] !== ''));
+          return fields.some(field => value?.[field] !== undefined && value?.[field] !== '');
+        });
+      };
+      
     const validationSchema = Yup.object({
-        rightEye: Yup.object({
-            rsd: Yup.string().required(),
-            rcd: Yup.string().required(),
-            rad: Yup.string().required(),
-            rsn: Yup.string().required(),
-            rcn: Yup.string().required(),
-            ran: Yup.string().required(),
-        }),
-        leftEye: Yup.object({
-            lsd: Yup.string().required(),
-            lcd: Yup.string().required(),
-            lad: Yup.string().required(),
-            lsn: Yup.string().required(),
-            lcn: Yup.string().required(),
-            lan: Yup.string().required(),
-        }),
-        pd: Yup.object({
-            pd1: Yup.number().required().max(180),
-            pd2: Yup.number().required().max(180),
-            pd3: Yup.number().required().max(360),
-        }),
+        // rightEye: atLeastOneFieldRequired(['rsd', 'rcd', 'rad', 'rsn', 'rcn', 'ran']),
+        leftEye: atLeastOneFieldRequired(['lsd', 'lcd', 'lad', 'lsn', 'lcn', 'lan']),
+        // pd: atLeastOneFieldRequired(['pd1', 'pd2', 'pd3']),
     });
 
     const formik = useFormik({
@@ -434,6 +450,12 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                 tab == 1 ?
                                     <div className="tab-content-inner">
                                         {/* <form > */}
+                                        {
+                                            !fError &&
+                                            <div className="act-msg error w-100">
+                                                Please enter you lens powers  
+                                            </div>
+                                        }
                                         <ManualPowerInputs data={data} formik={formik} />
                                         <p className="sm-text mt-8">
                                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut similique sunt ipsum vero vel mollitia deserunt, maiores nobis hic voluptatem numquam dolore soluta, in iure, perspiciatis unde. Quis, amet optio!

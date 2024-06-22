@@ -212,9 +212,16 @@
 }
 .home-cat-list{
     position: relative;
-    
+    // gap: 40px !important;
 
     li{
+
+        @media(max-width: 600px){
+
+            &:last-child{
+                margin-left: 44px !important;
+            }
+        }
         
         button{
             position: relative;
@@ -228,6 +235,7 @@
             transition: 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
             margin-bottom: 12px;
             min-width: max-content;
+            display: block !important;
 
             &:hover{
                 background: #e2e2e2;
@@ -488,7 +496,7 @@
     position: relative;
 
     .swiper{
-        height: 25em;
+        height: 31.5em;
     }
 }
 .price-wrapper{
@@ -2046,7 +2054,7 @@
             display: none !important;
         }
 
-        &:not(.or-tb, .pop-table) td{
+        &:not(.or-tb, .pop-table, .non-resp) td{
             display: flex;
             text-align: left;
             align-items: center;
@@ -2637,4 +2645,41 @@ input.error, select.error{
   }
   .home-cat-pr-slider .swiper-slide article {
     height: 100%;
+  }
+  .le_pr-inner-main-slider{
+
+    .swiper-button-disabled{
+        display: none;
+    }
+
+    .sw-next{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(50%);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: url('/images/down-ar.svg') center/contain ;
+        z-index: 5;
+        cursor: pointer;
+    }
+    .sw-prev{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: url('/images/up-ar.svg') center/contain ;
+        z-index: 5;
+        cursor: pointer;
+    }
+
+    @media(max-width: 600px){
+        .sw-next, .sw-prev{
+            display: none;
+        }
+    }
   }

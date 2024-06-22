@@ -30,6 +30,92 @@ const ManualPowerInputs = ({data,formik}) => {
     return (
         <>
             <div className="re-le-wrapper">
+            <div className="le-part">
+
+<div className="flex items-center gap-2 e-wr">
+    <Image src={eye} alt="" width={30} height={30} />
+    <span>Left Eye</span>
+</div>
+<div className="opt-table mt-3">
+    <div className="op-row">
+        <div className="op-cell"></div>
+        <div className="op-cell">
+            <p>Sph</p>
+        </div>
+        <div className="op-cell">
+            <p>Cyl</p>
+        </div>
+        <div className="op-cell">
+            <p>Axis</p>
+        </div>
+    </div>
+    {
+        [{ name: 'd', label: 'D.V' }, { name: 'n', label: 'N.V' }].map((item, i) => (
+            <div className="op-row" key={i}>
+                <div className="op-cell">
+                    <p>{item.label}</p>
+                </div>
+                {
+                    ['s', 'c', 'a'].map((field, index) => {
+                        let pws = [];
+                        switch (field) {
+                            case 's':
+                                pws = Spherical;
+                                break;
+                            case 'c':
+                                pws = cylinderical;
+                                break;
+                            case 'a':
+                                pws = axisDegrees;
+                                break;
+                            
+                            default:
+                                break;
+                        }
+                        return(
+                        <div className="op-cell" key={index}>
+
+                            {
+                                !data?.prescription?.status ?
+
+                                    <select name={`leftEye.${'l' + field + item.name}`}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.leftEye && formik.values.leftEye[`${'l' + field + item.name}`]}
+                                        className={formik.errors.leftEye ? formik.errors.leftEye[`${'l' + field + item.name}`] && 'error' : ''}>
+                                        <option selected value=""></option>
+                                        {
+                                            pws.map((e, index) => {
+                                                return (
+                                                    <option key={index} value={e}>{e}</option>
+                                                )
+                                            })
+                                        }
+                                    </select> :
+                                    <select readOnly name={`leftEye.${'l' + field + item.name}`}
+
+                                        value={formik.values.leftEye && formik.values.leftEye[`${'l' + field + item.name}`]}
+                                    >
+                                        <option value=""></option>
+                                        {
+                                            pws.map((e, index) => {
+                                                return (
+                                                    <option key={index} value={e}>{e}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+
+                            }
+                        </div>
+                        )
+                    })
+                }
+            </div>
+        ))
+    }
+</div>
+</div>
                 <div className="re-part">
 
                     <div className="flex items-center gap-2 e-wr">
@@ -113,92 +199,7 @@ const ManualPowerInputs = ({data,formik}) => {
                         }
                     </div>
                 </div>
-                <div className="le-part">
-
-                    <div className="flex items-center gap-2 e-wr">
-                        <Image src={eye} alt="" width={30} height={30} />
-                        <span>Left Eye</span>
-                    </div>
-                    <div className="opt-table mt-3">
-                        <div className="op-row">
-                            <div className="op-cell"></div>
-                            <div className="op-cell">
-                                <p>Sph</p>
-                            </div>
-                            <div className="op-cell">
-                                <p>Cyl</p>
-                            </div>
-                            <div className="op-cell">
-                                <p>Axis</p>
-                            </div>
-                        </div>
-                        {
-                            [{ name: 'd', label: 'D.V' }, { name: 'n', label: 'N.V' }].map((item, i) => (
-                                <div className="op-row" key={i}>
-                                    <div className="op-cell">
-                                        <p>{item.label}</p>
-                                    </div>
-                                    {
-                                        ['s', 'c', 'a'].map((field, index) => {
-                                            let pws = [];
-                                            switch (field) {
-                                                case 's':
-                                                    pws = Spherical;
-                                                    break;
-                                                case 'c':
-                                                    pws = cylinderical;
-                                                    break;
-                                                case 'a':
-                                                    pws = axisDegrees;
-                                                    break;
-                                                
-                                                default:
-                                                    break;
-                                            }
-                                            return(
-                                            <div className="op-cell" key={index}>
-
-                                                {
-                                                    !data?.prescription?.status ?
-
-                                                        <select name={`leftEye.${'l' + field + item.name}`}
-                                                            onChange={formik.handleChange}
-                                                            onBlur={formik.handleBlur}
-                                                            value={formik.values.leftEye && formik.values.leftEye[`${'l' + field + item.name}`]}
-                                                            className={formik.errors.leftEye ? formik.errors.leftEye[`${'l' + field + item.name}`] && 'error' : ''}>
-                                                            <option selected value=""></option>
-                                                            {
-                                                                pws.map((e, index) => {
-                                                                    return (
-                                                                        <option key={index} value={e}>{e}</option>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </select> :
-                                                        <select readOnly name={`leftEye.${'l' + field + item.name}`}
-
-                                                            value={formik.values.leftEye && formik.values.leftEye[`${'l' + field + item.name}`]}
-                                                        >
-                                                            <option value=""></option>
-                                                            {
-                                                                pws.map((e, index) => {
-                                                                    return (
-                                                                        <option key={index} value={e}>{e}</option>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </select>
-
-                                                }
-                                            </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            ))
-                        }
-                    </div>
-                </div>
+               
             </div>
             <div className="pd-inp-container mt-5">
                 <label htmlFor="" className="label-text">PD</label>

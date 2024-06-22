@@ -276,7 +276,7 @@ const ProductInner = ({params}) => {
                     </div>
                   }
                   
-                  <div className="flex flex-wrap gap-2 mt-8">
+                  <div className="flex flex-wrap gap-2 mt-8 pr-inner-btn-grp">
                     {
                       isLens || categoryid == 2 ?
                       <button onClick={addToCart} disabled={adding} className='main-btn big'>

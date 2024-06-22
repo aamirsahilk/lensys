@@ -85,7 +85,39 @@
 }
 
 @media(max-width:600px){
-    
+    .place-items-center.fixed.w-screen{
+
+        .w-3\/4{
+            width: 95% !important;
+        }
+    }
+    .sec-head h2{
+        font-size: 28px;
+    }
+    .price-wrapper .off, .price-wrapper p{
+        font-size: 24px;
+    }
+    .price-wrapper{
+        flex-wrap: wrap;
+        row-gap: 0px !important;
+
+        .mrp{
+            font-size: 13px;
+        }
+    }
+    .pr-inner-btn-grp{
+        flex-wrap: nowrap !important;
+        
+        >*{
+            padding: 1.1em 1em !important;
+            text-align: center !important;
+            width: 100%;
+        }
+
+        span{
+            font-size: 14px !important;
+        }
+    }
     .c-table a, .c-table td, .c-table th {
     word-wrap: anywhere;
     }
@@ -105,7 +137,7 @@
     .bread-crumbs{
         flex-wrap: wrap;
     }
-    .c-table:not(.or-tb) tbody tr{
+    .c-table:not(.or-tb, .non-resp) tbody tr{
         margin-bottom: 20px;
         display: block;
     }

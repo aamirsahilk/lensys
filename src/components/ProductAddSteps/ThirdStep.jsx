@@ -88,25 +88,25 @@ const ThirdStep = ({id, colorId}) => {
   }
   const validationSchema = Yup.object({
       rightEye: Yup.object({
-          rsd: Yup.string().required(),
-          rcd: Yup.string().required(),
-          rad: Yup.string().required(),
-          rsn: Yup.string().required(),
-          rcn: Yup.string().required(),
-          ran: Yup.string().required(),
+          // rsd: Yup.string().required(),
+          // rcd: Yup.string().required(),
+          // rad: Yup.string().required(),
+          // rsn: Yup.string().required(),
+          // rcn: Yup.string().required(),
+          // ran: Yup.string().required(),
       }),
       leftEye: Yup.object({
-          lsd: Yup.string().required(),
-          lcd: Yup.string().required(),
-          lad: Yup.string().required(),
-          lsn: Yup.string().required(),
-          lcn: Yup.string().required(),
-          lan: Yup.string().required(),
+          // lsd: Yup.string().required(),
+          // lcd: Yup.string().required(),
+          // lad: Yup.string().required(),
+          // lsn: Yup.string().required(),
+          // lcn: Yup.string().required(),
+          // lan: Yup.string().required(),
       }),
       pd: Yup.object({
-          pd1: Yup.number().required().max(180),
-          pd2: Yup.number().required().max(180),
-          pd3: Yup.number().required().max(360),
+          // pd1: Yup.number().required().max(180),
+          // pd2: Yup.number().required().max(180),
+          // pd3: Yup.number().required().max(360),
       }),
   });
 

@@ -14,7 +14,7 @@ const ProductInnerTabs = ({data}) => {
     console.log('atttr', attributes);
   return (
     <>
-        <Tabs value={'desc'}>
+        <Tabs value={'det'}>
             <TabsHeader className='le_tabs-header'>
     
                 <Tab value="desc">
@@ -37,7 +37,7 @@ const ProductInnerTabs = ({data}) => {
                 {
                   attributes &&
                   <div className="max-w-[600px] mx-auto">
-                    <table className='c-table'>
+                    <table className='c-table non-resp'>
                       <tbody>
                         {
                           attributes?.map((at, index)=>(
