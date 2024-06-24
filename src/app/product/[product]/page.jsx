@@ -296,13 +296,13 @@ const ProductInner = ({params}) => {
                   <div className="relative mt-5">
                     <ul className="pointer-list">
                       <li>
-                        Includes High-Quality Standard Lenses
+                        Provided with High-Quality Lenses
                       </li>
                       <li>
-                        30-Day Money Back Guarantee
+                        Thin, Light & Crystal Clear lenses according to your prescription
                       </li>
                       <li>
-                        Thin and light lenses as per your prescription
+                        14 days Manufacturing guarantee with Easy Returns
                       </li>
                     </ul>
                   </div>

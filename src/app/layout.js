@@ -10,6 +10,8 @@ import Favicon from '../../public/images/lensys-favicon.png'
 import LayoutProvider from './LayoutProvider'
 import ProgressProviders from '@/components/ProgressProviders'
 
+
+
 const inter = Inter({ subsets: ['latin'] })
 const open  = Open_Sans({ subsets: ['latin'] })
 
