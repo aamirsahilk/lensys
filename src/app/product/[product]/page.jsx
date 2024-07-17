@@ -213,8 +213,10 @@ const ProductInner = ({params}) => {
                     </p>
                   }
                   <div className="price-wrapper mt-5">
+                  
                     {
-                      regular_price > product_price &&
+                      parseInt(regular_price) > parseInt(product_price) &&
+        
                       <span className="off">
                         {`-${((product_price / regular_price) * 100).toFixed(0)}%`}
                       </span>

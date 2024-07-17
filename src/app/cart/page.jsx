@@ -4,7 +4,7 @@ import Image from 'next/image'
 import offerImage from '@/images/offer.svg'
 import infoIcon from '@/images/info.svg'
 import Link from 'next/link'
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCartCount } from '@/store/features/cartcount/cartCountSlice'
 import axios from 'axios'
@@ -69,6 +69,8 @@ const Cart = () => {
     const [stateKey, setStateKey] = useState('');
     const [city, setCity] = useState('');
     const [cities, setCities] = useState([]);
+    const [pin, setPin] = useState(false);
+    const [pinEr, setPinEr] = useState(true);
 
     const openDrawerRight = () => setOpenRight(true);
     const closeDrawerRight = () => setOpenRight(false);
@@ -191,6 +193,12 @@ const Cart = () => {
         setCoupons(res.data || []);
     },[userData])
 
+    const fetchPin = useCallback(async () => {
+        if(pin.length == 6){
+            const res = await api.get(`checkpincode?pincode=${pin}`)
+            setPinEr(res.data);
+        }
+    },[pin])
 
     const handleRemoveCart = async (id) => {
         const formData = new FormData();
@@ -206,6 +214,10 @@ const Cart = () => {
     useEffect(() => {
         getStates()
     },[getStates]);
+
+    useEffect(() => {
+        fetchPin()
+    },[fetchPin]);
 
     useEffect(() => {
         setDomLoaded(true)
@@ -352,8 +364,12 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group col-span-2">
                                                                         <div className="inp-grp">
-                                                                            <Field type="select" name="zipcode" placeholder="Zip Code" />
+                                                                            <Field type="select" name="zipcode" placeholder="Zip Code" onKeyUp={(e)=>setPin(e.target.value)} />
                                                                             <ErrorMessage name="zipcode" component="div" className="error-message" />
+                                                                            {
+                                                                                !pinEr &&
+                                                                                <p class="error-message">Sorry we currently not providing services in your area </p>
+                                                                            }
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -451,7 +467,7 @@ const Cart = () => {
                                                                     </div>
                                                                 }
 
-                                                                <button disabled={paymentLoading} type="submit" className='main-btn full mt-5 big dark'>
+                                                                <button disabled={paymentLoading || !pinEr} type="submit" className='main-btn full mt-5 big dark'>
                                                                     <span>{paymentLoading?'Please wait...':'Proceed For Payment'}</span>
                                                                 </button>
                                                             </div>

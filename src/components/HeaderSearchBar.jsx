@@ -11,7 +11,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 import api from '@/api/api';
 
-const HeaderSearchBar = () => {
+const HeaderSearchBar = ({setMenuOpen}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCatagories] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -49,6 +49,7 @@ const HeaderSearchBar = () => {
   const handleSubmit = (e)=>{
     e.preventDefault();
     router.push(`/products/${selected}?search=${searchQuery}`);
+    setMenuOpen(false)
   }
 
   useEffect(() =>{

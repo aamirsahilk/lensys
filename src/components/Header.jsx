@@ -172,7 +172,7 @@ const Header = () => {
                     </button>
                 </div>
                 <div className="relative pl-3 pr-3 pt-3 pb-3">
-                    <HeaderSearchBar />
+                    <HeaderSearchBar setMenuOpen={setMenuOpen} />
 
 
                 </div>
