@@ -80,7 +80,7 @@ const MyAccount = () => {
     var obj = {}
     Object.keys(values).forEach((key) => {
         formData.append(key, values[key]);
-        obj = {...obj, ...{[key]:values[key]}}mk
+        obj = {...obj, ...{[key]:values[key]}}
     });
     const res = await api.post(`update-profile?auth=${userData.access_token}`, formData);
     const data = res.data;
