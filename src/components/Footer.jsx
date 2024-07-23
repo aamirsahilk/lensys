@@ -18,6 +18,8 @@ const Footer = () => {
         setCatagories(response.data)
     }
 
+    const currentYear = new Date().getFullYear();
+
     useEffect(() =>{
         fetchCategories();
     },[])
@@ -117,6 +119,11 @@ const Footer = () => {
                                 <span>Refund Policy</span>
                             </Link>
                         </li>
+                        <li>
+                            <Link href={'/disclaimer'}>
+                                <span>Disclaimer</span>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
                 <div className="relative lg:col-span-2">
@@ -139,8 +146,10 @@ const Footer = () => {
                         <li>
                             <span>Location</span>
                             <a href="mailto:support@lensys.in">
-                                309, 2/A New Uday nagar <br/> 
-                                navi mumbai, maharashtra, India
+                                1st Floor, D9, Parle Colony CHS, <br />
+                                Sahakar Marg, Near Garware House, <br />
+                                Vile Parle East, Mumbai 400057.
+                                
                             </a>
                         </li>
                         
@@ -173,7 +182,7 @@ const Footer = () => {
         <div className="ft-bottom">
             <div className="container mx-auto">
                 <p className="para text-center">
-                    Copyright 2023 | Lensys Pvt. Ltd | <Link href="https://techmatrick.com" passHref={true} target="_blank">Code & Design Credits</Link>
+                    Copyright {currentYear} | Lensys Pvt. Ltd | <Link href="https://techmatrick.com" passHref={true} target="_blank">Code & Design Credits</Link>
                 </p>
             </div>
         </div>
