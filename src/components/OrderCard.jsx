@@ -132,14 +132,16 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
             setFileError('Please select a file.');
             return;
         }
-        if (
-            file.type !== 'application/pdf' &&
-            !file.name.endsWith('.doc') &&
-            !file.name.endsWith('.docx')
-        ) {
-            setFileError('Please select a PDF or Word document file.');
-            return;
-        }
+        // if (
+        //     file.type !== 'application/pdf' ||
+        //     !file.name.endsWith('.doc') ||
+        //     !file.name.endsWith('.docx') ||
+        //     !file.name.endsWith('.png') ||
+        //     !file.name.endsWith('.jpg') 
+        // ) {
+        //     setFileError('Please select a PDF or Word document file.');
+        //     return;
+        // }
         if (file.size > 5 * 1024 * 1024) {
             setFileError('File size exceeds 5 MB limit.');
             return;
@@ -484,7 +486,7 @@ const OrderCard = ({ handleRemoveCart, data, cartId, orderId, fetchOrder }) => {
                                                             <Image src={upload} alt="" />
                                                             <span>Upload Your Prescription</span>
                                                         </label>
-                                                        <p className="sm-text text-center mt-2 mb-3">Note : Document should be in PDF* format under 5MiB</p>
+                                                        <p className="sm-text text-center mt-2 mb-3">Note : Document should be ( PDF | PNG | JPG ) format & under 5MB</p>
                                                         {
                                                             fileError != '' &&
                                                             <div className='act-msg error center'>

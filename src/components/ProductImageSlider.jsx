@@ -27,7 +27,9 @@ const ProductImageSlider = ({lenstype}) => {
     return (
         <>
             <div className='le_pr-image-swiper'>
-
+                {/* <button>
+                    <span>size guide</span>
+                </button> */}
                 <Swiper navigation={{ prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current, }} spaceBetween={15} slidesPerView={4} onSlideChange={() => console.log('slide change')} modules={[Navigation]} className='mt-5 pb-5' breakpoints={{
                     0: {
                         slidesPerView: 1,

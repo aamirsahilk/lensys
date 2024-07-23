@@ -6,6 +6,20 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
 import "swiper/css/navigation";
 import SwiperCore, { Navigation } from 'swiper/core';
+import {
+    Popover,
+    PopoverHandler,
+    PopoverContent,
+    Avatar,
+    Typography,
+    List,
+    ListItem,
+    ListItemPrefix,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
+  } from "@material-tailwind/react";
 
 SwiperCore.use([Navigation]);
 
@@ -14,6 +28,8 @@ const ProductInnerMainSlider = ({thumbs, mainImage}) => {
     const navigationNextRef = useRef();
     const [image, setImage] = useState(mainImage);
     const [domLoaded, setDomLoaded] = useState(false);
+    const [size, setSize] = useState(null);
+    const handleOpen = (value) => setSize(value)
     useEffect(()=>{
         setImage(mainImage)
     },[mainImage])
@@ -121,6 +137,32 @@ const ProductInnerMainSlider = ({thumbs, mainImage}) => {
         </div>
         <div className="relative col-span-5 row-start-1 row-end-2 md:row-start-1 md:row-end-1">
             <div className="main-image-show">
+            <Dialog
+            open={
+              size === "xs" ||
+              size === "sm" ||
+              size === "md" ||
+              size === "lg" ||
+              size === "xl" ||
+              size === "xxl"
+            }
+            size={isMobile? 'xl': size || "md"}
+            handler={handleOpen}
+           
+          >
+            
+            <DialogBody className='p-0 rounded-xl h-[85vh] overflow-scroll' style={{'background':'#e7f6fc'}}>
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
+                <div className="relative">
+                    <button className='modal-cl-btn' onClick={() => handleOpen("none")}>&times;</button>
+                  <Image src="/images/size-guide.jpg" alt="" width={550} height={550} />
+                </div>
+              </div>
+            </DialogBody>
+          </Dialog>
+                <span className='size-g-btn' onClick={() => handleOpen("sm")}>
+                    <span>Size Guide</span>
+                </span>
                 {
                     image? 
                     <Image onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} src={image} alt="" width={500} height={500} />:''
