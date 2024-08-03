@@ -35,14 +35,14 @@ const ThirdStep = ({id, colorId}) => {
           setFileError('Please select a file.');
           return;
       }
-      if (
-          file.type !== 'application/pdf' &&
-          !file.name.endsWith('.doc') &&
-          !file.name.endsWith('.docx')
-      ) {
-          setFileError('Please select a PDF or Word document file.');
-          return;
-      }
+      // if (
+      //     file.type !== 'application/pdf' &&
+      //     !file.name.endsWith('.doc') &&
+      //     !file.name.endsWith('.docx')
+      // ) {
+      //     setFileError('Please select a PDF or Word document file.');
+      //     return;
+      // }
       if (file.size > 5 * 1024 * 1024) {
           setFileError('File size exceeds 5 MB limit.');
           return;
@@ -298,7 +298,7 @@ const ThirdStep = ({id, colorId}) => {
                               <label for="file1" className="big-upload-btn" >
                                   <input
                                       type="file"
-                                      accept=".pdf, .doc, .docx"
+                                      accept=".pdf, .doc, .docx, .jpg, .jpeg, .png, .webp, .avif"
                                       onChange={handleFileChange}
                                       style={{ display: 'none' }}
                                       id="file1"

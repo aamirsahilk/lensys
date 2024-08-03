@@ -10,7 +10,7 @@ import Favicon from '../../public/images/lensys-favicon.png'
 import LayoutProvider from './LayoutProvider'
 import ProgressProviders from '@/components/ProgressProviders'
 
-
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ['latin'] })
 const open  = Open_Sans({ subsets: ['latin'] })
@@ -26,6 +26,8 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      
+      <GoogleAnalytics gaId="G-G021C3HHGJ" />
       <body className={open.className} data-body="dc">
         <Providers>
           <LayoutProvider>
