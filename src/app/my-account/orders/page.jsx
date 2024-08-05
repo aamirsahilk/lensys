@@ -172,7 +172,7 @@ const Orders = () => {
                         orders?.map((item,index)=>(
                           <tr key={index}>
                             <td data-value="Order ID">
-                              <Link href={`my-account/orders/${item.order_id}`}>{item.order_id}
+                              <Link href={`my-account/orders/${item.order_id}`}>{item.lensysid}
                               {
                                 !item.prescription &&
                                 <div className="flex items-center gap-2 error-code-bar mt-2">

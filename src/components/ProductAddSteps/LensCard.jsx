@@ -70,12 +70,11 @@ const LensCard = ({lensDetails}) => {
             }
             size={isMobile? 'xl': size || "md"}
             handler={handleOpen}
-           
           >
             
             <DialogBody className='p-8 rounded-xl'>
               <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
-                
+                {/* <button className="close-bt"  onClick={() => handleOpen("close")}>&times;</button>    */}
                 <div className="relative">
                     {
                         features?
@@ -122,7 +121,7 @@ const LensCard = ({lensDetails}) => {
                         }
                         {
                             features.length > 2 &&
-                            <span className="view-more" onClick={() => handleOpen("sm")}>+{ features.length - 2} More</span>
+                            <span className="view-more" onClick={() => handleOpen(isMobile ? "xl":"sm")}>+{ features.length - 2} More</span>
                         }
                     </p>
                     <p className="price">+ ₹{lensDetails.price}&nbsp; <span>(excluding tax)</span></p>

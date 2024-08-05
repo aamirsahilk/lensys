@@ -151,7 +151,7 @@ const ProductInnerMainSlider = ({thumbs, mainImage}) => {
            
           >
             
-            <DialogBody className='p-0 rounded-xl h-[85vh] overflow-scroll' style={{'background':'#e7f6fc'}}>
+            <DialogBody className='p-0 rounded-xl  overflow-scroll' style={{'background':'#e7f6fc'}}>
               <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
                 <div className="relative">
                     <button className='modal-cl-btn' onClick={() => handleOpen("none")}>&times;</button>

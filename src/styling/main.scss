@@ -2720,3 +2720,12 @@ input.error, select.error{
     border-radius: 50%;
 
 }
+@media(max-width: 600px){    
+    .le_radio-check label {
+        padding-right: 3em;
+    }
+    .le_radio-check .ic {
+        min-width: 50px;
+        min-height: 50px;
+    }
+}
