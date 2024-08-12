@@ -108,7 +108,7 @@ const Category = ({params, searchParams}) => {
         <div className={`relative ${categoryParam != 'all' ? 'lg:col-span-4':'lg:col-span-5'} px-5`}>
           <div className="archive-pr-wrapper">
             <div className="flex items-center w-full justify-between">
-              <h3 className='searched-text mb-0' >{categoryParam}</h3>
+              <h3 className='searched-text mb-0' >{categoryParam && categoryParam.split('-').join(' ')}</h3>
               <div>
                 <button className="filter-btn sm:hidden" onClick={openDrawerRight}>
                   <FilterListIcon />

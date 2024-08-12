@@ -204,7 +204,7 @@ const ProductInner = ({params}) => {
                 </div>
                 <div className="relative">
                   <SecHeading>
-                    {product_name || 'Spectus'}
+                    {product_name || ''}
                   </SecHeading>
                   {
                     short_desc &&
@@ -213,15 +213,16 @@ const ProductInner = ({params}) => {
                     </p>
                   }
                   <div className="price-wrapper mt-5">
-                  
+
                     {
                       parseInt(regular_price) > parseInt(product_price) &&
         
                       <span className="off">
-                        {`-${((product_price / regular_price) * 100).toFixed(0)}%`}
+                        {`-${product?.discount}`}
+                        {/* {`-${((parseInt(product_price) / parseInt(regular_price)) * 100).toFixed(0)}%`} */}
                       </span>
                     }
-                    <p>{currency || '₹'} {product_price || '1600.00'} </p>
+                    <p>{currency || '₹'} {product_price || ''} </p>
                     {
                       <span className='mrp'>
                         <span>
