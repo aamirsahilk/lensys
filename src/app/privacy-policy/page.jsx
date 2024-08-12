@@ -24,11 +24,11 @@ const page = () => {
                 <p>
                     <span style={{ color: "#545454", fontSize: "13.5pt" }}>
                         The protection and security of your personal information is one of
-                        Lensys.in’s top priorities. This Privacy Policy discloses Lensys.in 's
+                        Lensys.in&apos;s top priorities. This Privacy Policy discloses Lensys.in &apos;s
                         practice with respect to the information collected from the users of the
                         website. Lensys Eyewear is authorized to use the website – for commercial
                         purposes. By using the website you agree to accept the terms of this
-                        Privacy Policy as well as the website’s Terms of Use. By accessing or
+                        Privacy Policy as well as the website&apos;s Terms of Use. By accessing or
                         using the website you expressly consent to our use and disclosure of your
                         personal information in any manner described in this Privacy Policy. This
                         Privacy Policy extends to both, users who visit the website but do not
