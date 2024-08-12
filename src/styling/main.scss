@@ -2729,3 +2729,13 @@ input.error, select.error{
         min-height: 50px;
     }
 }
+@media(max-width: 1300px){
+    .pe-secc.container{
+        max-width: 1200px;
+    }
+}
+@media(max-width: 1200px){
+    .pe-secc.container{
+        max-width: 1000px;
+    }
+}

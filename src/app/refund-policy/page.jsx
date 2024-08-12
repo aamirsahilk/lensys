@@ -3,7 +3,7 @@ import React from 'react'
 const page = () => {
     return (
         <div>
-            <div className="container sec mx-auto">
+            <div className="pe-secc container sec mx-auto">
                 <>
                     <h1 style={{ textAlign: "center" }}>
                         <strong>
@@ -38,7 +38,7 @@ const page = () => {
                                 <span
                                     style={{
                                         color: "#545454",
-                                        backgroundColor: "#f4cccc",
+                                        backgroundColor: "#fff",
                                         fontSize: "13.5pt"
                                     }}
                                 >
@@ -72,7 +72,7 @@ const page = () => {
                                 <span
                                     style={{
                                         color: "#545454",
-                                        backgroundColor: "#f4cccc",
+                                        backgroundColor: "#fff",
                                         fontSize: "13.5pt"
                                     }}
                                 >

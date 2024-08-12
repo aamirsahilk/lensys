@@ -3,7 +3,7 @@ import React from 'react'
 const page = () => {
     return (
         <div>
-            <div className="container sec mx-auto">
+            <div className="pe-secc container sec mx-auto">
                 <>
                     <p>
                         <strong>
