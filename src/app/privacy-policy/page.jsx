@@ -22,6 +22,7 @@ const page = () => {
                     </span>
                 </p>
                 <p>
+                    
                     <span style={{ color: "#545454", fontSize: "13.5pt" }}>
                         The protection and security of your personal information is one of
                         Lensys.in&apos;s top priorities. This Privacy Policy discloses Lensys.in &apos;s
