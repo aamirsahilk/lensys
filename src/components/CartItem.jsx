@@ -61,7 +61,7 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
                           {
                             data?.productdetails.attributes &&
                             data?.productdetails.attributes?.map((item, index)=>(
-                              <>{item.key}: {item.value} • </>
+                              <>{item.key}: {item.value} | </>
                             ))
                           }
                         </p>
@@ -73,6 +73,10 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
                                 </button>
                             </>
                         }
+                         {
+                            data?.lensprice != 0 &&
+                            <p className="addonlens">{`+ ₹ ${data?.lensprice} (${data?.lensdetails?.lenstype})`}</p>
+                          }
                         <div className="flex items-center gap-2 flex-wrap"> 
                           
                           {
@@ -121,10 +125,11 @@ const CartItem = ({fullDet, handleRemoveCart, data, counter, handleCounter}) => 
                               </tbody>
                             </table>
                           }
+                         
                         </div>
                     </div>
                     <div className='flex flex-col items-end h-full justify-between'>
-                        <p className="price">{'₹ '+data?.subtotal}</p>
+                        <p className="price">{'₹ '+data?.subtotal	}</p>
                         <button className='delete-btn' type="button" onClick={(e)=>handleRemoveCart(data?.cartid)}>
                             <span>Remove</span>
                             <Image src={deleteIcon} alt="" />

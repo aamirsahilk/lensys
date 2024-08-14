@@ -82,13 +82,20 @@ const Cart = () => {
     const getStates = useCallback(async() => {
         const res = await api.get('states');
         setStates(res.data)
-        getCities(res.data[0].id)
+        getCities(res.data[11].id)
     }, [])
     const getCities = async (id) => {
         const res = await api.get('cities/' + id);
         setCities(res.data)
       
     }
+
+    // useState(()=>{
+    //     setFieldValue('city', cities.length > 0 && cities[3].city)
+    //     setFieldValue('state', states.length > 0 && states[11].id)
+    //     console.log('data', cities, states);
+        
+    // }, [cities, states])
 
     const paymentProceed = async (id) => {
         const res = await api.get('paymentprocess/' + id);
@@ -264,26 +271,29 @@ const Cart = () => {
                                                     fname: userData.name,
                                                     lname: userData.lastname,
                                                     phone: userData.phone,
-                                                    city: '',
-                                                    state: '',
-                                                    city: cities.length > 0 && cities[0].city,
-                                                    state: states.length > 0 && states[0].id,
+                                                    // city: '',
+                                                    // state: '',
+                                                    city: cities?.[16]?.city || cities?.[16]?.city || '',
+                                                    state: states?.[11]?.id || states?.[11]?.id || '',
                                                     address: '',
                                                     zipcode: ''
                                                 }}
                                                 // enableReinitialize
+                                                enableReinitialize={true}
                                                 validationSchema={validationSchema}
                                                 onSubmit={(values) => {
                                                     console.log('submit..');
                                                     //  var selectedState = ;
-                                                    values.city = city == '' ? cities[0].city : city
-                                                     values.state = states.find(state => state.id === values.state) ? states.find(state => state.id === values.state).name : states[0].name;
-                                               
-                                                    handlePayment(values)
+                                                    console.log('values pela', values);
+                                                    // values.city = city == '' ? cities[0].city : city
+                                                    values.state = states.find(state => state.id === values.state) ? states.find(state => state.id === values.state).name : states[0].name;
+                                                    console.log('values', values);
+                                                    
+                                                    // handlePayment(values)
                                                 }}
 
                                             >
-                                                {({ isSubmitting }) => (
+                                                {({ values, isSubmitting, setFieldValue  }) => (
                                                     <Form>
                                                         <div className="grid grid-cols-1 md:grid-cols-12 mt-8 gap-8">
                                                             <div className="relative md:col-span-7">
@@ -330,7 +340,7 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group ">
                                                                         <div className="inp-grp">
-                                                                            <select name="state" value={stateKey} onChange={(e) =>{getCities(e.target.value); setStateKey(e.target.value)}}  id="">
+                                                                            <select name="state" value={values.state} onChange={(e) =>{getCities(e.target.value); setStateKey(e.target.value);setFieldValue('state', e.target.value)}}  id="">
 
                                                                                 {   
                                                                                     states.map((state, index) => (
@@ -348,7 +358,7 @@ const Cart = () => {
                                                                     </div>
                                                                     <div className="form-group">
                                                                         <div className="inp-grp">
-                                                                            <select name="city" value={city} id="" onChange={(e)=>setCity(e.target.value)}>
+                                                                            <select name="city" value={values.city} id="" onChange={(e)=>{setCity(e.target.value); setFieldValue('city', e.target.value)}}>
                                                                                 {
                                                                                     cities.map((city, index) => (
                                                                                         <option value={city.city} key={index}>
