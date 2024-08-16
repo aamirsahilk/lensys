@@ -56,7 +56,7 @@ const ContactLensPowerSelect = ({setLensObj}) => {
                            
                         </th>
                         <th>
-                            OS (RIGHT EYE)
+                            OD (RIGHT EYE)
                         </th>
                         <th>
                             OS (LEFT EYE)

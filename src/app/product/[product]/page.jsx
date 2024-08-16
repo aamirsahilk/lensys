@@ -95,11 +95,14 @@ const ProductInner = ({params}) => {
     setAdding(true);
     // return
     if(userdata.loggedin){
+      console.log('conditionss', categoryid == 4 || categoryid == 3, lensObj.qty && !lensObj.powerRight, lensObj.qty2 && !lensObj.powerLeft);
+      
       if(categoryid == 4 || categoryid == 3){
         if(Object.keys(lensObj).length === 0){
           setLensError(true);
           setTimeout(() => {
             setLensError(false);
+            setAdding(false);
           }, 2500);
           return
         }
@@ -107,6 +110,7 @@ const ProductInner = ({params}) => {
           setLensError(true);
           setTimeout(() => {
             setLensError(false);
+            setAdding(false);
           }, 2500);
           return
         }
@@ -114,6 +118,7 @@ const ProductInner = ({params}) => {
           setLensError(true);
           setTimeout(() => {
             setLensError(false);
+            setAdding(false);
           }, 2500);
           return
         }

@@ -156,22 +156,22 @@ const Footer = () => {
                     </ul>
                     <ul className='soc-list'>
                         <li>
-                            <Link href={'Facebook.com'}>
+                            <Link href={'https://www.facebook.com/lensys.in?mibextid=LQQJ4d'} target="_blank">
                                 <Image width={37} height={37} src={facebook} alt="" />
                             </Link>
                         </li>
                         <li>
-                            <Link href={'Facebook.com'}>
+                            <Link href={'https://www.instagram.com/lensys.in?igsh=d2J4N3pzeDl5N2tt&utm_source=qr'} target="_blank">
                                 <Image width={37} height={37} src={instagram} alt="" />
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link href={'Facebook.com'}>
                                 <Image width={37} height={37} src={twitter} alt="" />
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
-                            <Link href={'Facebook.com'}>
+                            <Link href={'https://www.linkedin.com/company/lensys-in/'} target="_blank">
                                 <Image width={37} height={37} src={linkedin} alt="" />
                             </Link>
                         </li>
