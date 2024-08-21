@@ -290,6 +290,7 @@ const Cart = () => {
                                                     console.log('values', values);
                                                     
                                                     handlePayment(values)
+                                                    
                                                 }}
 
                                             >
