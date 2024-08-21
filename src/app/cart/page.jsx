@@ -289,7 +289,7 @@ const Cart = () => {
                                                     values.state = states.find(state => state.id === values.state) ? states.find(state => state.id === values.state).name : states[0].name;
                                                     console.log('values', values);
                                                     
-                                                    // handlePayment(values)
+                                                    handlePayment(values)
                                                 }}
 
                                             >
